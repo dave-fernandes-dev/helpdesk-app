@@ -65,6 +65,7 @@ class _ListTecnicosTemplateWidgetState
                             padding: EdgeInsetsDirectional.fromSTEB(8, 0, 8, 0),
                             child: Row(
                               mainAxisSize: MainAxisSize.max,
+                              crossAxisAlignment: CrossAxisAlignment.center,
                               children: [
                                 Padding(
                                   padding: EdgeInsetsDirectional.fromSTEB(
