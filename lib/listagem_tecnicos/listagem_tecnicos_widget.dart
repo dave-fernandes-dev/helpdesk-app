@@ -2,18 +2,19 @@ import '../backend/api_requests/api_calls.dart';
 import '../flutter_flow/flutter_flow_icon_button.dart';
 import '../flutter_flow/flutter_flow_theme.dart';
 import '../flutter_flow/flutter_flow_util.dart';
+import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_spinkit/flutter_spinkit.dart';
 import 'package:google_fonts/google_fonts.dart';
 
-class ListTecnicosWidget extends StatefulWidget {
-  const ListTecnicosWidget({Key? key}) : super(key: key);
+class ListagemTecnicosWidget extends StatefulWidget {
+  const ListagemTecnicosWidget({Key? key}) : super(key: key);
 
   @override
-  _ListTecnicosWidgetState createState() => _ListTecnicosWidgetState();
+  _ListagemTecnicosWidgetState createState() => _ListagemTecnicosWidgetState();
 }
 
-class _ListTecnicosWidgetState extends State<ListTecnicosWidget> {
+class _ListagemTecnicosWidgetState extends State<ListagemTecnicosWidget> {
   final scaffoldKey = GlobalKey<ScaffoldState>();
 
   @override
@@ -34,18 +35,34 @@ class _ListTecnicosWidgetState extends State<ListTecnicosWidget> {
             size: 30,
           ),
           onPressed: () async {
-            Navigator.pop(context);
+            context.pop();
           },
         ),
         title: Text(
-          'ListTecnicos\n',
+          'Técnicos',
+          textAlign: TextAlign.center,
           style: FlutterFlowTheme.of(context).title2.override(
                 fontFamily: 'Poppins',
                 color: Colors.white,
                 fontSize: 22,
               ),
         ),
-        actions: [],
+        actions: [
+          FlutterFlowIconButton(
+            borderColor: Colors.transparent,
+            borderRadius: 30,
+            borderWidth: 1,
+            buttonSize: 60,
+            icon: Icon(
+              Icons.add,
+              color: FlutterFlowTheme.of(context).secondaryBackground,
+              size: 30,
+            ),
+            onPressed: () async {
+              context.pushNamed('CreateTecnico');
+            },
+          ),
+        ],
         centerTitle: true,
         elevation: 2,
       ),
@@ -92,21 +109,25 @@ class _ListTecnicosWidgetState extends State<ListTecnicosWidget> {
                             final tecItem = tec[tecIndex];
                             return Padding(
                               padding:
-                                  EdgeInsetsDirectional.fromSTEB(0, 0, 0, 1),
+                                  EdgeInsetsDirectional.fromSTEB(0, 0, 0, 3),
                               child: Container(
                                 width: double.infinity,
                                 height: 90,
                                 decoration: BoxDecoration(
                                   color: FlutterFlowTheme.of(context)
                                       .secondaryBackground,
+                                  boxShadow: [
+                                    BoxShadow(
+                                      blurRadius: 4,
+                                      color: Color(0x33000000),
+                                      offset: Offset(0, 2),
+                                    )
+                                  ],
+                                  borderRadius: BorderRadius.circular(6),
                                 ),
                                 child: Row(
                                   mainAxisSize: MainAxisSize.max,
                                   children: [
-                                    Column(
-                                      mainAxisSize: MainAxisSize.max,
-                                      children: [],
-                                    ),
                                     Expanded(
                                       child: Padding(
                                         padding: EdgeInsetsDirectional.fromSTEB(
@@ -119,6 +140,19 @@ class _ListTecnicosWidgetState extends State<ListTecnicosWidget> {
                                             Row(
                                               mainAxisSize: MainAxisSize.max,
                                               children: [
+                                                Padding(
+                                                  padding: EdgeInsetsDirectional
+                                                      .fromSTEB(0, 0, 5, 0),
+                                                  child: Text(
+                                                    getJsonField(
+                                                      tecItem,
+                                                      r'''$.id''',
+                                                    ).toString(),
+                                                    style: FlutterFlowTheme.of(
+                                                            context)
+                                                        .subtitle2,
+                                                  ),
+                                                ),
                                                 Text(
                                                   getJsonField(
                                                     tecItem,
@@ -179,10 +213,25 @@ class _ListTecnicosWidgetState extends State<ListTecnicosWidget> {
                                             padding:
                                                 EdgeInsetsDirectional.fromSTEB(
                                                     0, 0, 8, 0),
-                                            child: Icon(
-                                              Icons.chevron_right_outlined,
-                                              color: Color(0xFF95A1AC),
-                                              size: 24,
+                                            child: InkWell(
+                                              onTap: () async {
+                                                context.pushNamed(
+                                                  'GetTecnicoById',
+                                                  queryParams: {
+                                                    'tecnicoId': serializeParam(
+                                                        getJsonField(
+                                                          tecItem,
+                                                          r'''$.id''',
+                                                        ).toString(),
+                                                        ParamType.String),
+                                                  }.withoutNulls,
+                                                );
+                                              },
+                                              child: Icon(
+                                                Icons.chevron_right_outlined,
+                                                color: Color(0xFF95A1AC),
+                                                size: 24,
+                                              ),
                                             ),
                                           ),
                                         ),

@@ -1,7 +1,6 @@
 import '../flutter_flow/flutter_flow_icon_button.dart';
 import '../flutter_flow/flutter_flow_theme.dart';
 import '../flutter_flow/flutter_flow_util.dart';
-import '../list_tecnicos_template/list_tecnicos_template_widget.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_spinkit/flutter_spinkit.dart';
 import 'package:flutter_svg/flutter_svg.dart';
@@ -44,7 +43,7 @@ class _HomeWidgetState extends State<HomeWidget> {
           },
         ),
         title: Text(
-          'Page Title',
+          'Home',
           style: FlutterFlowTheme.of(context).title2.override(
                 fontFamily: 'Poppins',
                 color: Colors.white,
@@ -117,39 +116,28 @@ class _HomeWidgetState extends State<HomeWidget> {
                 ),
                 Padding(
                   padding: EdgeInsetsDirectional.fromSTEB(20, 15, 0, 0),
-                  child: InkWell(
-                    onTap: () async {
-                      // Action List Tecnicos
-                      await Navigator.push(
-                        context,
-                        MaterialPageRoute(
-                          builder: (context) => ListTecnicosTemplateWidget(),
+                  child: Row(
+                    mainAxisSize: MainAxisSize.max,
+                    mainAxisAlignment: MainAxisAlignment.start,
+                    crossAxisAlignment: CrossAxisAlignment.center,
+                    children: [
+                      Align(
+                        alignment: AlignmentDirectional(0, 0),
+                        child: Icon(
+                          Icons.person,
+                          color: Colors.black,
+                          size: 24,
                         ),
-                      );
-                    },
-                    child: Row(
-                      mainAxisSize: MainAxisSize.max,
-                      mainAxisAlignment: MainAxisAlignment.start,
-                      crossAxisAlignment: CrossAxisAlignment.center,
-                      children: [
-                        Align(
-                          alignment: AlignmentDirectional(0, 0),
-                          child: Icon(
-                            Icons.person,
-                            color: Colors.black,
-                            size: 24,
-                          ),
+                      ),
+                      Padding(
+                        padding: EdgeInsetsDirectional.fromSTEB(5, 0, 0, 0),
+                        child: Text(
+                          'Técnicos',
+                          textAlign: TextAlign.center,
+                          style: FlutterFlowTheme.of(context).title2,
                         ),
-                        Padding(
-                          padding: EdgeInsetsDirectional.fromSTEB(5, 0, 0, 0),
-                          child: Text(
-                            'Técnicos',
-                            textAlign: TextAlign.center,
-                            style: FlutterFlowTheme.of(context).title2,
-                          ),
-                        ),
-                      ],
-                    ),
+                      ),
+                    ],
                   ),
                 ),
                 Padding(

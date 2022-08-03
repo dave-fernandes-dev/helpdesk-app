@@ -2,10 +2,10 @@ import '../backend/api_requests/api_calls.dart';
 import '../flutter_flow/flutter_flow_theme.dart';
 import '../flutter_flow/flutter_flow_util.dart';
 import '../flutter_flow/flutter_flow_widgets.dart';
-import '../list_tecnicos/list_tecnicos_widget.dart';
 import 'package:easy_debounce/easy_debounce.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_spinkit/flutter_spinkit.dart';
+import 'package:flutter_svg/flutter_svg.dart';
 import 'package:google_fonts/google_fonts.dart';
 
 class LoginWidget extends StatefulWidget {
@@ -18,6 +18,7 @@ class LoginWidget extends StatefulWidget {
 class _LoginWidgetState extends State<LoginWidget> {
   ApiCallResponse? body;
   TextEditingController? textFielSenhaController;
+  late bool textFielSenhaVisibility;
   TextEditingController? textFieldEmailController;
   final formKey = GlobalKey<FormState>();
   final scaffoldKey = GlobalKey<ScaffoldState>();
@@ -26,6 +27,7 @@ class _LoginWidgetState extends State<LoginWidget> {
   void initState() {
     super.initState();
     textFielSenhaController = TextEditingController(text: '123');
+    textFielSenhaVisibility = false;
     textFieldEmailController =
         TextEditingController(text: 'dave-fernandes-dev@gmail.com');
   }
@@ -66,39 +68,99 @@ class _LoginWidgetState extends State<LoginWidget> {
             child: Form(
               key: formKey,
               autovalidateMode: AutovalidateMode.always,
-              child: Align(
-                alignment: AlignmentDirectional(0, 0),
-                child: Padding(
-                  padding: EdgeInsetsDirectional.fromSTEB(12, 12, 12, 12),
-                  child: SingleChildScrollView(
-                    child: Column(
-                      mainAxisSize: MainAxisSize.max,
-                      mainAxisAlignment: MainAxisAlignment.center,
-                      crossAxisAlignment: CrossAxisAlignment.center,
-                      children: [
-                        TextFormField(
-                          controller: textFieldEmailController,
-                          onChanged: (_) => EasyDebounce.debounce(
-                            'textFieldEmailController',
-                            Duration(milliseconds: 2000),
-                            () => setState(() {}),
+              child: Padding(
+                padding: EdgeInsetsDirectional.fromSTEB(12, 12, 12, 12),
+                child: SingleChildScrollView(
+                  child: Column(
+                    mainAxisSize: MainAxisSize.max,
+                    mainAxisAlignment: MainAxisAlignment.start,
+                    crossAxisAlignment: CrossAxisAlignment.center,
+                    children: [
+                      Padding(
+                        padding: EdgeInsetsDirectional.fromSTEB(0, 0, 0, 10),
+                        child: SvgPicture.asset(
+                          'assets/images/login-image.svg',
+                          width: double.infinity,
+                          height: 200,
+                          fit: BoxFit.contain,
+                        ),
+                      ),
+                      TextFormField(
+                        controller: textFieldEmailController,
+                        onChanged: (_) => EasyDebounce.debounce(
+                          'textFieldEmailController',
+                          Duration(milliseconds: 2000),
+                          () => setState(() {}),
+                        ),
+                        autofocus: true,
+                        obscureText: false,
+                        decoration: InputDecoration(
+                          labelText: 'Email',
+                          hintText: 'Digite o Email',
+                          enabledBorder: OutlineInputBorder(
+                            borderSide: BorderSide(
+                              color: FlutterFlowTheme.of(context).primaryColor,
+                              width: 1,
+                            ),
+                            borderRadius: BorderRadius.circular(6),
                           ),
-                          autofocus: true,
-                          obscureText: false,
+                          focusedBorder: OutlineInputBorder(
+                            borderSide: BorderSide(
+                              color: FlutterFlowTheme.of(context).primaryColor,
+                              width: 1,
+                            ),
+                            borderRadius: BorderRadius.circular(6),
+                          ),
+                          filled: true,
+                          fillColor:
+                              FlutterFlowTheme.of(context).secondaryBackground,
+                          contentPadding:
+                              EdgeInsetsDirectional.fromSTEB(24, 0, 0, 0),
+                          suffixIcon: textFieldEmailController!.text.isNotEmpty
+                              ? InkWell(
+                                  onTap: () => setState(
+                                    () => textFieldEmailController?.clear(),
+                                  ),
+                                  child: Icon(
+                                    Icons.clear,
+                                    color: Color(0xFF757575),
+                                    size: 22,
+                                  ),
+                                )
+                              : null,
+                        ),
+                        style: FlutterFlowTheme.of(context).bodyText1.override(
+                              fontFamily: 'Poppins',
+                              fontWeight: FontWeight.normal,
+                            ),
+                        textAlign: TextAlign.start,
+                        keyboardType: TextInputType.emailAddress,
+                        validator: (val) {
+                          if (val == null || val.isEmpty) {
+                            return 'Campo Obrigatório';
+                          }
+
+                          if (!RegExp(kTextValidatorEmailRegex).hasMatch(val)) {
+                            return 'Email Inválido';
+                          }
+                          return null;
+                        },
+                      ),
+                      Padding(
+                        padding: EdgeInsetsDirectional.fromSTEB(0, 20, 0, 0),
+                        child: TextFormField(
+                          controller: textFielSenhaController,
+                          obscureText: !textFielSenhaVisibility,
                           decoration: InputDecoration(
-                            labelText: 'Email',
-                            hintText: 'Digite o Email',
-                            hintStyle: FlutterFlowTheme.of(context).bodyText1,
+                            labelText: 'Senha',
+                            hintText: 'Digite a Senha...',
                             enabledBorder: OutlineInputBorder(
                               borderSide: BorderSide(
                                 color:
                                     FlutterFlowTheme.of(context).primaryColor,
                                 width: 1,
                               ),
-                              borderRadius: const BorderRadius.only(
-                                topLeft: Radius.circular(4.0),
-                                topRight: Radius.circular(4.0),
-                              ),
+                              borderRadius: BorderRadius.circular(6),
                             ),
                             focusedBorder: OutlineInputBorder(
                               borderSide: BorderSide(
@@ -106,161 +168,120 @@ class _LoginWidgetState extends State<LoginWidget> {
                                     FlutterFlowTheme.of(context).primaryColor,
                                 width: 1,
                               ),
-                              borderRadius: const BorderRadius.only(
-                                topLeft: Radius.circular(4.0),
-                                topRight: Radius.circular(4.0),
-                              ),
+                              borderRadius: BorderRadius.circular(6),
                             ),
                             filled: true,
                             fillColor: FlutterFlowTheme.of(context)
                                 .secondaryBackground,
-                            suffixIcon: textFieldEmailController!
-                                    .text.isNotEmpty
-                                ? InkWell(
-                                    onTap: () => setState(
-                                      () => textFieldEmailController?.clear(),
-                                    ),
-                                    child: Icon(
-                                      Icons.clear,
-                                      color: Color(0xFF757575),
-                                      size: 22,
-                                    ),
-                                  )
-                                : null,
-                          ),
-                          style: FlutterFlowTheme.of(context).bodyText1,
-                          textAlign: TextAlign.start,
-                          keyboardType: TextInputType.emailAddress,
-                        ),
-                        Padding(
-                          padding: EdgeInsetsDirectional.fromSTEB(0, 20, 0, 0),
-                          child: TextFormField(
-                            controller: textFielSenhaController,
-                            onChanged: (_) => EasyDebounce.debounce(
-                              'textFielSenhaController',
-                              Duration(milliseconds: 2000),
-                              () => setState(() {}),
-                            ),
-                            autofocus: true,
-                            obscureText: false,
-                            decoration: InputDecoration(
-                              labelText: 'Senha',
-                              hintText: 'Digite a Senha...',
-                              hintStyle: FlutterFlowTheme.of(context).bodyText2,
-                              enabledBorder: OutlineInputBorder(
-                                borderSide: BorderSide(
-                                  color:
-                                      FlutterFlowTheme.of(context).primaryColor,
-                                  width: 1,
-                                ),
-                                borderRadius: BorderRadius.circular(0),
+                            contentPadding:
+                                EdgeInsetsDirectional.fromSTEB(24, 0, 0, 0),
+                            suffixIcon: InkWell(
+                              onTap: () => setState(
+                                () => textFielSenhaVisibility =
+                                    !textFielSenhaVisibility,
                               ),
-                              focusedBorder: OutlineInputBorder(
-                                borderSide: BorderSide(
-                                  color:
-                                      FlutterFlowTheme.of(context).primaryColor,
-                                  width: 1,
-                                ),
-                                borderRadius: BorderRadius.circular(0),
+                              focusNode: FocusNode(skipTraversal: true),
+                              child: Icon(
+                                textFielSenhaVisibility
+                                    ? Icons.visibility_outlined
+                                    : Icons.visibility_off_outlined,
+                                color: Color(0xFF757575),
+                                size: 22,
                               ),
-                              filled: true,
-                              fillColor:
-                                  FlutterFlowTheme.of(context).primaryBtnText,
-                              suffixIcon: textFielSenhaController!
-                                      .text.isNotEmpty
-                                  ? InkWell(
-                                      onTap: () => setState(
-                                        () => textFielSenhaController?.clear(),
-                                      ),
-                                      child: Icon(
-                                        Icons.clear,
-                                        color: Color(0xFF757575),
-                                        size: 22,
-                                      ),
-                                    )
-                                  : null,
                             ),
-                            style: FlutterFlowTheme.of(context).bodyText1,
-                            textAlign: TextAlign.start,
                           ),
-                        ),
-                        Padding(
-                          padding: EdgeInsetsDirectional.fromSTEB(0, 20, 0, 0),
-                          child: FFButtonWidget(
-                            onPressed: () async {
-                              // ActionValidateFormLogin
-                              if (formKey.currentState == null ||
-                                  !formKey.currentState!.validate()) {
-                                return;
-                              }
-
-                              body = await PostLoginCall.call(
-                                email: textFieldEmailController!.text,
-                                senha: textFielSenhaController!.text,
-                              );
-                              if (PostLoginCall.token(
-                                (body?.jsonBody ?? ''),
-                              )) {
-                                setState(() =>
-                                    FFAppState().token = PostLoginCall.token(
-                                      (body?.jsonBody ?? ''),
-                                    ).toString());
-                                await Navigator.push(
-                                  context,
-                                  PageTransition(
-                                    type: PageTransitionType.fade,
-                                    duration: Duration(milliseconds: 0),
-                                    reverseDuration: Duration(milliseconds: 0),
-                                    child: ListTecnicosWidget(),
-                                  ),
-                                );
-                              } else {
-                                await showDialog(
-                                  context: context,
-                                  builder: (alertDialogContext) {
-                                    return AlertDialog(
-                                      title: Text('Atenção!'),
-                                      content:
-                                          Text('Email ou Senha Incorreto!'),
-                                      actions: [
-                                        TextButton(
-                                          onPressed: () =>
-                                              Navigator.pop(alertDialogContext),
-                                          child: Text('Ok'),
-                                        ),
-                                      ],
-                                    );
-                                  },
-                                );
-                                setState(() {
-                                  textFielSenhaController?.clear();
-                                });
-                              }
-
-                              setState(() {});
-                            },
-                            text: 'Login',
-                            options: FFButtonOptions(
-                              width: double.infinity,
-                              height: 40,
-                              color: FlutterFlowTheme.of(context).primaryColor,
-                              textStyle: FlutterFlowTheme.of(context)
-                                  .subtitle2
-                                  .override(
+                          style:
+                              FlutterFlowTheme.of(context).bodyText1.override(
                                     fontFamily: 'Poppins',
-                                    color: Colors.white,
+                                    fontWeight: FontWeight.normal,
                                   ),
-                              elevation: 10,
-                              borderSide: BorderSide(
-                                color: Colors.transparent,
-                                width: 1,
-                              ),
-                              borderRadius: BorderRadius.circular(8),
+                          textAlign: TextAlign.start,
+                          keyboardType: TextInputType.visiblePassword,
+                          validator: (val) {
+                            if (val == null || val.isEmpty) {
+                              return 'Campo Obrigatório';
+                            }
+                            if (val.length < 3) {
+                              return 'Requires at least 3 characters.';
+                            }
+
+                            return null;
+                          },
+                        ),
+                      ),
+                      Padding(
+                        padding: EdgeInsetsDirectional.fromSTEB(0, 20, 0, 0),
+                        child: FFButtonWidget(
+                          onPressed: () async {
+                            // ActionValidateFormLogin
+                            if (formKey.currentState == null ||
+                                !formKey.currentState!.validate()) {
+                              return;
+                            }
+
+                            body = await PostLoginCall.call(
+                              email: textFieldEmailController!.text,
+                              senha: textFielSenhaController!.text,
+                            );
+                            if ((body?.succeeded ?? true)) {
+                              setState(() =>
+                                  FFAppState().token = PostLoginCall.token(
+                                    (body?.jsonBody ?? ''),
+                                  ).toString());
+                              context.pushNamed(
+                                'ListagemTecnicos',
+                                extra: <String, dynamic>{
+                                  kTransitionInfoKey: TransitionInfo(
+                                    hasTransition: true,
+                                    transitionType: PageTransitionType.fade,
+                                    duration: Duration(milliseconds: 0),
+                                  ),
+                                },
+                              );
+                            } else {
+                              await showDialog(
+                                context: context,
+                                builder: (alertDialogContext) {
+                                  return AlertDialog(
+                                    title: Text('Atenção!'),
+                                    content: Text('Email ou Senha Incorreto!'),
+                                    actions: [
+                                      TextButton(
+                                        onPressed: () =>
+                                            Navigator.pop(alertDialogContext),
+                                        child: Text('Ok'),
+                                      ),
+                                    ],
+                                  );
+                                },
+                              );
+                              setState(() {
+                                textFielSenhaController?.clear();
+                              });
+                            }
+
+                            setState(() {});
+                          },
+                          text: 'Login',
+                          options: FFButtonOptions(
+                            width: double.infinity,
+                            height: 40,
+                            color: FlutterFlowTheme.of(context).primaryColor,
+                            textStyle:
+                                FlutterFlowTheme.of(context).subtitle2.override(
+                                      fontFamily: 'Poppins',
+                                      color: Colors.white,
+                                    ),
+                            elevation: 10,
+                            borderSide: BorderSide(
+                              color: Colors.transparent,
+                              width: 1,
                             ),
+                            borderRadius: BorderRadius.circular(6),
                           ),
                         ),
-                      ],
-                    ),
+                      ),
+                    ],
                   ),
                 ),
               ),
