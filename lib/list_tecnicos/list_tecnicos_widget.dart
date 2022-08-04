@@ -2,19 +2,18 @@ import '../backend/api_requests/api_calls.dart';
 import '../flutter_flow/flutter_flow_icon_button.dart';
 import '../flutter_flow/flutter_flow_theme.dart';
 import '../flutter_flow/flutter_flow_util.dart';
-import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_spinkit/flutter_spinkit.dart';
 import 'package:google_fonts/google_fonts.dart';
 
-class ListagemTecnicosWidget extends StatefulWidget {
-  const ListagemTecnicosWidget({Key? key}) : super(key: key);
+class ListTecnicosWidget extends StatefulWidget {
+  const ListTecnicosWidget({Key? key}) : super(key: key);
 
   @override
-  _ListagemTecnicosWidgetState createState() => _ListagemTecnicosWidgetState();
+  _ListTecnicosWidgetState createState() => _ListTecnicosWidgetState();
 }
 
-class _ListagemTecnicosWidgetState extends State<ListagemTecnicosWidget> {
+class _ListTecnicosWidgetState extends State<ListTecnicosWidget> {
+  ApiCallResponse? responseDeleteTecnicoById;
   final scaffoldKey = GlobalKey<ScaffoldState>();
 
   @override
@@ -86,9 +85,8 @@ class _ListagemTecnicosWidgetState extends State<ListagemTecnicosWidget> {
                         child: SizedBox(
                           width: 50,
                           height: 50,
-                          child: SpinKitFoldingCube(
+                          child: CircularProgressIndicator(
                             color: FlutterFlowTheme.of(context).primaryColor,
-                            size: 50,
                           ),
                         ),
                       );
@@ -113,6 +111,9 @@ class _ListagemTecnicosWidgetState extends State<ListagemTecnicosWidget> {
                               child: Container(
                                 width: double.infinity,
                                 height: 90,
+                                constraints: BoxConstraints(
+                                  maxHeight: double.infinity,
+                                ),
                                 decoration: BoxDecoration(
                                   color: FlutterFlowTheme.of(context)
                                       .secondaryBackground,
@@ -216,7 +217,7 @@ class _ListagemTecnicosWidgetState extends State<ListagemTecnicosWidget> {
                                             child: InkWell(
                                               onTap: () async {
                                                 context.pushNamed(
-                                                  'GetTecnicoById',
+                                                  'UpdateTecnico',
                                                   queryParams: {
                                                     'tecnicoId': serializeParam(
                                                         getJsonField(
@@ -228,10 +229,77 @@ class _ListagemTecnicosWidgetState extends State<ListagemTecnicosWidget> {
                                                 );
                                               },
                                               child: Icon(
-                                                Icons.chevron_right_outlined,
-                                                color: Color(0xFF95A1AC),
+                                                Icons.edit,
+                                                color:
+                                                    FlutterFlowTheme.of(context)
+                                                        .secondaryText,
                                                 size: 24,
                                               ),
+                                            ),
+                                          ),
+                                        ),
+                                        Expanded(
+                                          child: InkWell(
+                                            onTap: () async {
+                                              var _shouldSetState = false;
+                                              var confirmDialogResponse =
+                                                  await showDialog<bool>(
+                                                        context: context,
+                                                        builder:
+                                                            (alertDialogContext) {
+                                                          return AlertDialog(
+                                                            title: Text(
+                                                                'Atenção!'),
+                                                            content: Text(
+                                                                'Confirma Exclusão?'),
+                                                            actions: [
+                                                              TextButton(
+                                                                onPressed: () =>
+                                                                    Navigator.pop(
+                                                                        alertDialogContext,
+                                                                        false),
+                                                                child:
+                                                                    Text('Não'),
+                                                              ),
+                                                              TextButton(
+                                                                onPressed: () =>
+                                                                    Navigator.pop(
+                                                                        alertDialogContext,
+                                                                        true),
+                                                                child:
+                                                                    Text('Sim'),
+                                                              ),
+                                                            ],
+                                                          );
+                                                        },
+                                                      ) ??
+                                                      false;
+                                              if (confirmDialogResponse) {
+                                                responseDeleteTecnicoById =
+                                                    await DeleteTecnicoByIdCall
+                                                        .call(
+                                                  token: FFAppState().token,
+                                                  id: getJsonField(
+                                                    tecItem,
+                                                    r'''$.id''',
+                                                  ).toString(),
+                                                );
+                                                _shouldSetState = true;
+                                                context
+                                                    .pushNamed('ListTecnicos');
+                                              } else {
+                                                if (_shouldSetState)
+                                                  setState(() {});
+                                                return;
+                                              }
+
+                                              if (_shouldSetState)
+                                                setState(() {});
+                                            },
+                                            child: Icon(
+                                              Icons.delete,
+                                              color: Color(0xA7FF0000),
+                                              size: 20,
                                             ),
                                           ),
                                         ),

@@ -1,7 +1,6 @@
 import 'dart:async';
 
 import 'package:flutter/material.dart';
-import 'package:flutter_spinkit/flutter_spinkit.dart';
 import 'package:go_router/go_router.dart';
 import 'package:page_transition/page_transition.dart';
 import '../flutter_flow_theme.dart';
@@ -63,52 +62,40 @@ GoRouter createRouter(AppStateNotifier appStateNotifier) => GoRouter(
             FFRoute(
               name: 'Home',
               path: 'home',
-              builder: (context, params) => params.isEmpty
-                  ? NavBarPage(initialPage: 'Home')
-                  : HomeWidget(
-                      token: params.getParam('token', ParamType.String),
-                    ),
+              builder: (context, params) => HomeWidget(
+                token: params.getParam('token', ParamType.String),
+              ),
             ),
             FFRoute(
-              name: 'ListagemTecnicos',
-              path: 'listagemTecnicos',
-              builder: (context, params) => params.isEmpty
-                  ? NavBarPage(initialPage: 'ListagemTecnicos')
-                  : ListagemTecnicosWidget(),
+              name: 'ListTecnicos',
+              path: 'listTecnicos',
+              builder: (context, params) => ListTecnicosWidget(),
             ),
             FFRoute(
-              name: 'GetTecnicoById',
-              path: 'getTecnicoById',
-              builder: (context, params) => params.isEmpty
-                  ? NavBarPage(initialPage: 'GetTecnicoById')
-                  : GetTecnicoByIdWidget(
-                      tecnicoId: params.getParam('tecnicoId', ParamType.String),
-                    ),
+              name: 'UpdateTecnico',
+              path: 'updateTecnico',
+              builder: (context, params) => UpdateTecnicoWidget(
+                tecnicoId: params.getParam('tecnicoId', ParamType.String),
+              ),
             ),
             FFRoute(
               name: 'send',
               path: 'send',
-              builder: (context, params) => params.isEmpty
-                  ? NavBarPage(initialPage: 'send')
-                  : SendWidget(),
+              builder: (context, params) => SendWidget(),
             ),
             FFRoute(
               name: 'receive',
               path: 'receive',
-              builder: (context, params) => params.isEmpty
-                  ? NavBarPage(initialPage: 'receive')
-                  : ReceiveWidget(
-                      param1: params.getParam('param1', ParamType.String),
-                    ),
+              builder: (context, params) => ReceiveWidget(
+                param1: params.getParam('param1', ParamType.String),
+              ),
             ),
             FFRoute(
               name: 'CreateTecnico',
               path: 'createTecnico',
-              builder: (context, params) => params.isEmpty
-                  ? NavBarPage(initialPage: 'CreateTecnico')
-                  : CreateTecnicoWidget(
-                      tecnicoId: params.getParam('tecnicoId', ParamType.String),
-                    ),
+              builder: (context, params) => CreateTecnicoWidget(
+                tecnicoId: params.getParam('tecnicoId', ParamType.String),
+              ),
             )
           ].map((r) => r.toRoute(appStateNotifier)).toList(),
         ).toRoute(appStateNotifier),

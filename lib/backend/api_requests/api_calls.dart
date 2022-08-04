@@ -139,3 +139,66 @@ class GetTecnicoByIdCall {
         r'''$.senha''',
       );
 }
+
+class DeleteTecnicoByIdCall {
+  static Future<ApiCallResponse> call({
+    String? token = '',
+    String? id = '',
+  }) {
+    return ApiManager.instance.makeApiCall(
+      callName: 'deleteTecnicoById',
+      apiUrl: 'https://vl-helpdesk-api.herokuapp.com/tecnicos/${id}',
+      callType: ApiCallType.DELETE,
+      headers: {
+        'Content-type': 'application/json; charset=utf-8',
+        'Authorization': '${token}',
+      },
+      params: {},
+      returnBody: true,
+    );
+  }
+}
+
+class PutTecnicoCall {
+  static Future<ApiCallResponse> call({
+    String? token = '',
+    String? nome = '',
+    String? cpf = '',
+    String? email = '',
+    String? senha = '',
+    String? perfis = '',
+    String? id = '',
+  }) {
+    final body = '''
+{
+  "nome": "${nome}",
+  "cpf": "${cpf}",
+  "email": "${email}",
+  "senha": "${senha}"
+}''';
+    return ApiManager.instance.makeApiCall(
+      callName: 'putTecnico',
+      apiUrl: 'https://vl-helpdesk-api.herokuapp.com/tecnicos/${id}',
+      callType: ApiCallType.PUT,
+      headers: {
+        'Content-type': 'application/json; charset=utf-8',
+        'Authorization': '${token}',
+      },
+      params: {
+        'nome': nome,
+        'cpf': cpf,
+        'email': email,
+        'senha': senha,
+        'perfis': perfis,
+      },
+      body: body,
+      bodyType: BodyType.JSON,
+      returnBody: true,
+    );
+  }
+
+  static dynamic message(dynamic response) => getJsonField(
+        response,
+        r'''$''',
+      );
+}

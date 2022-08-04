@@ -6,12 +6,11 @@ import '../flutter_flow/flutter_flow_util.dart';
 import '../flutter_flow/flutter_flow_widgets.dart';
 import 'package:easy_debounce/easy_debounce.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_spinkit/flutter_spinkit.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:google_fonts/google_fonts.dart';
 
-class GetTecnicoByIdWidget extends StatefulWidget {
-  const GetTecnicoByIdWidget({
+class UpdateTecnicoWidget extends StatefulWidget {
+  const UpdateTecnicoWidget({
     Key? key,
     this.tecnicoId,
   }) : super(key: key);
@@ -19,16 +18,24 @@ class GetTecnicoByIdWidget extends StatefulWidget {
   final String? tecnicoId;
 
   @override
-  _GetTecnicoByIdWidgetState createState() => _GetTecnicoByIdWidgetState();
+  _UpdateTecnicoWidgetState createState() => _UpdateTecnicoWidgetState();
 }
 
-class _GetTecnicoByIdWidgetState extends State<GetTecnicoByIdWidget> {
+class _UpdateTecnicoWidgetState extends State<UpdateTecnicoWidget> {
+  ApiCallResponse? responsePutTecnico550482150;
   String? dropDownValue;
   TextEditingController? textFieldNomeController;
   TextEditingController? textFieldCpfController;
   TextEditingController? textFieldEmailController;
   TextEditingController? textFieldSenhaController;
+  late bool textFieldSenhaVisibility;
   final scaffoldKey = GlobalKey<ScaffoldState>();
+
+  @override
+  void initState() {
+    super.initState();
+    textFieldSenhaVisibility = false;
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -44,14 +51,13 @@ class _GetTecnicoByIdWidgetState extends State<GetTecnicoByIdWidget> {
             child: SizedBox(
               width: 50,
               height: 50,
-              child: SpinKitFoldingCube(
+              child: CircularProgressIndicator(
                 color: FlutterFlowTheme.of(context).primaryColor,
-                size: 50,
               ),
             ),
           );
         }
-        final getTecnicoByIdGetTecnicoByIdResponse = snapshot.data!;
+        final updateTecnicoGetTecnicoByIdResponse = snapshot.data!;
         return Scaffold(
           key: scaffoldKey,
           appBar: AppBar(
@@ -100,21 +106,21 @@ class _GetTecnicoByIdWidgetState extends State<GetTecnicoByIdWidget> {
                     padding: EdgeInsetsDirectional.fromSTEB(12, 5, 12, 0),
                     child: FlutterFlowDropDown(
                       options: (GetTecnicoByIdCall.perfis(
-                        getTecnicoByIdGetTecnicoByIdResponse.jsonBody,
+                        updateTecnicoGetTecnicoByIdResponse.jsonBody,
                       ) as List)
                           .map<String>((s) => s.toString())
                           .toList()
                           .toList(),
                       onChanged: (val) => setState(() => dropDownValue = val),
                       width: double.infinity,
-                      height: 50,
+                      height: 40,
                       textStyle:
                           FlutterFlowTheme.of(context).bodyText1.override(
                                 fontFamily: 'Poppins',
                                 color: Colors.black,
                                 fontWeight: FontWeight.normal,
                               ),
-                      hintText: 'Please select...',
+                      hintText: 'Selecione...',
                       fillColor: Colors.white,
                       elevation: 2,
                       borderColor: FlutterFlowTheme.of(context).primaryColor,
@@ -130,7 +136,7 @@ class _GetTecnicoByIdWidgetState extends State<GetTecnicoByIdWidget> {
                       controller: textFieldNomeController ??=
                           TextEditingController(
                         text: GetTecnicoByIdCall.nome(
-                          getTecnicoByIdGetTecnicoByIdResponse.jsonBody,
+                          updateTecnicoGetTecnicoByIdResponse.jsonBody,
                         ).toString(),
                       ),
                       onChanged: (_) => EasyDebounce.debounce(
@@ -140,6 +146,7 @@ class _GetTecnicoByIdWidgetState extends State<GetTecnicoByIdWidget> {
                       ),
                       obscureText: false,
                       decoration: InputDecoration(
+                        isDense: true,
                         labelText: 'Nome',
                         hintText: 'Digite o Nome',
                         enabledBorder: OutlineInputBorder(
@@ -187,7 +194,7 @@ class _GetTecnicoByIdWidgetState extends State<GetTecnicoByIdWidget> {
                       controller: textFieldCpfController ??=
                           TextEditingController(
                         text: GetTecnicoByIdCall.cpf(
-                          getTecnicoByIdGetTecnicoByIdResponse.jsonBody,
+                          updateTecnicoGetTecnicoByIdResponse.jsonBody,
                         ).toString(),
                       ),
                       onChanged: (_) => EasyDebounce.debounce(
@@ -197,6 +204,7 @@ class _GetTecnicoByIdWidgetState extends State<GetTecnicoByIdWidget> {
                       ),
                       obscureText: false,
                       decoration: InputDecoration(
+                        isDense: true,
                         labelText: 'CPF',
                         enabledBorder: OutlineInputBorder(
                           borderSide: BorderSide(
@@ -244,7 +252,7 @@ class _GetTecnicoByIdWidgetState extends State<GetTecnicoByIdWidget> {
                       controller: textFieldEmailController ??=
                           TextEditingController(
                         text: GetTecnicoByIdCall.email(
-                          getTecnicoByIdGetTecnicoByIdResponse.jsonBody,
+                          updateTecnicoGetTecnicoByIdResponse.jsonBody,
                         ).toString(),
                       ),
                       onChanged: (_) => EasyDebounce.debounce(
@@ -254,6 +262,7 @@ class _GetTecnicoByIdWidgetState extends State<GetTecnicoByIdWidget> {
                       ),
                       obscureText: false,
                       decoration: InputDecoration(
+                        isDense: true,
                         labelText: 'Email',
                         hintText: 'Digite um Email Válido...',
                         enabledBorder: OutlineInputBorder(
@@ -302,16 +311,12 @@ class _GetTecnicoByIdWidgetState extends State<GetTecnicoByIdWidget> {
                       controller: textFieldSenhaController ??=
                           TextEditingController(
                         text: GetTecnicoByIdCall.senha(
-                          getTecnicoByIdGetTecnicoByIdResponse.jsonBody,
+                          updateTecnicoGetTecnicoByIdResponse.jsonBody,
                         ).toString(),
                       ),
-                      onChanged: (_) => EasyDebounce.debounce(
-                        'textFieldSenhaController',
-                        Duration(milliseconds: 2000),
-                        () => setState(() {}),
-                      ),
-                      obscureText: false,
+                      obscureText: !textFieldSenhaVisibility,
                       decoration: InputDecoration(
+                        isDense: true,
                         labelText: 'Senha',
                         enabledBorder: OutlineInputBorder(
                           borderSide: BorderSide(
@@ -332,18 +337,20 @@ class _GetTecnicoByIdWidgetState extends State<GetTecnicoByIdWidget> {
                             FlutterFlowTheme.of(context).secondaryBackground,
                         contentPadding:
                             EdgeInsetsDirectional.fromSTEB(24, 0, 0, 0),
-                        suffixIcon: textFieldSenhaController!.text.isNotEmpty
-                            ? InkWell(
-                                onTap: () => setState(
-                                  () => textFieldSenhaController?.clear(),
-                                ),
-                                child: Icon(
-                                  Icons.clear,
-                                  color: Color(0xFF757575),
-                                  size: 22,
-                                ),
-                              )
-                            : null,
+                        suffixIcon: InkWell(
+                          onTap: () => setState(
+                            () => textFieldSenhaVisibility =
+                                !textFieldSenhaVisibility,
+                          ),
+                          focusNode: FocusNode(skipTraversal: true),
+                          child: Icon(
+                            textFieldSenhaVisibility
+                                ? Icons.visibility_outlined
+                                : Icons.visibility_off_outlined,
+                            color: Color(0xFF757575),
+                            size: 22,
+                          ),
+                        ),
                       ),
                       style: FlutterFlowTheme.of(context).bodyText1.override(
                             fontFamily: 'Poppins',
@@ -356,8 +363,52 @@ class _GetTecnicoByIdWidgetState extends State<GetTecnicoByIdWidget> {
                   Padding(
                     padding: EdgeInsetsDirectional.fromSTEB(0, 15, 0, 0),
                     child: FFButtonWidget(
-                      onPressed: () {
-                        print('ButtonAtualizar pressed ...');
+                      onPressed: () async {
+                        responsePutTecnico550482150 = await PutTecnicoCall.call(
+                          token: FFAppState().token,
+                          id: widget.tecnicoId,
+                          nome: textFieldNomeController?.text ?? '',
+                          cpf: textFieldCpfController?.text ?? '',
+                          email: textFieldEmailController?.text ?? '',
+                          senha: textFieldSenhaController?.text ?? '',
+                        );
+                        if ((responsePutTecnico550482150?.succeeded ?? true)) {
+                          await showDialog(
+                            context: context,
+                            builder: (alertDialogContext) {
+                              return AlertDialog(
+                                title: Text('Sucesso'),
+                                content: Text('Atualizado com Sucesso!'),
+                                actions: [
+                                  TextButton(
+                                    onPressed: () =>
+                                        Navigator.pop(alertDialogContext),
+                                    child: Text('Ok'),
+                                  ),
+                                ],
+                              );
+                            },
+                          );
+                        } else {
+                          await showDialog(
+                            context: context,
+                            builder: (alertDialogContext) {
+                              return AlertDialog(
+                                title: Text('Erro!'),
+                                content: Text('Não Atualizado!'),
+                                actions: [
+                                  TextButton(
+                                    onPressed: () =>
+                                        Navigator.pop(alertDialogContext),
+                                    child: Text('Ok'),
+                                  ),
+                                ],
+                              );
+                            },
+                          );
+                        }
+
+                        setState(() {});
                       },
                       text: 'Atualizar',
                       icon: Icon(

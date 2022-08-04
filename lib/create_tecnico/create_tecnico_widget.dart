@@ -6,7 +6,6 @@ import '../flutter_flow/flutter_flow_util.dart';
 import '../flutter_flow/flutter_flow_widgets.dart';
 import 'package:easy_debounce/easy_debounce.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_spinkit/flutter_spinkit.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:google_fonts/google_fonts.dart';
 
@@ -56,9 +55,8 @@ class _CreateTecnicoWidgetState extends State<CreateTecnicoWidget> {
             child: SizedBox(
               width: 50,
               height: 50,
-              child: SpinKitFoldingCube(
+              child: CircularProgressIndicator(
                 color: FlutterFlowTheme.of(context).primaryColor,
-                size: 50,
               ),
             ),
           );
@@ -116,7 +114,7 @@ class _CreateTecnicoWidgetState extends State<CreateTecnicoWidget> {
                       options: ['ADMIN', 'TECNICO', 'CLIENTE'],
                       onChanged: (val) => setState(() => dropDownValue = val),
                       width: double.infinity,
-                      height: 50,
+                      height: 40,
                       textStyle:
                           FlutterFlowTheme.of(context).bodyText1.override(
                                 fontFamily: 'Poppins',
@@ -144,6 +142,7 @@ class _CreateTecnicoWidgetState extends State<CreateTecnicoWidget> {
                       ),
                       obscureText: false,
                       decoration: InputDecoration(
+                        isDense: true,
                         labelText: 'Nome',
                         hintText: 'Digite o Nome...',
                         enabledBorder: OutlineInputBorder(
@@ -196,6 +195,7 @@ class _CreateTecnicoWidgetState extends State<CreateTecnicoWidget> {
                       ),
                       obscureText: false,
                       decoration: InputDecoration(
+                        isDense: true,
                         labelText: 'CPF',
                         hintText: 'Digite o CPF...',
                         enabledBorder: OutlineInputBorder(
@@ -249,6 +249,7 @@ class _CreateTecnicoWidgetState extends State<CreateTecnicoWidget> {
                       ),
                       obscureText: false,
                       decoration: InputDecoration(
+                        isDense: true,
                         labelText: 'Email',
                         hintText: 'Digite um Email Válido...',
                         enabledBorder: OutlineInputBorder(
@@ -297,6 +298,7 @@ class _CreateTecnicoWidgetState extends State<CreateTecnicoWidget> {
                       controller: textFieldSenhaController,
                       obscureText: !textFieldSenhaVisibility,
                       decoration: InputDecoration(
+                        isDense: true,
                         labelText: 'Senha',
                         hintText: 'Digite a Senha...',
                         enabledBorder: OutlineInputBorder(
@@ -353,7 +355,7 @@ class _CreateTecnicoWidgetState extends State<CreateTecnicoWidget> {
                           senha: textFieldSenhaController!.text,
                         );
                         if ((responseCreateTecnico?.succeeded ?? true)) {
-                          context.pushNamed('ListagemTecnicos');
+                          context.pushNamed('ListTecnicos');
                         } else {
                           setState(() {
                             textFieldSenhaController?.clear();
