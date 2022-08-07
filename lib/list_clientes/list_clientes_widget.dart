@@ -6,14 +6,14 @@ import 'dart:async';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 
-class ListTecnicosWidget extends StatefulWidget {
-  const ListTecnicosWidget({Key? key}) : super(key: key);
+class ListClientesWidget extends StatefulWidget {
+  const ListClientesWidget({Key? key}) : super(key: key);
 
   @override
-  _ListTecnicosWidgetState createState() => _ListTecnicosWidgetState();
+  _ListClientesWidgetState createState() => _ListClientesWidgetState();
 }
 
-class _ListTecnicosWidgetState extends State<ListTecnicosWidget> {
+class _ListClientesWidgetState extends State<ListClientesWidget> {
   ApiCallResponse? responseDeleteTecnicoById;
   Completer<ApiCallResponse>? _apiRequestCompleter;
   final scaffoldKey = GlobalKey<ScaffoldState>();
@@ -40,7 +40,7 @@ class _ListTecnicosWidgetState extends State<ListTecnicosWidget> {
           },
         ),
         title: Text(
-          'Técnicos',
+          'Clientes',
           textAlign: TextAlign.center,
           style: FlutterFlowTheme.of(context).title2.override(
                 fontFamily: 'Poppins',
@@ -60,7 +60,7 @@ class _ListTecnicosWidgetState extends State<ListTecnicosWidget> {
               size: 30,
             ),
             onPressed: () async {
-              context.pushNamed('CreateTecnico');
+              context.pushNamed('CreateCliente');
             },
           ),
         ],
@@ -84,8 +84,8 @@ class _ListTecnicosWidgetState extends State<ListTecnicosWidget> {
             color: FlutterFlowTheme.of(context).secondaryBackground,
             size: 30,
           ),
-          onPressed: () async {
-            context.pushNamed('CreateTecnico');
+          onPressed: () {
+            print('IconButton pressed ...');
           },
         ),
       ),
@@ -99,7 +99,7 @@ class _ListTecnicosWidgetState extends State<ListTecnicosWidget> {
                 padding: EdgeInsetsDirectional.fromSTEB(10, 10, 10, 10),
                 child: FutureBuilder<ApiCallResponse>(
                   future: (_apiRequestCompleter ??= Completer<ApiCallResponse>()
-                        ..complete(GetTecnicosCall.call(
+                        ..complete(GetClientesCall.call(
                           token: FFAppState().token,
                         )))
                       .future,
@@ -116,12 +116,11 @@ class _ListTecnicosWidgetState extends State<ListTecnicosWidget> {
                         ),
                       );
                     }
-                    final listViewGetTecnicosResponse = snapshot.data!;
+                    final listViewGetClientesResponse = snapshot.data!;
                     return Builder(
                       builder: (context) {
-                        final tec = getJsonField(
-                          listViewGetTecnicosResponse.jsonBody,
-                          r'''$''',
+                        final cliente = GetClientesCall.clientes(
+                          listViewGetClientesResponse.jsonBody,
                         ).toList();
                         return RefreshIndicator(
                           onRefresh: () async {
@@ -132,9 +131,9 @@ class _ListTecnicosWidgetState extends State<ListTecnicosWidget> {
                             padding: EdgeInsets.zero,
                             shrinkWrap: true,
                             scrollDirection: Axis.vertical,
-                            itemCount: tec.length,
-                            itemBuilder: (context, tecIndex) {
-                              final tecItem = tec[tecIndex];
+                            itemCount: cliente.length,
+                            itemBuilder: (context, clienteIndex) {
+                              final clienteItem = cliente[clienteIndex];
                               return Padding(
                                 padding:
                                     EdgeInsetsDirectional.fromSTEB(0, 0, 0, 3),
@@ -179,7 +178,7 @@ class _ListTecnicosWidgetState extends State<ListTecnicosWidget> {
                                                                 0, 0, 5, 0),
                                                     child: Text(
                                                       getJsonField(
-                                                        tecItem,
+                                                        clienteItem,
                                                         r'''$.id''',
                                                       ).toString(),
                                                       style:
@@ -190,7 +189,7 @@ class _ListTecnicosWidgetState extends State<ListTecnicosWidget> {
                                                   ),
                                                   Text(
                                                     getJsonField(
-                                                      tecItem,
+                                                      clienteItem,
                                                       r'''$.nome''',
                                                     ).toString(),
                                                     style: FlutterFlowTheme.of(
@@ -204,7 +203,7 @@ class _ListTecnicosWidgetState extends State<ListTecnicosWidget> {
                                                 children: [
                                                   Text(
                                                     getJsonField(
-                                                      tecItem,
+                                                      clienteItem,
                                                       r'''$.email''',
                                                     ).toString(),
                                                     style: FlutterFlowTheme.of(
@@ -218,7 +217,7 @@ class _ListTecnicosWidgetState extends State<ListTecnicosWidget> {
                                                 children: [
                                                   Text(
                                                     getJsonField(
-                                                      tecItem,
+                                                      clienteItem,
                                                       r'''$.cpf''',
                                                     ).toString(),
                                                     style: FlutterFlowTheme.of(
@@ -249,12 +248,12 @@ class _ListTecnicosWidgetState extends State<ListTecnicosWidget> {
                                               child: InkWell(
                                                 onTap: () async {
                                                   context.pushNamed(
-                                                    'UpdateTecnico',
+                                                    'UpdateCliente',
                                                     queryParams: {
-                                                      'tecnicoId':
+                                                      'clienteId':
                                                           serializeParam(
                                                               getJsonField(
-                                                                tecItem,
+                                                                clienteItem,
                                                                 r'''$.id''',
                                                               ).toString(),
                                                               ParamType.String),
@@ -308,16 +307,16 @@ class _ListTecnicosWidgetState extends State<ListTecnicosWidget> {
                                                         false;
                                                 if (confirmDialogResponse) {
                                                   responseDeleteTecnicoById =
-                                                      await DeleteTecnicoByIdCall
+                                                      await DeleteClienteByIdCall
                                                           .call(
                                                     token: FFAppState().token,
                                                     id: getJsonField(
-                                                      tecItem,
+                                                      clienteItem,
                                                       r'''$.id''',
                                                     ).toString(),
                                                   );
                                                   context.pushNamed(
-                                                      'ListTecnicos');
+                                                      'ListClientes');
                                                   ScaffoldMessenger.of(context)
                                                       .showSnackBar(
                                                     SnackBar(

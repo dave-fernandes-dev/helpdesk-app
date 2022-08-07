@@ -9,8 +9,8 @@ import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:google_fonts/google_fonts.dart';
 
-class CreateTecnicoWidget extends StatefulWidget {
-  const CreateTecnicoWidget({
+class CreateClienteWidget extends StatefulWidget {
+  const CreateClienteWidget({
     Key? key,
     this.tecnicoId,
   }) : super(key: key);
@@ -18,11 +18,11 @@ class CreateTecnicoWidget extends StatefulWidget {
   final String? tecnicoId;
 
   @override
-  _CreateTecnicoWidgetState createState() => _CreateTecnicoWidgetState();
+  _CreateClienteWidgetState createState() => _CreateClienteWidgetState();
 }
 
-class _CreateTecnicoWidgetState extends State<CreateTecnicoWidget> {
-  ApiCallResponse? responseCreateTecnico;
+class _CreateClienteWidgetState extends State<CreateClienteWidget> {
+  ApiCallResponse? responseCreateCliente;
   String? dropDownValue;
   TextEditingController? textFieldNomeController;
   TextEditingController? textFieldCpfController;
@@ -62,7 +62,7 @@ class _CreateTecnicoWidgetState extends State<CreateTecnicoWidget> {
             ),
           );
         }
-        final createTecnicoGetTecnicoByIdResponse = snapshot.data!;
+        final createClienteGetTecnicoByIdResponse = snapshot.data!;
         return Scaffold(
           key: scaffoldKey,
           appBar: AppBar(
@@ -83,7 +83,7 @@ class _CreateTecnicoWidgetState extends State<CreateTecnicoWidget> {
               },
             ),
             title: Text(
-              'Cadastrar Técnico',
+              'Cadastrar Cliente',
               textAlign: TextAlign.start,
               style: FlutterFlowTheme.of(context).title2.override(
                     fontFamily: 'Poppins',
@@ -205,9 +205,6 @@ class _CreateTecnicoWidgetState extends State<CreateTecnicoWidget> {
                             if (val.length < 3) {
                               return 'Requires at least 3 characters.';
                             }
-                            if (val.length > 20) {
-                              return 'Maximum 20 characters allowed, currently ${val.length}.';
-                            }
 
                             return null;
                           },
@@ -274,9 +271,6 @@ class _CreateTecnicoWidgetState extends State<CreateTecnicoWidget> {
                             if (val.length < 11) {
                               return 'Requires at least 11 characters.';
                             }
-                            if (val.length > 11) {
-                              return 'Maximum 11 characters allowed, currently ${val.length}.';
-                            }
 
                             return null;
                           },
@@ -341,8 +335,8 @@ class _CreateTecnicoWidgetState extends State<CreateTecnicoWidget> {
                             if (val == null || val.isEmpty) {
                               return 'Field is required';
                             }
-                            if (val.length < 8) {
-                              return 'Requires at least 8 characters.';
+                            if (val.length < 3) {
+                              return 'Requires at least 3 characters.';
                             }
 
                             if (!RegExp(kTextValidatorEmailRegex)
@@ -425,15 +419,15 @@ class _CreateTecnicoWidgetState extends State<CreateTecnicoWidget> {
                               return;
                             }
 
-                            responseCreateTecnico = await PostTecnicoCall.call(
+                            responseCreateCliente = await PostClienteCall.call(
                               token: FFAppState().token,
                               nome: textFieldNomeController!.text,
                               cpf: textFieldCpfController!.text,
                               email: textFieldEmailController!.text,
                               senha: textFieldSenhaController!.text,
                             );
-                            if ((responseCreateTecnico?.succeeded ?? true)) {
-                              context.pushNamed('ListTecnicos');
+                            if ((responseCreateCliente?.succeeded ?? true)) {
+                              context.pushNamed('ListClientes');
                               ScaffoldMessenger.of(context).showSnackBar(
                                 SnackBar(
                                   content: Text(
@@ -458,8 +452,8 @@ class _CreateTecnicoWidgetState extends State<CreateTecnicoWidget> {
                               ScaffoldMessenger.of(context).showSnackBar(
                                 SnackBar(
                                   content: Text(
-                                    PostTecnicoCall.message(
-                                      (responseCreateTecnico?.jsonBody ?? ''),
+                                    PostClienteCall.message(
+                                      (responseCreateCliente?.jsonBody ?? ''),
                                     ).toString(),
                                     style: FlutterFlowTheme.of(context)
                                         .bodyText1
@@ -476,8 +470,8 @@ class _CreateTecnicoWidgetState extends State<CreateTecnicoWidget> {
                               ScaffoldMessenger.of(context).showSnackBar(
                                 SnackBar(
                                   content: Text(
-                                    PostTecnicoCall.fieldNameError(
-                                      (responseCreateTecnico?.jsonBody ?? ''),
+                                    PostClienteCall.fieldNameError(
+                                      (responseCreateCliente?.jsonBody ?? ''),
                                     ).toString(),
                                     style: FlutterFlowTheme.of(context)
                                         .bodyText1

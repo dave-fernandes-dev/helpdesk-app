@@ -98,6 +98,10 @@ class PostTecnicoCall {
         response,
         r'''$.message''',
       );
+  static dynamic fieldNameError(dynamic response) => getJsonField(
+        response,
+        r'''$.errors.*.fieldName''',
+      );
 }
 
 class GetTecnicoByIdCall {
@@ -166,7 +170,6 @@ class PutTecnicoCall {
     String? cpf = '',
     String? email = '',
     String? senha = '',
-    String? perfis = '',
     String? id = '',
   }) {
     final body = '''
@@ -189,7 +192,6 @@ class PutTecnicoCall {
         'cpf': cpf,
         'email': email,
         'senha': senha,
-        'perfis': perfis,
       },
       body: body,
       bodyType: BodyType.JSON,
@@ -199,6 +201,184 @@ class PutTecnicoCall {
 
   static dynamic message(dynamic response) => getJsonField(
         response,
+        r'''$.message''',
+      );
+  static dynamic fieldNameError(dynamic response) => getJsonField(
+        response,
+        r'''$.errors.*.fieldName''',
+      );
+}
+
+class GetClientesCall {
+  static Future<ApiCallResponse> call({
+    String? token = '',
+  }) {
+    return ApiManager.instance.makeApiCall(
+      callName: 'getClientes',
+      apiUrl: 'https://vl-helpdesk-api.herokuapp.com/clientes',
+      callType: ApiCallType.GET,
+      headers: {
+        'Content-type': 'application/json; charset=utf-8',
+        'Authorization': '${token}',
+      },
+      params: {},
+      returnBody: true,
+    );
+  }
+
+  static dynamic clientes(dynamic response) => getJsonField(
+        response,
         r'''$''',
+      );
+}
+
+class DeleteClienteByIdCall {
+  static Future<ApiCallResponse> call({
+    String? token = '',
+    String? id = '',
+  }) {
+    return ApiManager.instance.makeApiCall(
+      callName: 'deleteClienteById',
+      apiUrl: 'https://vl-helpdesk-api.herokuapp.com/clientes/${id}',
+      callType: ApiCallType.DELETE,
+      headers: {
+        'Content-type': 'application/json; charset=utf-8',
+        'Authorization': '${token}',
+      },
+      params: {},
+      returnBody: true,
+    );
+  }
+}
+
+class PostClienteCall {
+  static Future<ApiCallResponse> call({
+    String? token = '',
+    String? nome = '',
+    String? cpf = '',
+    String? email = '',
+    String? senha = '',
+  }) {
+    final body = '''
+{
+  "nome": "${nome}",
+  "cpf": "${cpf}",
+  "email": "${email}",
+  "senha": "${senha}"
+}''';
+    return ApiManager.instance.makeApiCall(
+      callName: 'postCliente',
+      apiUrl:
+          'https://vl-helpdesk-api.herokuapp.com/clientes?with_response_body',
+      callType: ApiCallType.POST,
+      headers: {
+        'Content-type': 'application/json; charset=utf-8',
+        'Authorization': '${token}',
+      },
+      params: {
+        'nome': nome,
+        'cpf': cpf,
+        'email': email,
+        'senha': senha,
+      },
+      body: body,
+      bodyType: BodyType.JSON,
+      returnBody: true,
+    );
+  }
+
+  static dynamic message(dynamic response) => getJsonField(
+        response,
+        r'''$.message''',
+      );
+  static dynamic fieldNameError(dynamic response) => getJsonField(
+        response,
+        r'''$.errors.*.fieldName''',
+      );
+}
+
+class GetClienteByIdCall {
+  static Future<ApiCallResponse> call({
+    String? token = '',
+    String? id = '',
+  }) {
+    return ApiManager.instance.makeApiCall(
+      callName: 'getClienteById',
+      apiUrl: 'https://vl-helpdesk-api.herokuapp.com/clientes/${id}',
+      callType: ApiCallType.GET,
+      headers: {
+        'Content-type': 'application/json; charset=utf-8',
+        'Authorization': '${token}',
+      },
+      params: {},
+      returnBody: true,
+    );
+  }
+
+  static dynamic perfis(dynamic response) => getJsonField(
+        response,
+        r'''$.perfis''',
+      );
+  static dynamic nome(dynamic response) => getJsonField(
+        response,
+        r'''$.nome''',
+      );
+  static dynamic cpf(dynamic response) => getJsonField(
+        response,
+        r'''$.cpf''',
+      );
+  static dynamic email(dynamic response) => getJsonField(
+        response,
+        r'''$.email''',
+      );
+  static dynamic senha(dynamic response) => getJsonField(
+        response,
+        r'''$.senha''',
+      );
+}
+
+class PutClienteCall {
+  static Future<ApiCallResponse> call({
+    String? token = '',
+    String? nome = '',
+    String? cpf = '',
+    String? email = '',
+    String? senha = '',
+    String? id = '',
+  }) {
+    final body = '''
+{
+  "nome": "${nome}",
+  "cpf": "${cpf}",
+  "email": "${email}",
+  "senha": "${senha}"
+}''';
+    return ApiManager.instance.makeApiCall(
+      callName: 'putCliente',
+      apiUrl: 'https://vl-helpdesk-api.herokuapp.com/clientes/${id}',
+      callType: ApiCallType.PUT,
+      headers: {
+        'Content-type': 'application/json; charset=utf-8',
+        'Authorization': '${token}',
+      },
+      params: {
+        'nome': nome,
+        'cpf': cpf,
+        'email': email,
+        'senha': senha,
+      },
+      body: body,
+      bodyType: BodyType.JSON,
+      returnBody: true,
+    );
+  }
+
+  static dynamic message(dynamic response) => getJsonField(
+        response,
+        r'''$.message''',
+      );
+  static dynamic fieldNameError(dynamic response) => getJsonField(
+        response,
+        r'''$.errors.*.fieldName''',
       );
 }

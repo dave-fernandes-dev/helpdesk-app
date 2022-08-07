@@ -19,6 +19,8 @@ class FFAppState {
   late SharedPreferences prefs;
 
   String token = '';
+
+  List<String> perfisList = ['ADMIN', 'CLIENTE', 'TECNICO'];
 }
 
 LatLng? _latLngFromString(String? val) {

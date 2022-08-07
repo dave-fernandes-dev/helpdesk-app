@@ -67,6 +67,13 @@ GoRouter createRouter(AppStateNotifier appStateNotifier) => GoRouter(
               ),
             ),
             FFRoute(
+              name: 'CreateTecnico',
+              path: 'createTecnico',
+              builder: (context, params) => CreateTecnicoWidget(
+                tecnicoId: params.getParam('tecnicoId', ParamType.String),
+              ),
+            ),
+            FFRoute(
               name: 'ListTecnicos',
               path: 'listTecnicos',
               builder: (context, params) => ListTecnicosWidget(),
@@ -79,22 +86,22 @@ GoRouter createRouter(AppStateNotifier appStateNotifier) => GoRouter(
               ),
             ),
             FFRoute(
-              name: 'send',
-              path: 'send',
-              builder: (context, params) => SendWidget(),
+              name: 'ListClientes',
+              path: 'listClientes',
+              builder: (context, params) => ListClientesWidget(),
             ),
             FFRoute(
-              name: 'receive',
-              path: 'receive',
-              builder: (context, params) => ReceiveWidget(
-                param1: params.getParam('param1', ParamType.String),
+              name: 'CreateCliente',
+              path: 'createCliente',
+              builder: (context, params) => CreateClienteWidget(
+                tecnicoId: params.getParam('tecnicoId', ParamType.String),
               ),
             ),
             FFRoute(
-              name: 'CreateTecnico',
-              path: 'createTecnico',
-              builder: (context, params) => CreateTecnicoWidget(
-                tecnicoId: params.getParam('tecnicoId', ParamType.String),
+              name: 'UpdateCliente',
+              path: 'updateCliente',
+              builder: (context, params) => UpdateClienteWidget(
+                clienteId: params.getParam('clienteId', ParamType.String),
               ),
             )
           ].map((r) => r.toRoute(appStateNotifier)).toList(),
@@ -228,5 +235,9 @@ class TransitionInfo {
   final Duration duration;
   final Alignment? alignment;
 
-  static TransitionInfo appDefault() => TransitionInfo(hasTransition: false);
+  static TransitionInfo appDefault() => TransitionInfo(
+        hasTransition: true,
+        transitionType: PageTransitionType.fade,
+        duration: Duration(milliseconds: 300),
+      );
 }

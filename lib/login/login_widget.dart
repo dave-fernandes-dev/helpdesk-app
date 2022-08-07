@@ -228,7 +228,7 @@ class _LoginWidgetState extends State<LoginWidget> {
                                     (body?.jsonBody ?? ''),
                                   ).toString());
                               context.pushNamed(
-                                'ListTecnicos',
+                                'Home',
                                 extra: <String, dynamic>{
                                   kTransitionInfoKey: TransitionInfo(
                                     hasTransition: true,
@@ -237,22 +237,44 @@ class _LoginWidgetState extends State<LoginWidget> {
                                   ),
                                 },
                               );
+                              ScaffoldMessenger.of(context).showSnackBar(
+                                SnackBar(
+                                  content: Text(
+                                    'Autenticado Com Sucesso! ',
+                                    style: FlutterFlowTheme.of(context)
+                                        .bodyText1
+                                        .override(
+                                          fontFamily: 'Poppins',
+                                          color: FlutterFlowTheme.of(context)
+                                              .secondaryBackground,
+                                        ),
+                                  ),
+                                  duration: Duration(milliseconds: 4000),
+                                  backgroundColor: FlutterFlowTheme.of(context)
+                                      .secondaryColor,
+                                ),
+                              );
                             } else {
-                              await showDialog(
-                                context: context,
-                                builder: (alertDialogContext) {
-                                  return AlertDialog(
-                                    title: Text('Atenção!'),
-                                    content: Text('Email ou Senha Incorreto!'),
-                                    actions: [
-                                      TextButton(
-                                        onPressed: () =>
-                                            Navigator.pop(alertDialogContext),
-                                        child: Text('Ok'),
-                                      ),
-                                    ],
-                                  );
-                                },
+                              ScaffoldMessenger.of(context).showSnackBar(
+                                SnackBar(
+                                  content: Text(
+                                    valueOrDefault<String>(
+                                      PostLoginCall.messageError(
+                                        (body?.jsonBody ?? ''),
+                                      ).toString(),
+                                      'Erro Desconhecido',
+                                    ),
+                                    style: FlutterFlowTheme.of(context)
+                                        .bodyText1
+                                        .override(
+                                          fontFamily: 'Poppins',
+                                          color: FlutterFlowTheme.of(context)
+                                              .secondaryBackground,
+                                        ),
+                                  ),
+                                  duration: Duration(milliseconds: 6000),
+                                  backgroundColor: Color(0xFFFF0000),
+                                ),
                               );
                               setState(() {
                                 textFielSenhaController?.clear();

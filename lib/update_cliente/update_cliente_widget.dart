@@ -9,20 +9,20 @@ import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:google_fonts/google_fonts.dart';
 
-class UpdateTecnicoWidget extends StatefulWidget {
-  const UpdateTecnicoWidget({
+class UpdateClienteWidget extends StatefulWidget {
+  const UpdateClienteWidget({
     Key? key,
-    this.tecnicoId,
+    this.clienteId,
   }) : super(key: key);
 
-  final String? tecnicoId;
+  final String? clienteId;
 
   @override
-  _UpdateTecnicoWidgetState createState() => _UpdateTecnicoWidgetState();
+  _UpdateClienteWidgetState createState() => _UpdateClienteWidgetState();
 }
 
-class _UpdateTecnicoWidgetState extends State<UpdateTecnicoWidget> {
-  ApiCallResponse? responsePutTecnico550482150;
+class _UpdateClienteWidgetState extends State<UpdateClienteWidget> {
+  ApiCallResponse? responsePutCliente;
   List<String>? checkboxGroupPerfisValues;
   TextEditingController? textFieldNomeController;
   TextEditingController? textFieldCpfController;
@@ -41,9 +41,9 @@ class _UpdateTecnicoWidgetState extends State<UpdateTecnicoWidget> {
   @override
   Widget build(BuildContext context) {
     return FutureBuilder<ApiCallResponse>(
-      future: GetTecnicoByIdCall.call(
-        id: widget.tecnicoId,
+      future: GetClienteByIdCall.call(
         token: FFAppState().token,
+        id: widget.clienteId,
       ),
       builder: (context, snapshot) {
         // Customize what your widget looks like when it's loading.
@@ -58,7 +58,7 @@ class _UpdateTecnicoWidgetState extends State<UpdateTecnicoWidget> {
             ),
           );
         }
-        final updateTecnicoGetTecnicoByIdResponse = snapshot.data!;
+        final updateClienteGetClienteByIdResponse = snapshot.data!;
         return Scaffold(
           key: scaffoldKey,
           appBar: AppBar(
@@ -79,7 +79,7 @@ class _UpdateTecnicoWidgetState extends State<UpdateTecnicoWidget> {
               },
             ),
             title: Text(
-              'Atualizar Técnico',
+              'Atualizar Cliente',
               style: FlutterFlowTheme.of(context).title2.override(
                     fontFamily: 'Poppins',
                     color: Colors.white,
@@ -115,8 +115,8 @@ class _UpdateTecnicoWidgetState extends State<UpdateTecnicoWidget> {
                     FlutterFlowCheckboxGroup(
                       initiallySelected: checkboxGroupPerfisValues ??=
                           FFAppState().perfisList,
-                      options: (GetTecnicoByIdCall.perfis(
-                        updateTecnicoGetTecnicoByIdResponse.jsonBody,
+                      options: (GetClienteByIdCall.perfis(
+                        updateClienteGetClienteByIdResponse.jsonBody,
                       ) as List)
                           .map<String>((s) => s.toString())
                           .toList()
@@ -137,8 +137,8 @@ class _UpdateTecnicoWidgetState extends State<UpdateTecnicoWidget> {
                       child: TextFormField(
                         controller: textFieldNomeController ??=
                             TextEditingController(
-                          text: GetTecnicoByIdCall.nome(
-                            updateTecnicoGetTecnicoByIdResponse.jsonBody,
+                          text: GetClienteByIdCall.nome(
+                            updateClienteGetClienteByIdResponse.jsonBody,
                           ).toString(),
                         ),
                         onChanged: (_) => EasyDebounce.debounce(
@@ -194,8 +194,8 @@ class _UpdateTecnicoWidgetState extends State<UpdateTecnicoWidget> {
                       child: TextFormField(
                         controller: textFieldCpfController ??=
                             TextEditingController(
-                          text: GetTecnicoByIdCall.cpf(
-                            updateTecnicoGetTecnicoByIdResponse.jsonBody,
+                          text: GetClienteByIdCall.cpf(
+                            updateClienteGetClienteByIdResponse.jsonBody,
                           ).toString(),
                         ),
                         onChanged: (_) => EasyDebounce.debounce(
@@ -251,8 +251,8 @@ class _UpdateTecnicoWidgetState extends State<UpdateTecnicoWidget> {
                       child: TextFormField(
                         controller: textFieldEmailController ??=
                             TextEditingController(
-                          text: GetTecnicoByIdCall.email(
-                            updateTecnicoGetTecnicoByIdResponse.jsonBody,
+                          text: GetClienteByIdCall.email(
+                            updateClienteGetClienteByIdResponse.jsonBody,
                           ).toString(),
                         ),
                         onChanged: (_) => EasyDebounce.debounce(
@@ -309,8 +309,8 @@ class _UpdateTecnicoWidgetState extends State<UpdateTecnicoWidget> {
                       child: TextFormField(
                         controller: textFieldSenhaController ??=
                             TextEditingController(
-                          text: GetTecnicoByIdCall.senha(
-                            updateTecnicoGetTecnicoByIdResponse.jsonBody,
+                          text: GetClienteByIdCall.senha(
+                            updateClienteGetClienteByIdResponse.jsonBody,
                           ).toString(),
                         ),
                         obscureText: !textFieldSenhaVisibility,
@@ -362,17 +362,15 @@ class _UpdateTecnicoWidgetState extends State<UpdateTecnicoWidget> {
                       padding: EdgeInsetsDirectional.fromSTEB(0, 15, 0, 0),
                       child: FFButtonWidget(
                         onPressed: () async {
-                          responsePutTecnico550482150 =
-                              await PutTecnicoCall.call(
+                          responsePutCliente = await PutClienteCall.call(
                             token: FFAppState().token,
-                            id: widget.tecnicoId,
                             nome: textFieldNomeController?.text ?? '',
                             cpf: textFieldCpfController?.text ?? '',
                             email: textFieldEmailController?.text ?? '',
                             senha: textFieldSenhaController?.text ?? '',
+                            id: widget.clienteId,
                           );
-                          if ((responsePutTecnico550482150?.succeeded ??
-                              true)) {
+                          if ((responsePutCliente?.succeeded ?? true)) {
                             ScaffoldMessenger.of(context).showSnackBar(
                               SnackBar(
                                 content: Text(
@@ -390,18 +388,14 @@ class _UpdateTecnicoWidgetState extends State<UpdateTecnicoWidget> {
                                     FlutterFlowTheme.of(context).tertiary400,
                               ),
                             );
-                            context.pushNamed('ListTecnicos');
+                            context.pushNamed('ListClientes');
                           } else {
                             ScaffoldMessenger.of(context).showSnackBar(
                               SnackBar(
                                 content: Text(
-                                  valueOrDefault<String>(
-                                    PutTecnicoCall.message(
-                                      (responsePutTecnico550482150?.jsonBody ??
-                                          ''),
-                                    ).toString(),
-                                    'Erro Desconhecido!',
-                                  ),
+                                  PutClienteCall.message(
+                                    (responsePutCliente?.jsonBody ?? ''),
+                                  ).toString(),
                                   style: FlutterFlowTheme.of(context)
                                       .bodyText1
                                       .override(
@@ -417,9 +411,8 @@ class _UpdateTecnicoWidgetState extends State<UpdateTecnicoWidget> {
                             ScaffoldMessenger.of(context).showSnackBar(
                               SnackBar(
                                 content: Text(
-                                  PutTecnicoCall.fieldNameError(
-                                    (responsePutTecnico550482150?.jsonBody ??
-                                        ''),
+                                  PutClienteCall.fieldNameError(
+                                    (responsePutCliente?.jsonBody ?? ''),
                                   ).toString(),
                                   style: TextStyle(
                                     color: FlutterFlowTheme.of(context)
