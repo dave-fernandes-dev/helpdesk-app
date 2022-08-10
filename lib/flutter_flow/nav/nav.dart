@@ -37,7 +37,7 @@ GoRouter createRouter(AppStateNotifier appStateNotifier) => GoRouter(
                 ),
               ),
             )
-          : LoginWidget(),
+          : NavBarPage(),
       routes: [
         FFRoute(
           name: '_initialize',
@@ -52,19 +52,14 @@ GoRouter createRouter(AppStateNotifier appStateNotifier) => GoRouter(
                     ),
                   ),
                 )
-              : LoginWidget(),
+              : NavBarPage(),
           routes: [
             FFRoute(
               name: 'Login',
               path: 'login',
-              builder: (context, params) => LoginWidget(),
-            ),
-            FFRoute(
-              name: 'Home',
-              path: 'home',
-              builder: (context, params) => HomeWidget(
-                token: params.getParam('token', ParamType.String),
-              ),
+              builder: (context, params) => params.isEmpty
+                  ? NavBarPage(initialPage: 'Login')
+                  : LoginWidget(),
             ),
             FFRoute(
               name: 'CreateTecnico',
@@ -74,11 +69,6 @@ GoRouter createRouter(AppStateNotifier appStateNotifier) => GoRouter(
               ),
             ),
             FFRoute(
-              name: 'ListTecnicos',
-              path: 'listTecnicos',
-              builder: (context, params) => ListTecnicosWidget(),
-            ),
-            FFRoute(
               name: 'UpdateTecnico',
               path: 'updateTecnico',
               builder: (context, params) => UpdateTecnicoWidget(
@@ -86,9 +76,18 @@ GoRouter createRouter(AppStateNotifier appStateNotifier) => GoRouter(
               ),
             ),
             FFRoute(
+              name: 'ListTecnicos',
+              path: 'listTecnicos',
+              builder: (context, params) => params.isEmpty
+                  ? NavBarPage(initialPage: 'ListTecnicos')
+                  : ListTecnicosWidget(),
+            ),
+            FFRoute(
               name: 'ListClientes',
               path: 'listClientes',
-              builder: (context, params) => ListClientesWidget(),
+              builder: (context, params) => params.isEmpty
+                  ? NavBarPage(initialPage: 'ListClientes')
+                  : ListClientesWidget(),
             ),
             FFRoute(
               name: 'CreateCliente',
@@ -102,6 +101,38 @@ GoRouter createRouter(AppStateNotifier appStateNotifier) => GoRouter(
               path: 'updateCliente',
               builder: (context, params) => UpdateClienteWidget(
                 clienteId: params.getParam('clienteId', ParamType.String),
+              ),
+            ),
+            FFRoute(
+              name: 'Logout',
+              path: 'logout',
+              builder: (context, params) => params.isEmpty
+                  ? NavBarPage(initialPage: 'Logout')
+                  : LogoutWidget(
+                      token: params.getParam('token', ParamType.String),
+                    ),
+            ),
+            FFRoute(
+              name: 'Home',
+              path: 'home',
+              builder: (context, params) => params.isEmpty
+                  ? NavBarPage(initialPage: 'Home')
+                  : HomeWidget(
+                      token: params.getParam('token', ParamType.String),
+                    ),
+            ),
+            FFRoute(
+              name: 'ListChamados',
+              path: 'listChamados',
+              builder: (context, params) => params.isEmpty
+                  ? NavBarPage(initialPage: 'ListChamados')
+                  : ListChamadosWidget(),
+            ),
+            FFRoute(
+              name: 'UpdateChamado',
+              path: 'updateChamado',
+              builder: (context, params) => UpdateChamadoWidget(
+                chamadoId: params.getParam('chamadoId', ParamType.String),
               ),
             )
           ].map((r) => r.toRoute(appStateNotifier)).toList(),

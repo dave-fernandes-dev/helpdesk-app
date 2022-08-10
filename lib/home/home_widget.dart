@@ -1,7 +1,9 @@
 import '../flutter_flow/flutter_flow_icon_button.dart';
 import '../flutter_flow/flutter_flow_theme.dart';
 import '../flutter_flow/flutter_flow_util.dart';
+import '../flutter_flow/custom_functions.dart' as functions;
 import 'package:flutter/material.dart';
+import 'package:flutter/scheduler.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:google_fonts/google_fonts.dart';
 
@@ -19,6 +21,19 @@ class HomeWidget extends StatefulWidget {
 
 class _HomeWidgetState extends State<HomeWidget> {
   final scaffoldKey = GlobalKey<ScaffoldState>();
+
+  @override
+  void initState() {
+    super.initState();
+    // On page load action.
+    SchedulerBinding.instance.addPostFrameCallback((_) async {
+      if (functions.isLogged(FFAppState().token)) {
+        return;
+      }
+
+      context.pushNamed('Login');
+    });
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -201,28 +216,33 @@ class _HomeWidgetState extends State<HomeWidget> {
                   Divider(),
                   Padding(
                     padding: EdgeInsetsDirectional.fromSTEB(20, 15, 0, 0),
-                    child: Row(
-                      mainAxisSize: MainAxisSize.max,
-                      mainAxisAlignment: MainAxisAlignment.start,
-                      crossAxisAlignment: CrossAxisAlignment.center,
-                      children: [
-                        Align(
-                          alignment: AlignmentDirectional(0, 0),
-                          child: Icon(
-                            Icons.support,
-                            color: FlutterFlowTheme.of(context).secondaryText,
-                            size: 24,
+                    child: InkWell(
+                      onTap: () async {
+                        context.pushNamed('ListChamados');
+                      },
+                      child: Row(
+                        mainAxisSize: MainAxisSize.max,
+                        mainAxisAlignment: MainAxisAlignment.start,
+                        crossAxisAlignment: CrossAxisAlignment.center,
+                        children: [
+                          Align(
+                            alignment: AlignmentDirectional(0, 0),
+                            child: Icon(
+                              Icons.support,
+                              color: FlutterFlowTheme.of(context).secondaryText,
+                              size: 24,
+                            ),
                           ),
-                        ),
-                        Padding(
-                          padding: EdgeInsetsDirectional.fromSTEB(5, 0, 0, 0),
-                          child: Text(
-                            'Chamados',
-                            textAlign: TextAlign.center,
-                            style: FlutterFlowTheme.of(context).subtitle2,
+                          Padding(
+                            padding: EdgeInsetsDirectional.fromSTEB(5, 0, 0, 0),
+                            child: Text(
+                              'Chamados',
+                              textAlign: TextAlign.center,
+                              style: FlutterFlowTheme.of(context).subtitle2,
+                            ),
                           ),
-                        ),
-                      ],
+                        ],
+                      ),
                     ),
                   ),
                   Divider(),
@@ -264,6 +284,23 @@ class _HomeWidgetState extends State<HomeWidget> {
                       onTap: () async {
                         setState(() => FFAppState().token = '');
                         context.pushNamed('Login');
+                        ScaffoldMessenger.of(context).showSnackBar(
+                          SnackBar(
+                            content: Text(
+                              'Logout Efetuado.',
+                              style: FlutterFlowTheme.of(context)
+                                  .bodyText1
+                                  .override(
+                                    fontFamily: 'Poppins',
+                                    color: FlutterFlowTheme.of(context)
+                                        .secondaryBackground,
+                                  ),
+                            ),
+                            duration: Duration(milliseconds: 4000),
+                            backgroundColor:
+                                FlutterFlowTheme.of(context).secondaryColor,
+                          ),
+                        );
                       },
                       child: Row(
                         mainAxisSize: MainAxisSize.max,
@@ -314,7 +351,7 @@ class _HomeWidgetState extends State<HomeWidget> {
               child: SingleChildScrollView(
                 child: Column(
                   mainAxisSize: MainAxisSize.max,
-                  mainAxisAlignment: MainAxisAlignment.center,
+                  mainAxisAlignment: MainAxisAlignment.start,
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
                     Padding(
@@ -442,6 +479,25 @@ class _HomeWidgetState extends State<HomeWidget> {
                         'Em resumo é um sistema para gerenciamento de chamados simulando um simples Help Desk desenvolvido em Flutter3, Angular 12 e Spring Boot2. O sistema está rodando na nuvem sendo o front na Vercel e o back na Heroku. O projeto tem como objetivo principal abordar os conceitos de aplicações SPAs, Autenticação e Autorização com Tokens JWT, Criptografia, boas práticas e muito mais.\n\nFique a vontade para testar o \nsistema, criticar e deixar sua sugestão.',
                         textAlign: TextAlign.justify,
                         style: FlutterFlowTheme.of(context).bodyText2,
+                      ),
+                    ),
+                    Padding(
+                      padding: EdgeInsetsDirectional.fromSTEB(0, 5, 0, 5),
+                      child: InkWell(
+                        onTap: () async {
+                          await launchURL(
+                              'mailto:dave.fernandes.dev@gmail.com');
+                        },
+                        child: Text(
+                          'Contato: dave.fernandes.dev@gmail.com',
+                          style: FlutterFlowTheme.of(context)
+                              .bodyText2
+                              .override(
+                                fontFamily: 'Poppins',
+                                color:
+                                    FlutterFlowTheme.of(context).primaryColor,
+                              ),
+                        ),
                       ),
                     ),
                   ],

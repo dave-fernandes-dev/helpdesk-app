@@ -136,7 +136,7 @@ class _ListClientesWidgetState extends State<ListClientesWidget> {
                               final clienteItem = cliente[clienteIndex];
                               return Padding(
                                 padding:
-                                    EdgeInsetsDirectional.fromSTEB(0, 0, 0, 3),
+                                    EdgeInsetsDirectional.fromSTEB(0, 0, 0, 6),
                                 child: Container(
                                   width: double.infinity,
                                   height: 90,

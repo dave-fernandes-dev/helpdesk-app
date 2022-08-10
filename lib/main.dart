@@ -4,6 +4,8 @@ import 'package:flutter_localizations/flutter_localizations.dart';
 import 'flutter_flow/flutter_flow_theme.dart';
 import 'flutter_flow/flutter_flow_util.dart';
 import 'flutter_flow/internationalization.dart';
+import 'package:google_fonts/google_fonts.dart';
+import 'package:google_nav_bar/google_nav_bar.dart';
 import 'flutter_flow/nav/nav.dart';
 import 'index.dart';
 
@@ -66,6 +68,90 @@ class _MyAppState extends State<MyApp> {
       themeMode: _themeMode,
       routeInformationParser: _router.routeInformationParser,
       routerDelegate: _router.routerDelegate,
+    );
+  }
+}
+
+class NavBarPage extends StatefulWidget {
+  NavBarPage({Key? key, this.initialPage}) : super(key: key);
+
+  final String? initialPage;
+
+  @override
+  _NavBarPageState createState() => _NavBarPageState();
+}
+
+/// This is the private State class that goes with NavBarPage.
+class _NavBarPageState extends State<NavBarPage> {
+  String _currentPage = 'Login';
+
+  @override
+  void initState() {
+    super.initState();
+    _currentPage = widget.initialPage ?? _currentPage;
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    final tabs = {
+      'Login': LoginWidget(),
+      'Home': HomeWidget(),
+      'ListChamados': ListChamadosWidget(),
+      'ListTecnicos': ListTecnicosWidget(),
+      'ListClientes': ListClientesWidget(),
+      'Logout': LogoutWidget(),
+    };
+    final currentIndex = tabs.keys.toList().indexOf(_currentPage);
+    return Scaffold(
+      body: tabs[_currentPage],
+      bottomNavigationBar: GNav(
+        selectedIndex: currentIndex,
+        onTabChange: (i) =>
+            setState(() => _currentPage = tabs.keys.toList()[i]),
+        backgroundColor: FlutterFlowTheme.of(context).primaryBackground,
+        color: Color(0x8A000000),
+        activeColor: FlutterFlowTheme.of(context).primaryColor,
+        tabBackgroundColor: Color(0x00000000),
+        tabBorderRadius: 100,
+        tabMargin: EdgeInsetsDirectional.fromSTEB(0, 0, 0, 0),
+        padding: EdgeInsetsDirectional.fromSTEB(0, 0, 0, 0),
+        gap: 0,
+        mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+        duration: Duration(milliseconds: 500),
+        haptic: false,
+        tabs: [
+          GButton(
+            icon: Icons.login,
+            text: 'Login',
+            iconSize: 24,
+          ),
+          GButton(
+            icon: Icons.home_outlined,
+            text: 'Home',
+            iconSize: 24,
+          ),
+          GButton(
+            icon: Icons.call,
+            text: 'Chamados',
+            iconSize: 24,
+          ),
+          GButton(
+            icon: Icons.engineering_outlined,
+            text: 'Tecnicos',
+            iconSize: 24,
+          ),
+          GButton(
+            icon: Icons.face,
+            text: 'Clientes',
+            iconSize: 24,
+          ),
+          GButton(
+            icon: Icons.logout,
+            text: 'Sair',
+            iconSize: 24,
+          )
+        ],
+      ),
     );
   }
 }

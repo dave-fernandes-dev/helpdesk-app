@@ -21,6 +21,8 @@ class FFAppState {
   String token = '';
 
   List<String> perfisList = ['ADMIN', 'CLIENTE', 'TECNICO'];
+
+  String apiUrl = 'https://vl-helpdesk-api.herokuapp.com';
 }
 
 LatLng? _latLngFromString(String? val) {

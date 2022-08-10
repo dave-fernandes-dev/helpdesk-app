@@ -1,22 +1,33 @@
 import '../backend/api_requests/api_calls.dart';
 import '../flutter_flow/flutter_flow_icon_button.dart';
+import '../flutter_flow/flutter_flow_radio_button.dart';
 import '../flutter_flow/flutter_flow_theme.dart';
 import '../flutter_flow/flutter_flow_util.dart';
+import '../flutter_flow/custom_functions.dart' as functions;
 import 'dart:async';
+import 'package:easy_debounce/easy_debounce.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 
-class ListTecnicosWidget extends StatefulWidget {
-  const ListTecnicosWidget({Key? key}) : super(key: key);
+class ListChamadosWidget extends StatefulWidget {
+  const ListChamadosWidget({Key? key}) : super(key: key);
 
   @override
-  _ListTecnicosWidgetState createState() => _ListTecnicosWidgetState();
+  _ListChamadosWidgetState createState() => _ListChamadosWidgetState();
 }
 
-class _ListTecnicosWidgetState extends State<ListTecnicosWidget> {
+class _ListChamadosWidgetState extends State<ListChamadosWidget> {
   ApiCallResponse? responseDeleteTecnicoById;
   Completer<ApiCallResponse>? _apiRequestCompleter;
+  String? radioButtonValue;
+  TextEditingController? textController;
   final scaffoldKey = GlobalKey<ScaffoldState>();
+
+  @override
+  void initState() {
+    super.initState();
+    textController = TextEditingController();
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -40,7 +51,7 @@ class _ListTecnicosWidgetState extends State<ListTecnicosWidget> {
           },
         ),
         title: Text(
-          'Técnicos',
+          'Chamados',
           textAlign: TextAlign.center,
           style: FlutterFlowTheme.of(context).title2.override(
                 fontFamily: 'Poppins',
@@ -96,10 +107,170 @@ class _ListTecnicosWidgetState extends State<ListTecnicosWidget> {
             mainAxisSize: MainAxisSize.max,
             children: [
               Padding(
+                padding: EdgeInsetsDirectional.fromSTEB(10, 6, 10, 0),
+                child: Material(
+                  color: Colors.transparent,
+                  elevation: 0,
+                  shape: RoundedRectangleBorder(
+                    borderRadius: BorderRadius.circular(6),
+                  ),
+                  child: Container(
+                    width: double.infinity,
+                    height: 40,
+                    decoration: BoxDecoration(
+                      color: FlutterFlowTheme.of(context).secondaryBackground,
+                      boxShadow: [
+                        BoxShadow(
+                          blurRadius: 4,
+                          color: Color(0x33000000),
+                          offset: Offset(0, 2),
+                        )
+                      ],
+                      borderRadius: BorderRadius.circular(6),
+                      border: Border.all(
+                        color: FlutterFlowTheme.of(context).primaryBackground,
+                        width: 1,
+                      ),
+                    ),
+                    child: Padding(
+                      padding: EdgeInsetsDirectional.fromSTEB(10, 0, 10, 0),
+                      child: Row(
+                        mainAxisSize: MainAxisSize.max,
+                        children: [
+                          Expanded(
+                            child: Padding(
+                              padding:
+                                  EdgeInsetsDirectional.fromSTEB(10, 0, 0, 0),
+                              child: TextFormField(
+                                controller: textController,
+                                onChanged: (_) => EasyDebounce.debounce(
+                                  'textController',
+                                  Duration(milliseconds: 2000),
+                                  () => setState(() {}),
+                                ),
+                                autofocus: true,
+                                obscureText: false,
+                                decoration: InputDecoration(
+                                  hintText: 'Pesquisar...',
+                                  enabledBorder: OutlineInputBorder(
+                                    borderSide: BorderSide(
+                                      color: Color(0x00000000),
+                                      width: 1,
+                                    ),
+                                    borderRadius: const BorderRadius.only(
+                                      topLeft: Radius.circular(4.0),
+                                      topRight: Radius.circular(4.0),
+                                    ),
+                                  ),
+                                  focusedBorder: OutlineInputBorder(
+                                    borderSide: BorderSide(
+                                      color: Color(0x00000000),
+                                      width: 1,
+                                    ),
+                                    borderRadius: const BorderRadius.only(
+                                      topLeft: Radius.circular(4.0),
+                                      topRight: Radius.circular(4.0),
+                                    ),
+                                  ),
+                                  contentPadding:
+                                      EdgeInsetsDirectional.fromSTEB(
+                                          0, 15, 0, 0),
+                                  prefixIcon: Icon(
+                                    Icons.search,
+                                  ),
+                                  suffixIcon: textController!.text.isNotEmpty
+                                      ? InkWell(
+                                          onTap: () => setState(
+                                            () => textController?.clear(),
+                                          ),
+                                          child: Icon(
+                                            Icons.clear,
+                                            color: Color(0xFF757575),
+                                            size: 22,
+                                          ),
+                                        )
+                                      : null,
+                                ),
+                                style: FlutterFlowTheme.of(context)
+                                    .bodyText1
+                                    .override(
+                                      fontFamily: 'Poppins',
+                                      color: FlutterFlowTheme.of(context)
+                                          .secondaryText,
+                                      fontWeight: FontWeight.w600,
+                                    ),
+                                textAlign: TextAlign.start,
+                              ),
+                            ),
+                          ),
+                        ],
+                      ),
+                    ),
+                  ),
+                ),
+              ),
+              Padding(
+                padding: EdgeInsetsDirectional.fromSTEB(10, 6, 10, 0),
+                child: Material(
+                  color: Colors.transparent,
+                  elevation: 0,
+                  shape: RoundedRectangleBorder(
+                    borderRadius: BorderRadius.circular(6),
+                  ),
+                  child: Container(
+                    width: double.infinity,
+                    height: 40,
+                    decoration: BoxDecoration(
+                      color: FlutterFlowTheme.of(context).secondaryBackground,
+                      boxShadow: [
+                        BoxShadow(
+                          blurRadius: 4,
+                          color: Color(0x33000000),
+                          offset: Offset(0, 2),
+                        )
+                      ],
+                      borderRadius: BorderRadius.circular(6),
+                      border: Border.all(
+                        color: FlutterFlowTheme.of(context).primaryBackground,
+                        width: 1,
+                      ),
+                    ),
+                    child: Row(
+                      mainAxisSize: MainAxisSize.max,
+                      children: [
+                        FlutterFlowRadioButton(
+                          options:
+                              ['ABERTO', 'ANDAMENTO', 'ENCERRADO'].toList(),
+                          onChanged: (value) {
+                            setState(() => radioButtonValue = value);
+                          },
+                          optionHeight: 25,
+                          textStyle: FlutterFlowTheme.of(context)
+                              .bodyText1
+                              .override(
+                                fontFamily: 'Poppins',
+                                color:
+                                    FlutterFlowTheme.of(context).secondaryText,
+                              ),
+                          buttonPosition: RadioButtonPosition.left,
+                          direction: Axis.horizontal,
+                          radioButtonColor: Colors.blue,
+                          inactiveRadioButtonColor: Color(0x8A000000),
+                          toggleable: true,
+                          horizontalAlignment: WrapAlignment.start,
+                          verticalAlignment: WrapCrossAlignment.start,
+                        ),
+                      ],
+                    ),
+                  ),
+                ),
+              ),
+              Divider(),
+              Padding(
                 padding: EdgeInsetsDirectional.fromSTEB(10, 5, 10, 5),
                 child: FutureBuilder<ApiCallResponse>(
                   future: (_apiRequestCompleter ??= Completer<ApiCallResponse>()
-                        ..complete(GetTecnicosCall.call(
+                        ..complete(GetChamadosCall.call(
                           token: FFAppState().token,
                         )))
                       .future,
@@ -116,11 +287,11 @@ class _ListTecnicosWidgetState extends State<ListTecnicosWidget> {
                         ),
                       );
                     }
-                    final listViewGetTecnicosResponse = snapshot.data!;
+                    final listViewGetChamadosResponse = snapshot.data!;
                     return Builder(
                       builder: (context) {
-                        final tec = getJsonField(
-                          listViewGetTecnicosResponse.jsonBody,
+                        final chamado = getJsonField(
+                          listViewGetChamadosResponse.jsonBody,
                           r'''$''',
                         ).toList();
                         return RefreshIndicator(
@@ -132,9 +303,9 @@ class _ListTecnicosWidgetState extends State<ListTecnicosWidget> {
                             padding: EdgeInsets.zero,
                             shrinkWrap: true,
                             scrollDirection: Axis.vertical,
-                            itemCount: tec.length,
-                            itemBuilder: (context, tecIndex) {
-                              final tecItem = tec[tecIndex];
+                            itemCount: chamado.length,
+                            itemBuilder: (context, chamadoIndex) {
+                              final chamadoItem = chamado[chamadoIndex];
                               return Padding(
                                 padding:
                                     EdgeInsetsDirectional.fromSTEB(0, 0, 0, 6),
@@ -179,7 +350,7 @@ class _ListTecnicosWidgetState extends State<ListTecnicosWidget> {
                                                                 0, 0, 5, 0),
                                                     child: Text(
                                                       getJsonField(
-                                                        tecItem,
+                                                        chamadoItem,
                                                         r'''$.id''',
                                                       ).toString(),
                                                       style:
@@ -190,8 +361,8 @@ class _ListTecnicosWidgetState extends State<ListTecnicosWidget> {
                                                   ),
                                                   Text(
                                                     getJsonField(
-                                                      tecItem,
-                                                      r'''$.nome''',
+                                                      chamadoItem,
+                                                      r'''$.titulo''',
                                                     ).toString(),
                                                     style: FlutterFlowTheme.of(
                                                             context)
@@ -203,13 +374,29 @@ class _ListTecnicosWidgetState extends State<ListTecnicosWidget> {
                                                 mainAxisSize: MainAxisSize.max,
                                                 children: [
                                                   Text(
+                                                    'Cliente:',
+                                                    style: FlutterFlowTheme.of(
+                                                            context)
+                                                        .bodyText2
+                                                        .override(
+                                                          fontFamily: 'Poppins',
+                                                          fontWeight:
+                                                              FontWeight.normal,
+                                                        ),
+                                                  ),
+                                                  Text(
                                                     getJsonField(
-                                                      tecItem,
-                                                      r'''$.email''',
+                                                      chamadoItem,
+                                                      r'''$.nomeCliente''',
                                                     ).toString(),
                                                     style: FlutterFlowTheme.of(
                                                             context)
-                                                        .bodyText2,
+                                                        .bodyText2
+                                                        .override(
+                                                          fontFamily: 'Poppins',
+                                                          fontWeight:
+                                                              FontWeight.normal,
+                                                        ),
                                                   ),
                                                 ],
                                               ),
@@ -217,10 +404,107 @@ class _ListTecnicosWidgetState extends State<ListTecnicosWidget> {
                                                 mainAxisSize: MainAxisSize.max,
                                                 children: [
                                                   Text(
+                                                    'Tecnico:',
+                                                    style: FlutterFlowTheme.of(
+                                                            context)
+                                                        .bodyText2
+                                                        .override(
+                                                          fontFamily: 'Poppins',
+                                                          fontWeight:
+                                                              FontWeight.normal,
+                                                        ),
+                                                  ),
+                                                  Text(
                                                     getJsonField(
-                                                      tecItem,
-                                                      r'''$.cpf''',
+                                                      chamadoItem,
+                                                      r'''$.nomeTecnico''',
                                                     ).toString(),
+                                                    style: FlutterFlowTheme.of(
+                                                            context)
+                                                        .bodyText2
+                                                        .override(
+                                                          fontFamily: 'Poppins',
+                                                          fontWeight:
+                                                              FontWeight.normal,
+                                                        ),
+                                                  ),
+                                                ],
+                                              ),
+                                              Row(
+                                                mainAxisSize: MainAxisSize.max,
+                                                children: [
+                                                  Text(
+                                                    'Status: ',
+                                                    style: FlutterFlowTheme.of(
+                                                            context)
+                                                        .bodyText1
+                                                        .override(
+                                                          fontFamily: 'Poppins',
+                                                          color: FlutterFlowTheme
+                                                                  .of(context)
+                                                              .primaryColor,
+                                                          fontWeight:
+                                                              FontWeight.w500,
+                                                        ),
+                                                  ),
+                                                  Text(
+                                                    functions.handlerStatus(
+                                                        valueOrDefault<String>(
+                                                      getJsonField(
+                                                        chamadoItem,
+                                                        r'''$.status''',
+                                                      ).toString(),
+                                                      'ND',
+                                                    )),
+                                                    style: FlutterFlowTheme.of(
+                                                            context)
+                                                        .bodyText1
+                                                        .override(
+                                                          fontFamily: 'Poppins',
+                                                          color: FlutterFlowTheme
+                                                                  .of(context)
+                                                              .primaryColor,
+                                                          fontWeight:
+                                                              FontWeight.w500,
+                                                        ),
+                                                  ),
+                                                  Padding(
+                                                    padding:
+                                                        EdgeInsetsDirectional
+                                                            .fromSTEB(
+                                                                6, 0, 0, 0),
+                                                    child: Text(
+                                                      'Prioridade: ',
+                                                      style:
+                                                          FlutterFlowTheme.of(
+                                                                  context)
+                                                              .bodyText1
+                                                              .override(
+                                                                fontFamily:
+                                                                    'Poppins',
+                                                                color: FlutterFlowTheme.of(
+                                                                        context)
+                                                                    .primaryColor,
+                                                                fontWeight:
+                                                                    FontWeight
+                                                                        .w500,
+                                                              ),
+                                                    ),
+                                                  ),
+                                                  Text(
+                                                    valueOrDefault<String>(
+                                                      functions
+                                                          .handlerPrioridade(
+                                                              valueOrDefault<
+                                                                  String>(
+                                                        getJsonField(
+                                                          chamadoItem,
+                                                          r'''$.prioridade''',
+                                                        ).toString(),
+                                                        'ND',
+                                                      )),
+                                                      'ND',
+                                                    ),
                                                     style: FlutterFlowTheme.of(
                                                             context)
                                                         .bodyText1
@@ -249,14 +533,18 @@ class _ListTecnicosWidgetState extends State<ListTecnicosWidget> {
                                               child: InkWell(
                                                 onTap: () async {
                                                   context.pushNamed(
-                                                    'UpdateTecnico',
+                                                    'UpdateChamado',
                                                     queryParams: {
-                                                      'tecnicoId':
+                                                      'chamadoId':
                                                           serializeParam(
-                                                              getJsonField(
-                                                                tecItem,
-                                                                r'''$.id''',
-                                                              ).toString(),
+                                                              valueOrDefault<
+                                                                  String>(
+                                                                getJsonField(
+                                                                  chamadoItem,
+                                                                  r'''$.id''',
+                                                                ).toString(),
+                                                                'ND',
+                                                              ),
                                                               ParamType.String),
                                                     }.withoutNulls,
                                                   );
@@ -312,7 +600,7 @@ class _ListTecnicosWidgetState extends State<ListTecnicosWidget> {
                                                           .call(
                                                     token: FFAppState().token,
                                                     id: getJsonField(
-                                                      tecItem,
+                                                      chamadoItem,
                                                       r'''$.id''',
                                                     ).toString(),
                                                   );
