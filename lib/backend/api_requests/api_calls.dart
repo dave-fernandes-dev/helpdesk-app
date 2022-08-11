@@ -511,20 +511,20 @@ class PutChamadoCall {
     String? token = '',
     String? id = '',
     String? apiUrl = 'https://vl-helpdesk-api.herokuapp.com',
-    String? prioridade = '',
-    int? status = 0,
+    String? prioridadeDescricao = '',
+    String? statusDescricao = '',
     String? titulo = '',
-    int? tecnicoId,
-    int? clienteId,
+    String? nomeTecnico = '',
+    String? nomeCliente = '',
     String? observacoes = '',
   }) {
     final body = '''
 {
-  "prioridade": "${prioridade}",
-  "status": ${status},
+  "prioridadeDescricao": "${prioridadeDescricao}",
+  "statusDescricao": "${statusDescricao}",
   "titulo": "${titulo}",
-  "tecnico": ${tecnicoId},
-  "cliente": ${clienteId},
+  "nomeTecnico": "${nomeTecnico}",
+  "nomeCliente": "${nomeCliente}",
   "observacoes": "${observacoes}"
 }''';
     return ApiManager.instance.makeApiCall(
@@ -536,11 +536,11 @@ class PutChamadoCall {
         'Authorization': '${token}',
       },
       params: {
-        'prioridade': prioridade,
-        'status': status,
+        'prioridadeDescricao': prioridadeDescricao,
+        'statusDescricao': statusDescricao,
         'titulo': titulo,
-        'tecnicoId': tecnicoId,
-        'clienteId': clienteId,
+        'nomeTecnico': nomeTecnico,
+        'nomeCliente': nomeCliente,
         'observacoes': observacoes,
       },
       body: body,
@@ -556,5 +556,59 @@ class PutChamadoCall {
   static dynamic fieldNameError(dynamic response) => getJsonField(
         response,
         r'''$.errors.*.fieldName''',
+      );
+}
+
+class GetChamadosByFilterCall {
+  static Future<ApiCallResponse> call({
+    String? token = '',
+    String? titulo = '',
+    String? status = '',
+  }) {
+    return ApiManager.instance.makeApiCall(
+      callName: 'getChamadosByFilter',
+      apiUrl:
+          'https://vl-helpdesk-api.herokuapp.com/chamados?filter&titulo=${titulo}&status=${status}',
+      callType: ApiCallType.GET,
+      headers: {
+        'Content-type': 'application/json; charset=utf-8',
+        'Authorization': '${token}',
+      },
+      params: {},
+      returnBody: true,
+    );
+  }
+
+  static dynamic chamados(dynamic response) => getJsonField(
+        response,
+        r'''$.id''',
+      );
+  static dynamic id(dynamic response) => getJsonField(
+        response,
+        r'''$.id''',
+      );
+  static dynamic titulo(dynamic response) => getJsonField(
+        response,
+        r'''$.titulo''',
+      );
+  static dynamic nomeTecnico(dynamic response) => getJsonField(
+        response,
+        r'''$.nomeTecnico''',
+      );
+  static dynamic nomeCliente(dynamic response) => getJsonField(
+        response,
+        r'''$.nomeCliente''',
+      );
+  static dynamic dataAbertura(dynamic response) => getJsonField(
+        response,
+        r'''$.dataAbertura''',
+      );
+  static dynamic prioridade(dynamic response) => getJsonField(
+        response,
+        r'''$.prioridade''',
+      );
+  static dynamic status(dynamic response) => getJsonField(
+        response,
+        r'''$.status''',
       );
 }

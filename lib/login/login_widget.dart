@@ -28,7 +28,7 @@ class _LoginWidgetState extends State<LoginWidget> {
     textFielSenhaController = TextEditingController(text: '123');
     textFielSenhaVisibility = false;
     textFieldEmailController =
-        TextEditingController(text: 'dave-fernandes-dev@gmail.com');
+        TextEditingController(text: 'dave.fernandes.dev@gmail.com');
   }
 
   @override

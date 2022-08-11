@@ -22,7 +22,7 @@ class UpdateChamadoWidget extends StatefulWidget {
 }
 
 class _UpdateChamadoWidgetState extends State<UpdateChamadoWidget> {
-  ApiCallResponse? responseUpdateChamado;
+  ApiCallResponse? responseUpdate;
   String? dropDownClienteValue;
   String? dropDownPrioridadeValue;
   String? dropDownStatusValue;
@@ -110,10 +110,28 @@ class _UpdateChamadoWidgetState extends State<UpdateChamadoWidget> {
                         'assets/images/tecnico-create.svg',
                         width: double.infinity,
                         height: 100,
-                        fit: BoxFit.fill,
+                        fit: BoxFit.cover,
+                      ),
+                      Row(
+                        mainAxisSize: MainAxisSize.max,
+                        children: [
+                          Padding(
+                            padding:
+                                EdgeInsetsDirectional.fromSTEB(15, 0, 0, 0),
+                            child: Text(
+                              'Título',
+                              style: FlutterFlowTheme.of(context)
+                                  .bodyText1
+                                  .override(
+                                    fontFamily: 'Poppins',
+                                    fontWeight: FontWeight.normal,
+                                  ),
+                            ),
+                          ),
+                        ],
                       ),
                       Padding(
-                        padding: EdgeInsetsDirectional.fromSTEB(12, 5, 12, 6),
+                        padding: EdgeInsetsDirectional.fromSTEB(12, 0, 12, 6),
                         child: TextFormField(
                           controller: textFieldTituloController ??=
                               TextEditingController(
@@ -129,7 +147,6 @@ class _UpdateChamadoWidgetState extends State<UpdateChamadoWidget> {
                           ),
                           obscureText: false,
                           decoration: InputDecoration(
-                            labelText: 'Título',
                             hintText: 'Digite o Título...',
                             enabledBorder: OutlineInputBorder(
                               borderSide: BorderSide(
@@ -152,6 +169,9 @@ class _UpdateChamadoWidgetState extends State<UpdateChamadoWidget> {
                                 .secondaryBackground,
                             contentPadding:
                                 EdgeInsetsDirectional.fromSTEB(24, 0, 0, 0),
+                            prefixIcon: Icon(
+                              Icons.title,
+                            ),
                             suffixIcon: textFieldTituloController!
                                     .text.isNotEmpty
                                 ? InkWell(
@@ -174,105 +194,144 @@ class _UpdateChamadoWidgetState extends State<UpdateChamadoWidget> {
                           textAlign: TextAlign.start,
                         ),
                       ),
-                      Row(
-                        mainAxisSize: MainAxisSize.max,
-                        children: [
-                          Padding(
-                            padding:
-                                EdgeInsetsDirectional.fromSTEB(15, 0, 0, 0),
-                            child: Text(
-                              'Status',
-                              style: FlutterFlowTheme.of(context)
-                                  .bodyText1
-                                  .override(
-                                    fontFamily: 'Poppins',
-                                    fontWeight: FontWeight.normal,
-                                  ),
-                            ),
-                          ),
-                        ],
-                      ),
                       Padding(
-                        padding: EdgeInsetsDirectional.fromSTEB(12, 0, 12, 6),
-                        child: FlutterFlowDropDown(
-                          initialOption: dropDownStatusValue ??= getJsonField(
-                            updateChamadoGetChamadoByIdResponse.jsonBody,
-                            r'''$.statusDescricao''',
-                          ).toString(),
-                          options: ['ABERTO', 'ANDAMENTO', 'ENCERRADO'],
-                          onChanged: (val) =>
-                              setState(() => dropDownStatusValue = val),
-                          width: double.infinity,
-                          height: 47,
-                          textStyle:
-                              FlutterFlowTheme.of(context).bodyText1.override(
-                                    fontFamily: 'Poppins',
-                                    fontWeight: FontWeight.normal,
+                        padding: EdgeInsetsDirectional.fromSTEB(0, 3, 0, 6),
+                        child: Row(
+                          mainAxisSize: MainAxisSize.max,
+                          mainAxisAlignment: MainAxisAlignment.center,
+                          crossAxisAlignment: CrossAxisAlignment.center,
+                          children: [
+                            Expanded(
+                              child: Column(
+                                mainAxisSize: MainAxisSize.max,
+                                mainAxisAlignment: MainAxisAlignment.center,
+                                crossAxisAlignment: CrossAxisAlignment.center,
+                                children: [
+                                  Align(
+                                    alignment: AlignmentDirectional(-1, 0),
+                                    child: Padding(
+                                      padding: EdgeInsetsDirectional.fromSTEB(
+                                          15, 0, 0, 0),
+                                      child: Text(
+                                        'Status',
+                                        textAlign: TextAlign.start,
+                                        style: FlutterFlowTheme.of(context)
+                                            .bodyText1
+                                            .override(
+                                              fontFamily: 'Poppins',
+                                              fontWeight: FontWeight.normal,
+                                            ),
+                                      ),
+                                    ),
                                   ),
-                          hintText: 'Status do Chamado',
-                          icon: Icon(
-                            Icons.storage,
-                            size: 15,
-                          ),
-                          fillColor: Colors.white,
-                          elevation: 2,
-                          borderColor:
-                              FlutterFlowTheme.of(context).primaryColor,
-                          borderWidth: 0,
-                          borderRadius: 6,
-                          margin: EdgeInsetsDirectional.fromSTEB(12, 0, 12, 4),
-                          hidesUnderline: true,
-                        ),
-                      ),
-                      Row(
-                        mainAxisSize: MainAxisSize.max,
-                        children: [
-                          Padding(
-                            padding:
-                                EdgeInsetsDirectional.fromSTEB(15, 0, 0, 0),
-                            child: Text(
-                              'Prioridade',
-                              style: FlutterFlowTheme.of(context)
-                                  .bodyText1
-                                  .override(
-                                    fontFamily: 'Poppins',
-                                    fontWeight: FontWeight.normal,
+                                  Padding(
+                                    padding: EdgeInsetsDirectional.fromSTEB(
+                                        12, 0, 12, 0),
+                                    child: FlutterFlowDropDown(
+                                      initialOption: dropDownStatusValue ??=
+                                          getJsonField(
+                                        updateChamadoGetChamadoByIdResponse
+                                            .jsonBody,
+                                        r'''$.statusDescricao''',
+                                      ).toString(),
+                                      options: [
+                                        'ABERTO',
+                                        'ANDAMENTO',
+                                        'ENCERRADO'
+                                      ],
+                                      onChanged: (val) => setState(
+                                          () => dropDownStatusValue = val),
+                                      width: double.infinity,
+                                      height: 47,
+                                      textStyle: FlutterFlowTheme.of(context)
+                                          .bodyText1
+                                          .override(
+                                            fontFamily: 'Poppins',
+                                            fontWeight: FontWeight.normal,
+                                          ),
+                                      hintText: 'Status do Chamado',
+                                      icon: Icon(
+                                        Icons.storage,
+                                        size: 15,
+                                      ),
+                                      fillColor: Colors.white,
+                                      elevation: 2,
+                                      borderColor: FlutterFlowTheme.of(context)
+                                          .primaryColor,
+                                      borderWidth: 0,
+                                      borderRadius: 6,
+                                      margin: EdgeInsetsDirectional.fromSTEB(
+                                          12, 0, 12, 4),
+                                      hidesUnderline: true,
+                                    ),
                                   ),
+                                ],
+                              ),
                             ),
-                          ),
-                        ],
-                      ),
-                      Padding(
-                        padding: EdgeInsetsDirectional.fromSTEB(12, 0, 12, 0),
-                        child: FlutterFlowDropDown(
-                          initialOption: dropDownPrioridadeValue ??=
-                              getJsonField(
-                            updateChamadoGetChamadoByIdResponse.jsonBody,
-                            r'''$.prioridadeDescricao''',
-                          ).toString(),
-                          options: ['BAIXA', 'MEDIA', 'ALTA'],
-                          onChanged: (val) =>
-                              setState(() => dropDownPrioridadeValue = val),
-                          width: double.infinity,
-                          height: 47,
-                          textStyle:
-                              FlutterFlowTheme.of(context).bodyText1.override(
-                                    fontFamily: 'Poppins',
-                                    fontWeight: FontWeight.normal,
+                            Expanded(
+                              child: Column(
+                                mainAxisSize: MainAxisSize.max,
+                                mainAxisAlignment: MainAxisAlignment.center,
+                                crossAxisAlignment: CrossAxisAlignment.center,
+                                children: [
+                                  Align(
+                                    alignment: AlignmentDirectional(-1, 0),
+                                    child: Padding(
+                                      padding: EdgeInsetsDirectional.fromSTEB(
+                                          15, 0, 0, 0),
+                                      child: Text(
+                                        'Prioridade',
+                                        textAlign: TextAlign.start,
+                                        style: FlutterFlowTheme.of(context)
+                                            .bodyText1
+                                            .override(
+                                              fontFamily: 'Poppins',
+                                              fontWeight: FontWeight.normal,
+                                            ),
+                                      ),
+                                    ),
                                   ),
-                          hintText: 'Please select...',
-                          icon: Icon(
-                            Icons.star_rounded,
-                            size: 15,
-                          ),
-                          fillColor: Colors.white,
-                          elevation: 2,
-                          borderColor:
-                              FlutterFlowTheme.of(context).primaryColor,
-                          borderWidth: 0,
-                          borderRadius: 6,
-                          margin: EdgeInsetsDirectional.fromSTEB(12, 4, 12, 4),
-                          hidesUnderline: true,
+                                  Padding(
+                                    padding: EdgeInsetsDirectional.fromSTEB(
+                                        12, 0, 12, 0),
+                                    child: FlutterFlowDropDown(
+                                      initialOption: dropDownPrioridadeValue ??=
+                                          getJsonField(
+                                        updateChamadoGetChamadoByIdResponse
+                                            .jsonBody,
+                                        r'''$.prioridadeDescricao''',
+                                      ).toString(),
+                                      options: ['BAIXA', 'MEDIA', 'ALTA'],
+                                      onChanged: (val) => setState(
+                                          () => dropDownPrioridadeValue = val),
+                                      width: double.infinity,
+                                      height: 47,
+                                      textStyle: FlutterFlowTheme.of(context)
+                                          .bodyText1
+                                          .override(
+                                            fontFamily: 'Poppins',
+                                            fontWeight: FontWeight.normal,
+                                          ),
+                                      hintText: 'Please select...',
+                                      icon: Icon(
+                                        Icons.star_rounded,
+                                        size: 15,
+                                      ),
+                                      fillColor: Colors.white,
+                                      elevation: 2,
+                                      borderColor: FlutterFlowTheme.of(context)
+                                          .primaryColor,
+                                      borderWidth: 0,
+                                      borderRadius: 6,
+                                      margin: EdgeInsetsDirectional.fromSTEB(
+                                          12, 4, 12, 4),
+                                      hidesUnderline: true,
+                                    ),
+                                  ),
+                                ],
+                              ),
+                            ),
+                          ],
                         ),
                       ),
                       Row(
@@ -283,6 +342,7 @@ class _UpdateChamadoWidgetState extends State<UpdateChamadoWidget> {
                                 EdgeInsetsDirectional.fromSTEB(15, 6, 0, 0),
                             child: Text(
                               'Técnico',
+                              textAlign: TextAlign.start,
                               style: FlutterFlowTheme.of(context)
                                   .bodyText1
                                   .override(
@@ -291,6 +351,75 @@ class _UpdateChamadoWidgetState extends State<UpdateChamadoWidget> {
                                   ),
                             ),
                           ),
+                          Padding(
+                            padding:
+                                EdgeInsetsDirectional.fromSTEB(20, 6, 0, 0),
+                            child: Text(
+                              'Abriu:',
+                              textAlign: TextAlign.end,
+                              style: FlutterFlowTheme.of(context)
+                                  .bodyText1
+                                  .override(
+                                    fontFamily: 'Poppins',
+                                    fontWeight: FontWeight.w300,
+                                  ),
+                            ),
+                          ),
+                          Padding(
+                            padding: EdgeInsetsDirectional.fromSTEB(2, 6, 0, 0),
+                            child: Text(
+                              getJsonField(
+                                updateChamadoGetChamadoByIdResponse.jsonBody,
+                                r'''$.dataAbertura''',
+                              ).toString(),
+                              textAlign: TextAlign.end,
+                              style: FlutterFlowTheme.of(context)
+                                  .bodyText1
+                                  .override(
+                                    fontFamily: 'Poppins',
+                                    fontWeight: FontWeight.w300,
+                                  ),
+                            ),
+                          ),
+                          Padding(
+                            padding: EdgeInsetsDirectional.fromSTEB(5, 6, 0, 0),
+                            child: Text(
+                              'Fechou:',
+                              textAlign: TextAlign.end,
+                              style: FlutterFlowTheme.of(context)
+                                  .bodyText1
+                                  .override(
+                                    fontFamily: 'Poppins',
+                                    fontWeight: FontWeight.w300,
+                                  ),
+                            ),
+                          ),
+                          if (getJsonField(
+                                updateChamadoGetChamadoByIdResponse.jsonBody,
+                                r'''$.dataFechamento''',
+                              ) !=
+                              null)
+                            Padding(
+                              padding:
+                                  EdgeInsetsDirectional.fromSTEB(2, 6, 0, 0),
+                              child: Text(
+                                valueOrDefault<String>(
+                                  getJsonField(
+                                    updateChamadoGetChamadoByIdResponse
+                                        .jsonBody,
+                                    r'''$.dataFechamento''',
+                                  ).toString(),
+                                  '?',
+                                ),
+                                textAlign: TextAlign.end,
+                                style: FlutterFlowTheme.of(context)
+                                    .bodyText1
+                                    .override(
+                                      fontFamily: 'Poppins',
+                                      fontWeight: FontWeight.w300,
+                                    ),
+                              ),
+                            ),
                         ],
                       ),
                       Padding(
@@ -339,6 +468,10 @@ class _UpdateChamadoWidgetState extends State<UpdateChamadoWidget> {
                                     fontWeight: FontWeight.normal,
                                   ),
                               hintText: 'Please select Tecnico...',
+                              icon: Icon(
+                                Icons.person,
+                                size: 15,
+                              ),
                               fillColor: Colors.white,
                               elevation: 2,
                               borderColor:
@@ -352,8 +485,26 @@ class _UpdateChamadoWidgetState extends State<UpdateChamadoWidget> {
                           },
                         ),
                       ),
+                      Row(
+                        mainAxisSize: MainAxisSize.max,
+                        children: [
+                          Padding(
+                            padding:
+                                EdgeInsetsDirectional.fromSTEB(15, 6, 0, 0),
+                            child: Text(
+                              'Cliente',
+                              style: FlutterFlowTheme.of(context)
+                                  .bodyText1
+                                  .override(
+                                    fontFamily: 'Poppins',
+                                    fontWeight: FontWeight.normal,
+                                  ),
+                            ),
+                          ),
+                        ],
+                      ),
                       Padding(
-                        padding: EdgeInsetsDirectional.fromSTEB(12, 10, 12, 0),
+                        padding: EdgeInsetsDirectional.fromSTEB(12, 0, 12, 0),
                         child: FutureBuilder<ApiCallResponse>(
                           future: GetClientesCall.call(
                             token: FFAppState().token,
@@ -398,6 +549,10 @@ class _UpdateChamadoWidgetState extends State<UpdateChamadoWidget> {
                                     fontWeight: FontWeight.normal,
                                   ),
                               hintText: 'Please select Cliente...',
+                              icon: Icon(
+                                Icons.face,
+                                size: 15,
+                              ),
                               fillColor: Colors.white,
                               elevation: 2,
                               borderColor:
@@ -411,8 +566,26 @@ class _UpdateChamadoWidgetState extends State<UpdateChamadoWidget> {
                           },
                         ),
                       ),
+                      Row(
+                        mainAxisSize: MainAxisSize.max,
+                        children: [
+                          Padding(
+                            padding:
+                                EdgeInsetsDirectional.fromSTEB(15, 6, 0, 0),
+                            child: Text(
+                              'Observações',
+                              style: FlutterFlowTheme.of(context)
+                                  .bodyText1
+                                  .override(
+                                    fontFamily: 'Poppins',
+                                    fontWeight: FontWeight.normal,
+                                  ),
+                            ),
+                          ),
+                        ],
+                      ),
                       Padding(
-                        padding: EdgeInsetsDirectional.fromSTEB(12, 10, 12, 0),
+                        padding: EdgeInsetsDirectional.fromSTEB(12, 0, 12, 0),
                         child: TextFormField(
                           controller: textFieldObsController ??=
                               TextEditingController(
@@ -428,7 +601,6 @@ class _UpdateChamadoWidgetState extends State<UpdateChamadoWidget> {
                           ),
                           obscureText: false,
                           decoration: InputDecoration(
-                            labelText: 'Observações',
                             hintText: 'Digite...',
                             enabledBorder: OutlineInputBorder(
                               borderSide: BorderSide(
@@ -451,6 +623,9 @@ class _UpdateChamadoWidgetState extends State<UpdateChamadoWidget> {
                                 .secondaryBackground,
                             contentPadding:
                                 EdgeInsetsDirectional.fromSTEB(24, 0, 0, 0),
+                            prefixIcon: Icon(
+                              Icons.keyboard,
+                            ),
                             suffixIcon: textFieldObsController!.text.isNotEmpty
                                 ? InkWell(
                                     onTap: () => setState(
@@ -470,6 +645,7 @@ class _UpdateChamadoWidgetState extends State<UpdateChamadoWidget> {
                                     fontWeight: FontWeight.normal,
                                   ),
                           textAlign: TextAlign.start,
+                          maxLines: 2,
                         ),
                       ),
                       Padding(
@@ -481,14 +657,19 @@ class _UpdateChamadoWidgetState extends State<UpdateChamadoWidget> {
                               return;
                             }
 
-                            responseUpdateChamado = await PutChamadoCall.call(
+                            responseUpdate = await PutChamadoCall.call(
                               token: FFAppState().token,
                               apiUrl: FFAppState().apiUrl,
                               id: widget.chamadoId,
-                              prioridade: dropDownPrioridadeValue,
+                              prioridadeDescricao: dropDownPrioridadeValue,
+                              statusDescricao: dropDownStatusValue,
+                              titulo: textFieldTituloController?.text ?? '',
+                              nomeTecnico: dropDownTecnicoValue,
+                              nomeCliente: dropDownClienteValue,
+                              observacoes: textFieldObsController?.text ?? '',
                             );
-                            if ((responseUpdateChamado?.succeeded ?? true)) {
-                              context.pushNamed('ListClientes');
+                            if ((responseUpdate?.succeeded ?? true)) {
+                              context.pushNamed('ListChamados');
                               ScaffoldMessenger.of(context).showSnackBar(
                                 SnackBar(
                                   content: Text(
@@ -511,7 +692,7 @@ class _UpdateChamadoWidgetState extends State<UpdateChamadoWidget> {
                                 SnackBar(
                                   content: Text(
                                     PutChamadoCall.message(
-                                      (responseUpdateChamado?.jsonBody ?? ''),
+                                      (responseUpdate?.jsonBody ?? ''),
                                     ).toString(),
                                     style: FlutterFlowTheme.of(context)
                                         .bodyText1
@@ -529,7 +710,7 @@ class _UpdateChamadoWidgetState extends State<UpdateChamadoWidget> {
                                 SnackBar(
                                   content: Text(
                                     PutChamadoCall.fieldNameError(
-                                      (responseUpdateChamado?.jsonBody ?? ''),
+                                      (responseUpdate?.jsonBody ?? ''),
                                     ).toString(),
                                     style: FlutterFlowTheme.of(context)
                                         .bodyText1

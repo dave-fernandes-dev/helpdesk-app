@@ -4,7 +4,6 @@ import '../flutter_flow/flutter_flow_radio_button.dart';
 import '../flutter_flow/flutter_flow_theme.dart';
 import '../flutter_flow/flutter_flow_util.dart';
 import '../flutter_flow/custom_functions.dart' as functions;
-import 'dart:async';
 import 'package:easy_debounce/easy_debounce.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
@@ -17,8 +16,6 @@ class ListChamadosWidget extends StatefulWidget {
 }
 
 class _ListChamadosWidgetState extends State<ListChamadosWidget> {
-  ApiCallResponse? responseDeleteTecnicoById;
-  Completer<ApiCallResponse>? _apiRequestCompleter;
   String? radioButtonValue;
   TextEditingController? textController;
   final scaffoldKey = GlobalKey<ScaffoldState>();
@@ -265,15 +262,14 @@ class _ListChamadosWidgetState extends State<ListChamadosWidget> {
                   ),
                 ),
               ),
-              Divider(),
               Padding(
                 padding: EdgeInsetsDirectional.fromSTEB(10, 5, 10, 5),
                 child: FutureBuilder<ApiCallResponse>(
-                  future: (_apiRequestCompleter ??= Completer<ApiCallResponse>()
-                        ..complete(GetChamadosCall.call(
-                          token: FFAppState().token,
-                        )))
-                      .future,
+                  future: GetChamadosByFilterCall.call(
+                    token: FFAppState().token,
+                    titulo: textController!.text,
+                    status: radioButtonValue,
+                  ),
                   builder: (context, snapshot) {
                     // Customize what your widget looks like when it's loading.
                     if (!snapshot.hasData) {
@@ -287,54 +283,73 @@ class _ListChamadosWidgetState extends State<ListChamadosWidget> {
                         ),
                       );
                     }
-                    final listViewGetChamadosResponse = snapshot.data!;
+                    final listViewGetChamadosByFilterResponse = snapshot.data!;
                     return Builder(
                       builder: (context) {
                         final chamado = getJsonField(
-                          listViewGetChamadosResponse.jsonBody,
+                          listViewGetChamadosByFilterResponse.jsonBody,
                           r'''$''',
                         ).toList();
-                        return RefreshIndicator(
-                          onRefresh: () async {
-                            setState(() => _apiRequestCompleter = null);
-                            await waitForApiRequestCompleter();
-                          },
-                          child: ListView.builder(
-                            padding: EdgeInsets.zero,
-                            shrinkWrap: true,
-                            scrollDirection: Axis.vertical,
-                            itemCount: chamado.length,
-                            itemBuilder: (context, chamadoIndex) {
-                              final chamadoItem = chamado[chamadoIndex];
-                              return Padding(
-                                padding:
-                                    EdgeInsetsDirectional.fromSTEB(0, 0, 0, 6),
-                                child: Container(
-                                  width: double.infinity,
-                                  height: 90,
-                                  constraints: BoxConstraints(
-                                    maxHeight: double.infinity,
-                                  ),
-                                  decoration: BoxDecoration(
-                                    color: FlutterFlowTheme.of(context)
-                                        .secondaryBackground,
-                                    boxShadow: [
-                                      BoxShadow(
-                                        blurRadius: 4,
-                                        color: Color(0x33000000),
-                                        offset: Offset(0, 2),
-                                      )
-                                    ],
-                                    borderRadius: BorderRadius.circular(6),
-                                  ),
-                                  child: Row(
-                                    mainAxisSize: MainAxisSize.max,
-                                    children: [
-                                      Expanded(
-                                        child: Padding(
-                                          padding:
-                                              EdgeInsetsDirectional.fromSTEB(
-                                                  8, 1, 0, 0),
+                        if (chamado.isEmpty) {
+                          return Center(
+                            child: Image.asset(
+                              'assets/images/nada.png',
+                              fit: BoxFit.cover,
+                            ),
+                          );
+                        }
+                        return ListView.builder(
+                          padding: EdgeInsets.zero,
+                          shrinkWrap: true,
+                          scrollDirection: Axis.vertical,
+                          itemCount: chamado.length,
+                          itemBuilder: (context, chamadoIndex) {
+                            final chamadoItem = chamado[chamadoIndex];
+                            return Padding(
+                              padding:
+                                  EdgeInsetsDirectional.fromSTEB(0, 0, 0, 6),
+                              child: Container(
+                                width: double.infinity,
+                                height: 90,
+                                constraints: BoxConstraints(
+                                  maxHeight: double.infinity,
+                                ),
+                                decoration: BoxDecoration(
+                                  color: FlutterFlowTheme.of(context)
+                                      .secondaryBackground,
+                                  boxShadow: [
+                                    BoxShadow(
+                                      blurRadius: 4,
+                                      color: Color(0x33000000),
+                                      offset: Offset(0, 2),
+                                    )
+                                  ],
+                                  borderRadius: BorderRadius.circular(6),
+                                ),
+                                child: Row(
+                                  mainAxisSize: MainAxisSize.max,
+                                  children: [
+                                    Expanded(
+                                      child: Padding(
+                                        padding: EdgeInsetsDirectional.fromSTEB(
+                                            8, 1, 0, 0),
+                                        child: InkWell(
+                                          onTap: () async {
+                                            context.pushNamed(
+                                              'UpdateChamado',
+                                              queryParams: {
+                                                'chamadoId': serializeParam(
+                                                    valueOrDefault<String>(
+                                                      getJsonField(
+                                                        chamadoItem,
+                                                        r'''$.id''',
+                                                      ).toString(),
+                                                      'ND',
+                                                    ),
+                                                    ParamType.String),
+                                              }.withoutNulls,
+                                            );
+                                          },
                                           child: Column(
                                             mainAxisSize: MainAxisSize.max,
                                             mainAxisAlignment:
@@ -384,19 +399,77 @@ class _ListChamadosWidgetState extends State<ListChamadosWidget> {
                                                               FontWeight.normal,
                                                         ),
                                                   ),
-                                                  Text(
-                                                    getJsonField(
-                                                      chamadoItem,
-                                                      r'''$.nomeCliente''',
-                                                    ).toString(),
-                                                    style: FlutterFlowTheme.of(
-                                                            context)
-                                                        .bodyText2
-                                                        .override(
-                                                          fontFamily: 'Poppins',
-                                                          fontWeight:
-                                                              FontWeight.normal,
-                                                        ),
+                                                  Padding(
+                                                    padding:
+                                                        EdgeInsetsDirectional
+                                                            .fromSTEB(
+                                                                5, 0, 0, 0),
+                                                    child: Text(
+                                                      getJsonField(
+                                                        chamadoItem,
+                                                        r'''$.nomeCliente''',
+                                                      ).toString(),
+                                                      style:
+                                                          FlutterFlowTheme.of(
+                                                                  context)
+                                                              .bodyText2
+                                                              .override(
+                                                                fontFamily:
+                                                                    'Poppins',
+                                                                fontWeight:
+                                                                    FontWeight
+                                                                        .normal,
+                                                              ),
+                                                    ),
+                                                  ),
+                                                  Padding(
+                                                    padding:
+                                                        EdgeInsetsDirectional
+                                                            .fromSTEB(
+                                                                5, 0, 0, 0),
+                                                    child: Text(
+                                                      'Aberto Em:',
+                                                      style:
+                                                          FlutterFlowTheme.of(
+                                                                  context)
+                                                              .bodyText2
+                                                              .override(
+                                                                fontFamily:
+                                                                    'Poppins',
+                                                                color: FlutterFlowTheme.of(
+                                                                        context)
+                                                                    .tertiaryColor,
+                                                                fontWeight:
+                                                                    FontWeight
+                                                                        .normal,
+                                                              ),
+                                                    ),
+                                                  ),
+                                                  Padding(
+                                                    padding:
+                                                        EdgeInsetsDirectional
+                                                            .fromSTEB(
+                                                                5, 0, 0, 0),
+                                                    child: Text(
+                                                      getJsonField(
+                                                        chamadoItem,
+                                                        r'''$.dataAbertura''',
+                                                      ).toString(),
+                                                      style:
+                                                          FlutterFlowTheme.of(
+                                                                  context)
+                                                              .bodyText2
+                                                              .override(
+                                                                fontFamily:
+                                                                    'Poppins',
+                                                                color: FlutterFlowTheme.of(
+                                                                        context)
+                                                                    .tertiaryColor,
+                                                                fontWeight:
+                                                                    FontWeight
+                                                                        .normal,
+                                                              ),
+                                                    ),
                                                   ),
                                                 ],
                                               ),
@@ -414,19 +487,28 @@ class _ListChamadosWidgetState extends State<ListChamadosWidget> {
                                                               FontWeight.normal,
                                                         ),
                                                   ),
-                                                  Text(
-                                                    getJsonField(
-                                                      chamadoItem,
-                                                      r'''$.nomeTecnico''',
-                                                    ).toString(),
-                                                    style: FlutterFlowTheme.of(
-                                                            context)
-                                                        .bodyText2
-                                                        .override(
-                                                          fontFamily: 'Poppins',
-                                                          fontWeight:
-                                                              FontWeight.normal,
-                                                        ),
+                                                  Padding(
+                                                    padding:
+                                                        EdgeInsetsDirectional
+                                                            .fromSTEB(
+                                                                5, 0, 0, 0),
+                                                    child: Text(
+                                                      getJsonField(
+                                                        chamadoItem,
+                                                        r'''$.nomeTecnico''',
+                                                      ).toString(),
+                                                      style:
+                                                          FlutterFlowTheme.of(
+                                                                  context)
+                                                              .bodyText2
+                                                              .override(
+                                                                fontFamily:
+                                                                    'Poppins',
+                                                                fontWeight:
+                                                                    FontWeight
+                                                                        .normal,
+                                                              ),
+                                                    ),
                                                   ),
                                                 ],
                                               ),
@@ -523,157 +605,47 @@ class _ListChamadosWidgetState extends State<ListChamadosWidget> {
                                           ),
                                         ),
                                       ),
-                                      Column(
-                                        mainAxisSize: MainAxisSize.max,
-                                        children: [
-                                          Expanded(
-                                            child: Padding(
-                                              padding: EdgeInsetsDirectional
-                                                  .fromSTEB(0, 0, 8, 0),
-                                              child: InkWell(
-                                                onTap: () async {
-                                                  context.pushNamed(
-                                                    'UpdateChamado',
-                                                    queryParams: {
-                                                      'chamadoId':
-                                                          serializeParam(
-                                                              valueOrDefault<
-                                                                  String>(
-                                                                getJsonField(
-                                                                  chamadoItem,
-                                                                  r'''$.id''',
-                                                                ).toString(),
-                                                                'ND',
-                                                              ),
-                                                              ParamType.String),
-                                                    }.withoutNulls,
-                                                  );
-                                                },
-                                                child: Icon(
-                                                  Icons.edit,
-                                                  color: FlutterFlowTheme.of(
-                                                          context)
+                                    ),
+                                    Column(
+                                      mainAxisSize: MainAxisSize.max,
+                                      children: [
+                                        Padding(
+                                          padding:
+                                              EdgeInsetsDirectional.fromSTEB(
+                                                  0, 0, 8, 0),
+                                          child: InkWell(
+                                            onTap: () async {
+                                              context.pushNamed(
+                                                'UpdateChamado',
+                                                queryParams: {
+                                                  'chamadoId': serializeParam(
+                                                      valueOrDefault<String>(
+                                                        getJsonField(
+                                                          chamadoItem,
+                                                          r'''$.id''',
+                                                        ).toString(),
+                                                        'ND',
+                                                      ),
+                                                      ParamType.String),
+                                                }.withoutNulls,
+                                              );
+                                            },
+                                            child: Icon(
+                                              Icons.edit,
+                                              color:
+                                                  FlutterFlowTheme.of(context)
                                                       .secondaryText,
-                                                  size: 24,
-                                                ),
-                                              ),
+                                              size: 24,
                                             ),
                                           ),
-                                          Expanded(
-                                            child: InkWell(
-                                              onTap: () async {
-                                                var confirmDialogResponse =
-                                                    await showDialog<bool>(
-                                                          context: context,
-                                                          builder:
-                                                              (alertDialogContext) {
-                                                            return AlertDialog(
-                                                              title: Text(
-                                                                  'Atenção!'),
-                                                              content: Text(
-                                                                  'Confirma Exclusão?'),
-                                                              actions: [
-                                                                TextButton(
-                                                                  onPressed: () =>
-                                                                      Navigator.pop(
-                                                                          alertDialogContext,
-                                                                          false),
-                                                                  child: Text(
-                                                                      'Não'),
-                                                                ),
-                                                                TextButton(
-                                                                  onPressed: () =>
-                                                                      Navigator.pop(
-                                                                          alertDialogContext,
-                                                                          true),
-                                                                  child: Text(
-                                                                      'Sim'),
-                                                                ),
-                                                              ],
-                                                            );
-                                                          },
-                                                        ) ??
-                                                        false;
-                                                if (confirmDialogResponse) {
-                                                  responseDeleteTecnicoById =
-                                                      await DeleteTecnicoByIdCall
-                                                          .call(
-                                                    token: FFAppState().token,
-                                                    id: getJsonField(
-                                                      chamadoItem,
-                                                      r'''$.id''',
-                                                    ).toString(),
-                                                  );
-                                                  context.pushNamed(
-                                                      'ListTecnicos');
-                                                  ScaffoldMessenger.of(context)
-                                                      .showSnackBar(
-                                                    SnackBar(
-                                                      content: Text(
-                                                        'Excluído com Sucesso!',
-                                                        style:
-                                                            FlutterFlowTheme.of(
-                                                                    context)
-                                                                .bodyText1
-                                                                .override(
-                                                                  fontFamily:
-                                                                      'Poppins',
-                                                                  color: FlutterFlowTheme.of(
-                                                                          context)
-                                                                      .secondaryBackground,
-                                                                ),
-                                                      ),
-                                                      duration: Duration(
-                                                          milliseconds: 4000),
-                                                      backgroundColor:
-                                                          FlutterFlowTheme.of(
-                                                                  context)
-                                                              .secondaryColor,
-                                                    ),
-                                                  );
-                                                } else {
-                                                  ScaffoldMessenger.of(context)
-                                                      .showSnackBar(
-                                                    SnackBar(
-                                                      content: Text(
-                                                        'Erro ao Excluir!',
-                                                        style:
-                                                            FlutterFlowTheme.of(
-                                                                    context)
-                                                                .bodyText1
-                                                                .override(
-                                                                  fontFamily:
-                                                                      'Poppins',
-                                                                  color: FlutterFlowTheme.of(
-                                                                          context)
-                                                                      .secondaryBackground,
-                                                                ),
-                                                      ),
-                                                      duration: Duration(
-                                                          milliseconds: 4000),
-                                                      backgroundColor:
-                                                          Color(0xFFFF0000),
-                                                    ),
-                                                  );
-                                                }
-
-                                                setState(() {});
-                                              },
-                                              child: Icon(
-                                                Icons.delete,
-                                                color: Color(0xA7FF0000),
-                                                size: 20,
-                                              ),
-                                            ),
-                                          ),
-                                        ],
-                                      ),
-                                    ],
-                                  ),
+                                        ),
+                                      ],
+                                    ),
+                                  ],
                                 ),
-                              );
-                            },
-                          ),
+                              ),
+                            );
+                          },
                         );
                       },
                     );
@@ -685,20 +657,5 @@ class _ListChamadosWidgetState extends State<ListChamadosWidget> {
         ),
       ),
     );
-  }
-
-  Future waitForApiRequestCompleter({
-    double minWait = 0,
-    double maxWait = double.infinity,
-  }) async {
-    final stopwatch = Stopwatch()..start();
-    while (true) {
-      await Future.delayed(Duration(milliseconds: 50));
-      final timeElapsed = stopwatch.elapsedMilliseconds;
-      final requestComplete = _apiRequestCompleter?.isCompleted ?? false;
-      if (timeElapsed > maxWait || (requestComplete && timeElapsed > minWait)) {
-        break;
-      }
-    }
   }
 }
