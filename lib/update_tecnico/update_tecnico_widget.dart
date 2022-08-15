@@ -4,6 +4,7 @@ import '../flutter_flow/flutter_flow_icon_button.dart';
 import '../flutter_flow/flutter_flow_theme.dart';
 import '../flutter_flow/flutter_flow_util.dart';
 import '../flutter_flow/flutter_flow_widgets.dart';
+import '../custom_code/widgets/index.dart' as custom_widgets;
 import 'package:easy_debounce/easy_debounce.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
@@ -13,11 +14,9 @@ class UpdateTecnicoWidget extends StatefulWidget {
   const UpdateTecnicoWidget({
     Key? key,
     this.tecnicoId,
-    this.listPerfil,
   }) : super(key: key);
 
   final String? tecnicoId;
-  final dynamic listPerfil;
 
   @override
   _UpdateTecnicoWidgetState createState() => _UpdateTecnicoWidgetState();
@@ -523,6 +522,14 @@ class _UpdateTecnicoWidgetState extends State<UpdateTecnicoWidget> {
                             ),
                             borderRadius: BorderRadius.circular(8),
                           ),
+                        ),
+                      ),
+                      Container(
+                        width: double.infinity,
+                        height: 50,
+                        child: custom_widgets.GroupButtonDev(
+                          width: double.infinity,
+                          height: 50,
                         ),
                       ),
                     ],
