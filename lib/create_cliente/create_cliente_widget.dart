@@ -181,9 +181,10 @@ class _CreateClienteWidgetState extends State<CreateClienteWidget> {
                                 EdgeInsetsDirectional.fromSTEB(24, 0, 0, 0),
                             suffixIcon: textFieldNomeController!.text.isNotEmpty
                                 ? InkWell(
-                                    onTap: () => setState(
-                                      () => textFieldNomeController?.clear(),
-                                    ),
+                                    onTap: () async {
+                                      textFieldNomeController?.clear();
+                                      setState(() {});
+                                    },
                                     child: Icon(
                                       Icons.clear,
                                       color: Color(0xFF757575),
@@ -246,9 +247,10 @@ class _CreateClienteWidgetState extends State<CreateClienteWidget> {
                                 EdgeInsetsDirectional.fromSTEB(24, 0, 0, 0),
                             suffixIcon: textFieldCpfController!.text.isNotEmpty
                                 ? InkWell(
-                                    onTap: () => setState(
-                                      () => textFieldCpfController?.clear(),
-                                    ),
+                                    onTap: () async {
+                                      textFieldCpfController?.clear();
+                                      setState(() {});
+                                    },
                                     child: Icon(
                                       Icons.clear,
                                       color: Color(0xFF757575),
@@ -310,19 +312,20 @@ class _CreateClienteWidgetState extends State<CreateClienteWidget> {
                                 .secondaryBackground,
                             contentPadding:
                                 EdgeInsetsDirectional.fromSTEB(24, 0, 0, 0),
-                            suffixIcon: textFieldEmailController!
-                                    .text.isNotEmpty
-                                ? InkWell(
-                                    onTap: () => setState(
-                                      () => textFieldEmailController?.clear(),
-                                    ),
-                                    child: Icon(
-                                      Icons.clear,
-                                      color: Color(0xFF757575),
-                                      size: 22,
-                                    ),
-                                  )
-                                : null,
+                            suffixIcon:
+                                textFieldEmailController!.text.isNotEmpty
+                                    ? InkWell(
+                                        onTap: () async {
+                                          textFieldEmailController?.clear();
+                                          setState(() {});
+                                        },
+                                        child: Icon(
+                                          Icons.clear,
+                                          color: Color(0xFF757575),
+                                          size: 22,
+                                        ),
+                                      )
+                                    : null,
                           ),
                           style:
                               FlutterFlowTheme.of(context).bodyText1.override(

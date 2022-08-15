@@ -172,19 +172,20 @@ class _UpdateChamadoWidgetState extends State<UpdateChamadoWidget> {
                             prefixIcon: Icon(
                               Icons.title,
                             ),
-                            suffixIcon: textFieldTituloController!
-                                    .text.isNotEmpty
-                                ? InkWell(
-                                    onTap: () => setState(
-                                      () => textFieldTituloController?.clear(),
-                                    ),
-                                    child: Icon(
-                                      Icons.clear,
-                                      color: Color(0xFF757575),
-                                      size: 22,
-                                    ),
-                                  )
-                                : null,
+                            suffixIcon:
+                                textFieldTituloController!.text.isNotEmpty
+                                    ? InkWell(
+                                        onTap: () async {
+                                          textFieldTituloController?.clear();
+                                          setState(() {});
+                                        },
+                                        child: Icon(
+                                          Icons.clear,
+                                          color: Color(0xFF757575),
+                                          size: 22,
+                                        ),
+                                      )
+                                    : null,
                           ),
                           style:
                               FlutterFlowTheme.of(context).bodyText1.override(
@@ -628,9 +629,10 @@ class _UpdateChamadoWidgetState extends State<UpdateChamadoWidget> {
                             ),
                             suffixIcon: textFieldObsController!.text.isNotEmpty
                                 ? InkWell(
-                                    onTap: () => setState(
-                                      () => textFieldObsController?.clear(),
-                                    ),
+                                    onTap: () async {
+                                      textFieldObsController?.clear();
+                                      setState(() {});
+                                    },
                                     child: Icon(
                                       Icons.clear,
                                       color: Color(0xFF757575),

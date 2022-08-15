@@ -117,9 +117,10 @@ class _LoginWidgetState extends State<LoginWidget> {
                               EdgeInsetsDirectional.fromSTEB(24, 0, 0, 0),
                           suffixIcon: textFieldEmailController!.text.isNotEmpty
                               ? InkWell(
-                                  onTap: () => setState(
-                                    () => textFieldEmailController?.clear(),
-                                  ),
+                                  onTap: () async {
+                                    textFieldEmailController?.clear();
+                                    setState(() {});
+                                  },
                                   child: Icon(
                                     Icons.clear,
                                     color: Color(0xFF757575),

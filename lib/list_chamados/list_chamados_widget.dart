@@ -3,9 +3,11 @@ import '../flutter_flow/flutter_flow_icon_button.dart';
 import '../flutter_flow/flutter_flow_radio_button.dart';
 import '../flutter_flow/flutter_flow_theme.dart';
 import '../flutter_flow/flutter_flow_util.dart';
+import '../custom_code/actions/index.dart' as actions;
 import '../flutter_flow/custom_functions.dart' as functions;
 import 'package:easy_debounce/easy_debounce.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/scheduler.dart';
 import 'package:google_fonts/google_fonts.dart';
 
 class ListChamadosWidget extends StatefulWidget {
@@ -18,11 +20,24 @@ class ListChamadosWidget extends StatefulWidget {
 class _ListChamadosWidgetState extends State<ListChamadosWidget> {
   String? radioButtonValue;
   TextEditingController? textController;
+  bool? tokenValid;
   final scaffoldKey = GlobalKey<ScaffoldState>();
 
   @override
   void initState() {
     super.initState();
+    // On page load action.
+    SchedulerBinding.instance.addPostFrameCallback((_) async {
+      tokenValid = await actions.isTokenValid(
+        FFAppState().token,
+      );
+      if (tokenValid!) {
+        return;
+      }
+
+      context.pushNamed('Login');
+    });
+
     textController = TextEditingController();
   }
 
@@ -177,9 +192,10 @@ class _ListChamadosWidgetState extends State<ListChamadosWidget> {
                                   ),
                                   suffixIcon: textController!.text.isNotEmpty
                                       ? InkWell(
-                                          onTap: () => setState(
-                                            () => textController?.clear(),
-                                          ),
+                                          onTap: () async {
+                                            textController?.clear();
+                                            setState(() {});
+                                          },
                                           child: Icon(
                                             Icons.clear,
                                             color: Color(0xFF757575),

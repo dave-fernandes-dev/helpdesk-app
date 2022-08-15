@@ -69,13 +69,6 @@ GoRouter createRouter(AppStateNotifier appStateNotifier) => GoRouter(
               ),
             ),
             FFRoute(
-              name: 'UpdateTecnico',
-              path: 'updateTecnico',
-              builder: (context, params) => UpdateTecnicoWidget(
-                tecnicoId: params.getParam('tecnicoId', ParamType.String),
-              ),
-            ),
-            FFRoute(
               name: 'ListTecnicos',
               path: 'listTecnicos',
               builder: (context, params) => params.isEmpty
@@ -83,11 +76,12 @@ GoRouter createRouter(AppStateNotifier appStateNotifier) => GoRouter(
                   : ListTecnicosWidget(),
             ),
             FFRoute(
-              name: 'ListClientes',
-              path: 'listClientes',
-              builder: (context, params) => params.isEmpty
-                  ? NavBarPage(initialPage: 'ListClientes')
-                  : ListClientesWidget(),
+              name: 'UpdateTecnico',
+              path: 'updateTecnico',
+              builder: (context, params) => UpdateTecnicoWidget(
+                tecnicoId: params.getParam('tecnicoId', ParamType.String),
+                listPerfil: params.getParam('listPerfil', ParamType.JSON),
+              ),
             ),
             FFRoute(
               name: 'CreateCliente',
@@ -95,6 +89,13 @@ GoRouter createRouter(AppStateNotifier appStateNotifier) => GoRouter(
               builder: (context, params) => CreateClienteWidget(
                 tecnicoId: params.getParam('tecnicoId', ParamType.String),
               ),
+            ),
+            FFRoute(
+              name: 'ListClientes',
+              path: 'listClientes',
+              builder: (context, params) => params.isEmpty
+                  ? NavBarPage(initialPage: 'ListClientes')
+                  : ListClientesWidget(),
             ),
             FFRoute(
               name: 'UpdateCliente',
@@ -138,6 +139,7 @@ GoRouter createRouter(AppStateNotifier appStateNotifier) => GoRouter(
           ].map((r) => r.toRoute(appStateNotifier)).toList(),
         ).toRoute(appStateNotifier),
       ],
+      urlPathStrategy: UrlPathStrategy.path,
     );
 
 extension NavParamExtensions on Map<String, String?> {

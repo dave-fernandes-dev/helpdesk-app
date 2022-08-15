@@ -2,8 +2,10 @@ import '../backend/api_requests/api_calls.dart';
 import '../flutter_flow/flutter_flow_icon_button.dart';
 import '../flutter_flow/flutter_flow_theme.dart';
 import '../flutter_flow/flutter_flow_util.dart';
+import '../custom_code/actions/index.dart' as actions;
 import 'dart:async';
 import 'package:flutter/material.dart';
+import 'package:flutter/scheduler.dart';
 import 'package:google_fonts/google_fonts.dart';
 
 class ListClientesWidget extends StatefulWidget {
@@ -16,7 +18,24 @@ class ListClientesWidget extends StatefulWidget {
 class _ListClientesWidgetState extends State<ListClientesWidget> {
   ApiCallResponse? responseDeleteTecnicoById;
   Completer<ApiCallResponse>? _apiRequestCompleter;
+  bool? tokenValid;
   final scaffoldKey = GlobalKey<ScaffoldState>();
+
+  @override
+  void initState() {
+    super.initState();
+    // On page load action.
+    SchedulerBinding.instance.addPostFrameCallback((_) async {
+      tokenValid = await actions.isTokenValid(
+        FFAppState().token,
+      );
+      if (tokenValid!) {
+        return;
+      }
+
+      context.pushNamed('Login');
+    });
+  }
 
   @override
   Widget build(BuildContext context) {

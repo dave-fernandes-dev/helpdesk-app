@@ -45,7 +45,8 @@ class _MyAppState extends State<MyApp> {
         () => setState(() => _appStateNotifier.stopShowingSplashImage()));
   }
 
-  void setLocale(Locale value) => setState(() => _locale = value);
+  void setLocale(String language) =>
+      setState(() => _locale = createLocale(language));
   void setThemeMode(ThemeMode mode) => setState(() {
         _themeMode = mode;
       });
@@ -62,7 +63,7 @@ class _MyAppState extends State<MyApp> {
       ],
       locale: _locale,
       supportedLocales: const [
-        Locale('en', ''),
+        Locale('en'),
       ],
       theme: ThemeData(brightness: Brightness.light),
       themeMode: _themeMode,

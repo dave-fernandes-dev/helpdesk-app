@@ -1,7 +1,7 @@
 import '../flutter_flow/flutter_flow_icon_button.dart';
 import '../flutter_flow/flutter_flow_theme.dart';
 import '../flutter_flow/flutter_flow_util.dart';
-import '../flutter_flow/custom_functions.dart' as functions;
+import '../custom_code/actions/index.dart' as actions;
 import 'package:flutter/material.dart';
 import 'package:flutter/scheduler.dart';
 import 'package:flutter_svg/flutter_svg.dart';
@@ -20,6 +20,7 @@ class HomeWidget extends StatefulWidget {
 }
 
 class _HomeWidgetState extends State<HomeWidget> {
+  bool? tokenValid;
   final scaffoldKey = GlobalKey<ScaffoldState>();
 
   @override
@@ -27,7 +28,10 @@ class _HomeWidgetState extends State<HomeWidget> {
     super.initState();
     // On page load action.
     SchedulerBinding.instance.addPostFrameCallback((_) async {
-      if (functions.isLogged(FFAppState().token)) {
+      tokenValid = await actions.isTokenValid(
+        FFAppState().token,
+      );
+      if (tokenValid!) {
         return;
       }
 

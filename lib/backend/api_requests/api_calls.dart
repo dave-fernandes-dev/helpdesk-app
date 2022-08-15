@@ -171,13 +171,16 @@ class PutTecnicoCall {
     String? email = '',
     String? senha = '',
     String? id = '',
+    String? perfis = '',
   }) {
     final body = '''
 {
   "nome": "${nome}",
   "cpf": "${cpf}",
   "email": "${email}",
-  "senha": "${senha}"
+  "senha": "${senha}",
+  "perfis": ["ADMIN","CLIENTE","TECNICO"]
+
 }''';
     return ApiManager.instance.makeApiCall(
       callName: 'putTecnico',
@@ -192,6 +195,7 @@ class PutTecnicoCall {
         'cpf': cpf,
         'email': email,
         'senha': senha,
+        'perfis': perfis,
       },
       body: body,
       bodyType: BodyType.JSON,

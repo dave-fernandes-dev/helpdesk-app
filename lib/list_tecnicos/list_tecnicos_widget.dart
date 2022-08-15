@@ -2,8 +2,10 @@ import '../backend/api_requests/api_calls.dart';
 import '../flutter_flow/flutter_flow_icon_button.dart';
 import '../flutter_flow/flutter_flow_theme.dart';
 import '../flutter_flow/flutter_flow_util.dart';
+import '../custom_code/actions/index.dart' as actions;
 import 'dart:async';
 import 'package:flutter/material.dart';
+import 'package:flutter/scheduler.dart';
 import 'package:google_fonts/google_fonts.dart';
 
 class ListTecnicosWidget extends StatefulWidget {
@@ -16,7 +18,24 @@ class ListTecnicosWidget extends StatefulWidget {
 class _ListTecnicosWidgetState extends State<ListTecnicosWidget> {
   ApiCallResponse? responseDeleteTecnicoById;
   Completer<ApiCallResponse>? _apiRequestCompleter;
+  bool? tokenValid;
   final scaffoldKey = GlobalKey<ScaffoldState>();
+
+  @override
+  void initState() {
+    super.initState();
+    // On page load action.
+    SchedulerBinding.instance.addPostFrameCallback((_) async {
+      tokenValid = await actions.isTokenValid(
+        FFAppState().token,
+      );
+      if (tokenValid!) {
+        return;
+      }
+
+      context.pushNamed('Login');
+    });
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -164,78 +183,107 @@ class _ListTecnicosWidgetState extends State<ListTecnicosWidget> {
                                           padding:
                                               EdgeInsetsDirectional.fromSTEB(
                                                   8, 1, 0, 0),
-                                          child: Column(
-                                            mainAxisSize: MainAxisSize.max,
-                                            mainAxisAlignment:
-                                                MainAxisAlignment.center,
-                                            children: [
-                                              Row(
-                                                mainAxisSize: MainAxisSize.max,
-                                                children: [
-                                                  Padding(
-                                                    padding:
-                                                        EdgeInsetsDirectional
-                                                            .fromSTEB(
-                                                                0, 0, 5, 0),
-                                                    child: Text(
+                                          child: InkWell(
+                                            onTap: () async {
+                                              context.pushNamed(
+                                                'UpdateTecnico',
+                                                queryParams: {
+                                                  'tecnicoId': serializeParam(
                                                       getJsonField(
                                                         tecItem,
                                                         r'''$.id''',
+                                                      ).toString(),
+                                                      ParamType.String),
+                                                  'listPerfil': serializeParam(
+                                                      getJsonField(
+                                                        tecItem,
+                                                        r'''$.perfis''',
+                                                      ),
+                                                      ParamType.JSON),
+                                                }.withoutNulls,
+                                              );
+                                            },
+                                            child: Column(
+                                              mainAxisSize: MainAxisSize.max,
+                                              mainAxisAlignment:
+                                                  MainAxisAlignment.center,
+                                              children: [
+                                                Row(
+                                                  mainAxisSize:
+                                                      MainAxisSize.max,
+                                                  children: [
+                                                    Padding(
+                                                      padding:
+                                                          EdgeInsetsDirectional
+                                                              .fromSTEB(
+                                                                  0, 0, 5, 0),
+                                                      child: Text(
+                                                        getJsonField(
+                                                          tecItem,
+                                                          r'''$.id''',
+                                                        ).toString(),
+                                                        style:
+                                                            FlutterFlowTheme.of(
+                                                                    context)
+                                                                .subtitle2,
+                                                      ),
+                                                    ),
+                                                    Text(
+                                                      getJsonField(
+                                                        tecItem,
+                                                        r'''$.nome''',
                                                       ).toString(),
                                                       style:
                                                           FlutterFlowTheme.of(
                                                                   context)
                                                               .subtitle2,
                                                     ),
-                                                  ),
-                                                  Text(
-                                                    getJsonField(
-                                                      tecItem,
-                                                      r'''$.nome''',
-                                                    ).toString(),
-                                                    style: FlutterFlowTheme.of(
-                                                            context)
-                                                        .subtitle2,
-                                                  ),
-                                                ],
-                                              ),
-                                              Row(
-                                                mainAxisSize: MainAxisSize.max,
-                                                children: [
-                                                  Text(
-                                                    getJsonField(
-                                                      tecItem,
-                                                      r'''$.email''',
-                                                    ).toString(),
-                                                    style: FlutterFlowTheme.of(
-                                                            context)
-                                                        .bodyText2,
-                                                  ),
-                                                ],
-                                              ),
-                                              Row(
-                                                mainAxisSize: MainAxisSize.max,
-                                                children: [
-                                                  Text(
-                                                    getJsonField(
-                                                      tecItem,
-                                                      r'''$.cpf''',
-                                                    ).toString(),
-                                                    style: FlutterFlowTheme.of(
-                                                            context)
-                                                        .bodyText1
-                                                        .override(
-                                                          fontFamily: 'Poppins',
-                                                          color: FlutterFlowTheme
-                                                                  .of(context)
-                                                              .primaryColor,
-                                                          fontWeight:
-                                                              FontWeight.w500,
-                                                        ),
-                                                  ),
-                                                ],
-                                              ),
-                                            ],
+                                                  ],
+                                                ),
+                                                Row(
+                                                  mainAxisSize:
+                                                      MainAxisSize.max,
+                                                  children: [
+                                                    Text(
+                                                      getJsonField(
+                                                        tecItem,
+                                                        r'''$.email''',
+                                                      ).toString(),
+                                                      style:
+                                                          FlutterFlowTheme.of(
+                                                                  context)
+                                                              .bodyText2,
+                                                    ),
+                                                  ],
+                                                ),
+                                                Row(
+                                                  mainAxisSize:
+                                                      MainAxisSize.max,
+                                                  children: [
+                                                    Text(
+                                                      getJsonField(
+                                                        tecItem,
+                                                        r'''$.cpf''',
+                                                      ).toString(),
+                                                      style:
+                                                          FlutterFlowTheme.of(
+                                                                  context)
+                                                              .bodyText1
+                                                              .override(
+                                                                fontFamily:
+                                                                    'Poppins',
+                                                                color: FlutterFlowTheme.of(
+                                                                        context)
+                                                                    .primaryColor,
+                                                                fontWeight:
+                                                                    FontWeight
+                                                                        .w500,
+                                                              ),
+                                                    ),
+                                                  ],
+                                                ),
+                                              ],
+                                            ),
                                           ),
                                         ),
                                       ),
