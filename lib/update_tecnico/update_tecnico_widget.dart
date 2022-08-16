@@ -443,7 +443,16 @@ class _UpdateTecnicoWidgetState extends State<UpdateTecnicoWidget> {
                               cpf: textFieldCpfController?.text ?? '',
                               email: textFieldEmailController?.text ?? '',
                               senha: textFieldSenhaController?.text ?? '',
-                              perfis: 'ADMIN',
+                              perfisFf: valueOrDefault<String>(
+                                checkboxGroupPerfisValues
+                                    ?.contains('${valueOrDefault<String>(
+                                      checkboxGroupPerfisValues?.length
+                                          ?.toString(),
+                                      'ND',
+                                    )}')
+                                    ?.toString(),
+                                'ND',
+                              ),
                             );
                             if ((responsePutTecnico?.succeeded ?? true)) {
                               ScaffoldMessenger.of(context).showSnackBar(

@@ -171,7 +171,8 @@ class PutTecnicoCall {
     String? email = '',
     String? senha = '',
     String? id = '',
-    String? perfis = '',
+    String? perfis = '[\"ADMIN\",\"CLIENTE\",\"TECNICO\"]',
+    String? perfisFf = 'ADMIN,CLIENTE,TECNICO',
   }) {
     final body = '''
 {
@@ -179,8 +180,7 @@ class PutTecnicoCall {
   "cpf": "${cpf}",
   "email": "${email}",
   "senha": "${senha}",
-  "perfis": ["ADMIN","CLIENTE","TECNICO"]
-
+  "perfisFf": "${perfisFf}"
 }''';
     return ApiManager.instance.makeApiCall(
       callName: 'putTecnico',
@@ -196,6 +196,7 @@ class PutTecnicoCall {
         'email': email,
         'senha': senha,
         'perfis': perfis,
+        'perfisFf': perfisFf,
       },
       body: body,
       bodyType: BodyType.JSON,
@@ -614,5 +615,42 @@ class GetChamadosByFilterCall {
   static dynamic status(dynamic response) => getJsonField(
         response,
         r'''$.status''',
+      );
+}
+
+class PatchTecnicoPerfisCall {
+  static Future<ApiCallResponse> call({
+    String? token = '',
+    String? id = '',
+    String? perfis = 'CLIENTE,TECNICO',
+  }) {
+    final body = '''
+{
+  "perfis": "${perfis}"
+}''';
+    return ApiManager.instance.makeApiCall(
+      callName: 'patchTecnico Perfis',
+      apiUrl: 'https://vl-helpdesk-api.herokuapp.com/tecnicos/${id}',
+      callType: ApiCallType.PATCH,
+      headers: {
+        'Content-type': 'application/json; charset=utf-8',
+        'Authorization': '${token}',
+      },
+      params: {
+        'perfis': perfis,
+      },
+      body: body,
+      bodyType: BodyType.JSON,
+      returnBody: true,
+    );
+  }
+
+  static dynamic message(dynamic response) => getJsonField(
+        response,
+        r'''$.message''',
+      );
+  static dynamic fieldNameError(dynamic response) => getJsonField(
+        response,
+        r'''$.errors.*.fieldName''',
       );
 }
