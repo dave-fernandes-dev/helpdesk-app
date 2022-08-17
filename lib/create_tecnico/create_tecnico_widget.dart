@@ -1,9 +1,10 @@
 import '../backend/api_requests/api_calls.dart';
-import '../flutter_flow/flutter_flow_drop_down.dart';
+import '../flutter_flow/flutter_flow_choice_chips.dart';
 import '../flutter_flow/flutter_flow_icon_button.dart';
 import '../flutter_flow/flutter_flow_theme.dart';
 import '../flutter_flow/flutter_flow_util.dart';
 import '../flutter_flow/flutter_flow_widgets.dart';
+import '../flutter_flow/custom_functions.dart' as functions;
 import 'package:easy_debounce/easy_debounce.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
@@ -23,7 +24,7 @@ class CreateTecnicoWidget extends StatefulWidget {
 
 class _CreateTecnicoWidgetState extends State<CreateTecnicoWidget> {
   ApiCallResponse? responseCreateTecnico;
-  String? dropDownValue;
+  List<String>? choiceChipsPerfisValues;
   TextEditingController? textFieldNomeController;
   TextEditingController? textFieldCpfController;
   TextEditingController? textFieldEmailController;
@@ -121,28 +122,45 @@ class _CreateTecnicoWidgetState extends State<CreateTecnicoWidget> {
                         fit: BoxFit.fill,
                       ),
                       Padding(
-                        padding: EdgeInsetsDirectional.fromSTEB(12, 5, 12, 0),
-                        child: FlutterFlowDropDown(
-                          initialOption: dropDownValue ??= 'CLIENTE',
-                          options: FFAppState().perfisList.toList(),
+                        padding: EdgeInsetsDirectional.fromSTEB(0, 15, 0, 0),
+                        child: FlutterFlowChoiceChips(
+                          initiallySelected: choiceChipsPerfisValues != null
+                              ? choiceChipsPerfisValues
+                              : [],
+                          options: FFAppState()
+                              .perfisList
+                              .map((label) => ChipData(label))
+                              .toList(),
                           onChanged: (val) =>
-                              setState(() => dropDownValue = val),
-                          width: double.infinity,
-                          height: 47,
-                          textStyle:
-                              FlutterFlowTheme.of(context).bodyText1.override(
-                                    fontFamily: 'Poppins',
-                                    fontWeight: FontWeight.normal,
-                                  ),
-                          hintText: 'Please select...',
-                          fillColor: Colors.white,
-                          elevation: 2,
-                          borderColor:
-                              FlutterFlowTheme.of(context).primaryColor,
-                          borderWidth: 0,
-                          borderRadius: 6,
-                          margin: EdgeInsetsDirectional.fromSTEB(12, 4, 12, 4),
-                          hidesUnderline: true,
+                              setState(() => choiceChipsPerfisValues = val),
+                          selectedChipStyle: ChipStyle(
+                            backgroundColor:
+                                FlutterFlowTheme.of(context).primaryColor,
+                            textStyle:
+                                FlutterFlowTheme.of(context).bodyText1.override(
+                                      fontFamily: 'Poppins',
+                                      color: Colors.white,
+                                    ),
+                            iconColor: Colors.white,
+                            iconSize: 18,
+                            elevation: 4,
+                          ),
+                          unselectedChipStyle: ChipStyle(
+                            backgroundColor: Colors.white,
+                            textStyle:
+                                FlutterFlowTheme.of(context).bodyText2.override(
+                                      fontFamily: 'Poppins',
+                                      color: FlutterFlowTheme.of(context)
+                                          .secondaryText,
+                                    ),
+                            iconColor: Color(0xFFE3E7ED),
+                            iconSize: 18,
+                            elevation: 4,
+                          ),
+                          chipSpacing: 20,
+                          multiselect: true,
+                          initialized: choiceChipsPerfisValues != null,
+                          alignment: WrapAlignment.start,
                         ),
                       ),
                       Padding(
@@ -434,6 +452,12 @@ class _CreateTecnicoWidgetState extends State<CreateTecnicoWidget> {
                               cpf: textFieldCpfController!.text,
                               email: textFieldEmailController!.text,
                               senha: textFieldSenhaController!.text,
+                              apiUrl: FFAppState().apiUrl,
+                              perfisFf: valueOrDefault<String>(
+                                functions.listToString(
+                                    choiceChipsPerfisValues!.toList()),
+                                'ND',
+                              ),
                             );
                             if ((responseCreateTecnico?.succeeded ?? true)) {
                               context.pushNamed('ListTecnicos');

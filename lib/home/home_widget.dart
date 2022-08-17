@@ -359,148 +359,256 @@ class _HomeWidgetState extends State<HomeWidget> {
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
                     Padding(
-                      padding: EdgeInsetsDirectional.fromSTEB(0, 10, 0, 5),
-                      child: Text(
-                        '<- use o Menu Lateral',
-                        style: FlutterFlowTheme.of(context).bodyText1.override(
-                              fontFamily: 'Poppins',
-                              color: Color(0xFFFF0000),
-                            ),
-                      ),
-                    ),
-                    Text(
-                      'HelpDesk Flutter',
-                      textAlign: TextAlign.start,
-                      style: FlutterFlowTheme.of(context).subtitle1,
-                    ),
-                    Padding(
-                      padding: EdgeInsetsDirectional.fromSTEB(0, 5, 0, 5),
-                      child: InkWell(
-                        onTap: () async {
-                          await launchURL(
-                              'https://www.linkedin.com/in/dave-carllen/');
-                        },
-                        child: Text(
-                          'By Dave Fernandes - Analista & Dev Full Stack',
-                          style: FlutterFlowTheme.of(context)
-                              .bodyText2
-                              .override(
-                                fontFamily: 'Poppins',
-                                color:
-                                    FlutterFlowTheme.of(context).primaryColor,
-                              ),
-                        ),
-                      ),
-                    ),
-                    Padding(
-                      padding: EdgeInsetsDirectional.fromSTEB(0, 5, 0, 5),
-                      child: Text(
-                        'Este App foi primeiramente feito em Angular(front) e Spring-Boot(backend), eu decidi programá-lo em Flutter para que ele rodasse tanto em smartphone Android quanto Iphone, o código fonte estão nos links a seguir:',
-                        textAlign: TextAlign.justify,
-                        style: FlutterFlowTheme.of(context).bodyText2,
-                      ),
-                    ),
-                    Padding(
-                      padding: EdgeInsetsDirectional.fromSTEB(0, 5, 0, 0),
-                      child: InkWell(
-                        onTap: () async {
-                          await launchURL(
-                              'https://www.linkedin.com/in/dave-carllen/');
-                        },
-                        child: Text(
-                          'Linkedin Dave Fernades: Clique Aqui',
-                          textAlign: TextAlign.justify,
-                          style:
-                              FlutterFlowTheme.of(context).bodyText2.override(
-                                    fontFamily: 'Poppins',
-                                    color: Color(0xFF1E88E5),
+                      padding: EdgeInsetsDirectional.fromSTEB(0, 10, 0, 0),
+                      child: Material(
+                        color: Colors.transparent,
+                        elevation: 0,
+                        child: Container(
+                          width: double.infinity,
+                          height: 100,
+                          decoration: BoxDecoration(
+                            color: FlutterFlowTheme.of(context)
+                                .secondaryBackground,
+                            boxShadow: [
+                              BoxShadow(
+                                blurRadius: 4,
+                                color: Color(0x33000000),
+                                offset: Offset(0, 2),
+                              )
+                            ],
+                          ),
+                          child: Padding(
+                            padding: EdgeInsetsDirectional.fromSTEB(6, 0, 0, 0),
+                            child: Column(
+                              mainAxisSize: MainAxisSize.max,
+                              crossAxisAlignment: CrossAxisAlignment.start,
+                              children: [
+                                Padding(
+                                  padding: EdgeInsetsDirectional.fromSTEB(
+                                      0, 10, 0, 5),
+                                  child: Text(
+                                    '<- use o Menu Lateral',
+                                    style: FlutterFlowTheme.of(context)
+                                        .bodyText1
+                                        .override(
+                                          fontFamily: 'Poppins',
+                                          color: Color(0xFFFF0000),
+                                        ),
                                   ),
+                                ),
+                                Text(
+                                  'HelpDesk Flutter',
+                                  textAlign: TextAlign.start,
+                                  style: FlutterFlowTheme.of(context).subtitle1,
+                                ),
+                                Padding(
+                                  padding: EdgeInsetsDirectional.fromSTEB(
+                                      0, 5, 0, 5),
+                                  child: InkWell(
+                                    onTap: () async {
+                                      await launchURL(
+                                          'https://www.linkedin.com/in/dave-carllen/');
+                                    },
+                                    child: Text(
+                                      'By Dave Fernandes - Analista & Dev Full Stack',
+                                      style: FlutterFlowTheme.of(context)
+                                          .bodyText2
+                                          .override(
+                                            fontFamily: 'Poppins',
+                                            color: FlutterFlowTheme.of(context)
+                                                .primaryColor,
+                                          ),
+                                    ),
+                                  ),
+                                ),
+                              ],
+                            ),
+                          ),
                         ),
                       ),
                     ),
                     Padding(
-                      padding: EdgeInsetsDirectional.fromSTEB(0, 5, 0, 0),
-                      child: InkWell(
-                        onTap: () async {
-                          await launchURL(
-                              'https://github.com/dave-fernandes-dev/helpdesk-app/tree/flutterflow');
-                        },
-                        child: Text(
-                          'GitHub: Código Fonte Flutter (clique)',
-                          textAlign: TextAlign.justify,
-                          style: FlutterFlowTheme.of(context)
-                              .bodyText2
-                              .override(
-                                fontFamily: 'Poppins',
-                                color:
-                                    FlutterFlowTheme.of(context).tertiaryColor,
-                              ),
+                      padding: EdgeInsetsDirectional.fromSTEB(0, 10, 0, 0),
+                      child: Material(
+                        color: Colors.transparent,
+                        elevation: 0,
+                        child: Container(
+                          width: double.infinity,
+                          height: 200,
+                          decoration: BoxDecoration(
+                            color: FlutterFlowTheme.of(context)
+                                .secondaryBackground,
+                            boxShadow: [
+                              BoxShadow(
+                                blurRadius: 4,
+                                color: Color(0x33000000),
+                                offset: Offset(0, 2),
+                              )
+                            ],
+                          ),
+                          child: Padding(
+                            padding: EdgeInsetsDirectional.fromSTEB(6, 0, 0, 0),
+                            child: Column(
+                              mainAxisSize: MainAxisSize.max,
+                              crossAxisAlignment: CrossAxisAlignment.start,
+                              children: [
+                                Padding(
+                                  padding: EdgeInsetsDirectional.fromSTEB(
+                                      0, 5, 0, 5),
+                                  child: Text(
+                                    'Este App foi primeiramente feito em Angular(front) e Spring-Boot(backend), eu decidi programá-lo em Flutter para que ele rodasse tanto em smartphone Android quanto Iphone, o código fonte estão nos links a seguir:',
+                                    textAlign: TextAlign.justify,
+                                    style:
+                                        FlutterFlowTheme.of(context).bodyText2,
+                                  ),
+                                ),
+                                Padding(
+                                  padding: EdgeInsetsDirectional.fromSTEB(
+                                      0, 5, 0, 0),
+                                  child: InkWell(
+                                    onTap: () async {
+                                      await launchURL(
+                                          'https://www.linkedin.com/in/dave-carllen/');
+                                    },
+                                    child: Text(
+                                      'Linkedin Dave Fernades: Clique Aqui',
+                                      textAlign: TextAlign.justify,
+                                      style: FlutterFlowTheme.of(context)
+                                          .bodyText2
+                                          .override(
+                                            fontFamily: 'Poppins',
+                                            color: Color(0xFF1E88E5),
+                                          ),
+                                    ),
+                                  ),
+                                ),
+                                Padding(
+                                  padding: EdgeInsetsDirectional.fromSTEB(
+                                      0, 5, 0, 0),
+                                  child: InkWell(
+                                    onTap: () async {
+                                      await launchURL(
+                                          'https://github.com/dave-fernandes-dev/helpdesk-app/tree/flutterflow');
+                                    },
+                                    child: Text(
+                                      'GitHub: Código Fonte Flutter (clique)',
+                                      textAlign: TextAlign.justify,
+                                      style: FlutterFlowTheme.of(context)
+                                          .bodyText2
+                                          .override(
+                                            fontFamily: 'Poppins',
+                                            color: FlutterFlowTheme.of(context)
+                                                .tertiaryColor,
+                                          ),
+                                    ),
+                                  ),
+                                ),
+                                Padding(
+                                  padding: EdgeInsetsDirectional.fromSTEB(
+                                      0, 5, 0, 0),
+                                  child: InkWell(
+                                    onTap: () async {
+                                      await launchURL(
+                                          'https://github.com/dave-fernandes-dev/helpdesk-api');
+                                    },
+                                    child: Text(
+                                      'GitHub: Código Fonte Java (clique)',
+                                      textAlign: TextAlign.justify,
+                                      style: FlutterFlowTheme.of(context)
+                                          .bodyText2
+                                          .override(
+                                            fontFamily: 'Poppins',
+                                            color: FlutterFlowTheme.of(context)
+                                                .alternate,
+                                          ),
+                                    ),
+                                  ),
+                                ),
+                                Padding(
+                                  padding: EdgeInsetsDirectional.fromSTEB(
+                                      0, 5, 0, 0),
+                                  child: InkWell(
+                                    onTap: () async {
+                                      await launchURL(
+                                          'https://www.udemy.com/course/formacao-angular-spring-boot');
+                                    },
+                                    child: Text(
+                                      'Curso Original na Udemy (clique)',
+                                      textAlign: TextAlign.justify,
+                                      style: FlutterFlowTheme.of(context)
+                                          .bodyText2
+                                          .override(
+                                            fontFamily: 'Poppins',
+                                            color: FlutterFlowTheme.of(context)
+                                                .secondaryColor,
+                                          ),
+                                    ),
+                                  ),
+                                ),
+                              ],
+                            ),
+                          ),
                         ),
                       ),
                     ),
                     Padding(
-                      padding: EdgeInsetsDirectional.fromSTEB(0, 5, 0, 0),
-                      child: InkWell(
-                        onTap: () async {
-                          await launchURL(
-                              'https://github.com/dave-fernandes-dev/helpdesk-api');
-                        },
-                        child: Text(
-                          'GitHub: Código Fonte Java (clique)',
-                          textAlign: TextAlign.justify,
-                          style: FlutterFlowTheme.of(context)
-                              .bodyText2
-                              .override(
-                                fontFamily: 'Poppins',
-                                color: FlutterFlowTheme.of(context).alternate,
-                              ),
-                        ),
-                      ),
-                    ),
-                    Padding(
-                      padding: EdgeInsetsDirectional.fromSTEB(0, 5, 0, 0),
-                      child: InkWell(
-                        onTap: () async {
-                          await launchURL(
-                              'https://www.udemy.com/course/formacao-angular-spring-boot');
-                        },
-                        child: Text(
-                          'Curso Original na Udemy (clique)',
-                          textAlign: TextAlign.justify,
-                          style: FlutterFlowTheme.of(context)
-                              .bodyText2
-                              .override(
-                                fontFamily: 'Poppins',
-                                color:
-                                    FlutterFlowTheme.of(context).secondaryColor,
-                              ),
-                        ),
-                      ),
-                    ),
-                    Padding(
-                      padding: EdgeInsetsDirectional.fromSTEB(0, 5, 0, 5),
-                      child: Text(
-                        'Em resumo é um sistema para gerenciamento de chamados simulando um simples Help Desk desenvolvido em Flutter3, Angular 12 e Spring Boot2. O sistema está rodando na nuvem sendo o front na Vercel e o back na Heroku. O projeto tem como objetivo principal abordar os conceitos de aplicações SPAs, Autenticação e Autorização com Tokens JWT, Criptografia, boas práticas e muito mais.\n\nFique a vontade para testar o \nsistema, criticar e deixar sua sugestão.',
-                        textAlign: TextAlign.justify,
-                        style: FlutterFlowTheme.of(context).bodyText2,
-                      ),
-                    ),
-                    Padding(
-                      padding: EdgeInsetsDirectional.fromSTEB(0, 5, 0, 5),
-                      child: InkWell(
-                        onTap: () async {
-                          await launchURL(
-                              'mailto:dave.fernandes.dev@gmail.com');
-                        },
-                        child: Text(
-                          'Contato: dave.fernandes.dev@gmail.com',
-                          style: FlutterFlowTheme.of(context)
-                              .bodyText2
-                              .override(
-                                fontFamily: 'Poppins',
-                                color:
-                                    FlutterFlowTheme.of(context).primaryColor,
-                              ),
+                      padding: EdgeInsetsDirectional.fromSTEB(0, 10, 0, 0),
+                      child: Material(
+                        color: Colors.transparent,
+                        elevation: 0,
+                        child: Container(
+                          width: double.infinity,
+                          height: 250,
+                          decoration: BoxDecoration(
+                            color: FlutterFlowTheme.of(context)
+                                .secondaryBackground,
+                            boxShadow: [
+                              BoxShadow(
+                                blurRadius: 4,
+                                color: Color(0x33000000),
+                                offset: Offset(0, 2),
+                              )
+                            ],
+                          ),
+                          child: Padding(
+                            padding: EdgeInsetsDirectional.fromSTEB(6, 0, 0, 0),
+                            child: Column(
+                              mainAxisSize: MainAxisSize.max,
+                              crossAxisAlignment: CrossAxisAlignment.start,
+                              children: [
+                                Padding(
+                                  padding: EdgeInsetsDirectional.fromSTEB(
+                                      0, 5, 0, 5),
+                                  child: Text(
+                                    'Em resumo é um sistema para gerenciamento de chamados simulando um simples Help Desk desenvolvido em Flutter3, Angular 12 e Spring Boot2. O sistema está rodando na nuvem sendo o front na Vercel e o back na Heroku. O projeto tem como objetivo principal abordar os conceitos de aplicações SPAs, Autenticação e Autorização com Tokens JWT, Criptografia, boas práticas e muito mais.\n\nFique a vontade para testar o \nsistema, criticar e deixar sua sugestão.',
+                                    textAlign: TextAlign.start,
+                                    style:
+                                        FlutterFlowTheme.of(context).bodyText2,
+                                  ),
+                                ),
+                                Padding(
+                                  padding: EdgeInsetsDirectional.fromSTEB(
+                                      0, 5, 0, 5),
+                                  child: InkWell(
+                                    onTap: () async {
+                                      await launchURL(
+                                          'mailto:dave.fernandes.dev@gmail.com');
+                                    },
+                                    child: Text(
+                                      'Contato: dave.fernandes.dev@gmail.com',
+                                      style: FlutterFlowTheme.of(context)
+                                          .bodyText2
+                                          .override(
+                                            fontFamily: 'Poppins',
+                                            color: FlutterFlowTheme.of(context)
+                                                .primaryColor,
+                                          ),
+                                    ),
+                                  ),
+                                ),
+                              ],
+                            ),
+                          ),
                         ),
                       ),
                     ),

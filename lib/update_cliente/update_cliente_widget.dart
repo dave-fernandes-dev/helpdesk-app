@@ -1,5 +1,4 @@
 import '../backend/api_requests/api_calls.dart';
-import '../flutter_flow/flutter_flow_checkbox_group.dart';
 import '../flutter_flow/flutter_flow_icon_button.dart';
 import '../flutter_flow/flutter_flow_theme.dart';
 import '../flutter_flow/flutter_flow_util.dart';
@@ -23,9 +22,8 @@ class UpdateClienteWidget extends StatefulWidget {
 
 class _UpdateClienteWidgetState extends State<UpdateClienteWidget> {
   ApiCallResponse? responsePutCliente;
-  List<String>? checkboxGroupPerfisValues;
-  TextEditingController? textFieldNomeController;
   TextEditingController? textFieldCpfController;
+  TextEditingController? textFieldNomeController;
   TextEditingController? textFieldEmailController;
   TextEditingController? textFieldSenhaController;
   late bool textFieldSenhaVisibility;
@@ -35,7 +33,6 @@ class _UpdateClienteWidgetState extends State<UpdateClienteWidget> {
   void initState() {
     super.initState();
     textFieldSenhaVisibility = false;
-    WidgetsBinding.instance.addPostFrameCallback((_) => setState(() {}));
   }
 
   @override
@@ -111,26 +108,6 @@ class _UpdateClienteWidgetState extends State<UpdateClienteWidget> {
                       width: double.infinity,
                       height: 10,
                       fit: BoxFit.fill,
-                    ),
-                    FlutterFlowCheckboxGroup(
-                      initiallySelected: checkboxGroupPerfisValues ??=
-                          FFAppState().perfisList,
-                      options: (GetClienteByIdCall.perfis(
-                        updateClienteGetClienteByIdResponse.jsonBody,
-                      ) as List)
-                          .map<String>((s) => s.toString())
-                          .toList()
-                          .toList(),
-                      onChanged: (val) =>
-                          setState(() => checkboxGroupPerfisValues = val),
-                      activeColor: FlutterFlowTheme.of(context).primaryColor,
-                      checkColor: Colors.white,
-                      checkboxBorderColor: Color(0xFF95A1AC),
-                      textStyle:
-                          FlutterFlowTheme.of(context).bodyText1.override(
-                                fontFamily: 'Poppins',
-                                fontWeight: FontWeight.normal,
-                              ),
                     ),
                     Padding(
                       padding: EdgeInsetsDirectional.fromSTEB(12, 15, 12, 0),

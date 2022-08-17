@@ -1,5 +1,4 @@
 import '../backend/api_requests/api_calls.dart';
-import '../flutter_flow/flutter_flow_drop_down.dart';
 import '../flutter_flow/flutter_flow_icon_button.dart';
 import '../flutter_flow/flutter_flow_theme.dart';
 import '../flutter_flow/flutter_flow_util.dart';
@@ -23,9 +22,8 @@ class CreateClienteWidget extends StatefulWidget {
 
 class _CreateClienteWidgetState extends State<CreateClienteWidget> {
   ApiCallResponse? responseCreateCliente;
-  String? dropDownValue;
-  TextEditingController? textFieldNomeController;
   TextEditingController? textFieldCpfController;
+  TextEditingController? textFieldNomeController;
   TextEditingController? textFieldEmailController;
   TextEditingController? textFieldSenhaController;
   late bool textFieldSenhaVisibility;
@@ -119,31 +117,6 @@ class _CreateClienteWidgetState extends State<CreateClienteWidget> {
                         width: double.infinity,
                         height: 170,
                         fit: BoxFit.fill,
-                      ),
-                      Padding(
-                        padding: EdgeInsetsDirectional.fromSTEB(12, 5, 12, 0),
-                        child: FlutterFlowDropDown(
-                          initialOption: dropDownValue ??= 'CLIENTE',
-                          options: FFAppState().perfisList.toList(),
-                          onChanged: (val) =>
-                              setState(() => dropDownValue = val),
-                          width: double.infinity,
-                          height: 47,
-                          textStyle:
-                              FlutterFlowTheme.of(context).bodyText1.override(
-                                    fontFamily: 'Poppins',
-                                    fontWeight: FontWeight.normal,
-                                  ),
-                          hintText: 'Please select...',
-                          fillColor: Colors.white,
-                          elevation: 2,
-                          borderColor:
-                              FlutterFlowTheme.of(context).primaryColor,
-                          borderWidth: 0,
-                          borderRadius: 6,
-                          margin: EdgeInsetsDirectional.fromSTEB(12, 4, 12, 4),
-                          hidesUnderline: true,
-                        ),
                       ),
                       Padding(
                         padding: EdgeInsetsDirectional.fromSTEB(12, 15, 12, 0),
@@ -428,6 +401,7 @@ class _CreateClienteWidgetState extends State<CreateClienteWidget> {
                               cpf: textFieldCpfController!.text,
                               email: textFieldEmailController!.text,
                               senha: textFieldSenhaController!.text,
+                              apiUrl: FFAppState().apiUrl,
                             );
                             if ((responseCreateCliente?.succeeded ?? true)) {
                               context.pushNamed('ListClientes');

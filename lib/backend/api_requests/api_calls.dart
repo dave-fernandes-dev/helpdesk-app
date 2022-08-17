@@ -66,17 +66,20 @@ class PostTecnicoCall {
     String? cpf = '',
     String? email = '',
     String? senha = '',
+    String? apiUrl = 'https://vl-helpdesk-api.herokuapp.com',
+    String? perfisFf = 'ADMIN,CLIENTE,TECNICO',
   }) {
     final body = '''
 {
   "nome": "${nome}",
   "cpf": "${cpf}",
   "email": "${email}",
-  "senha": "${senha}"
+  "senha": "${senha}",
+  "perfisFf": "${perfisFf}"
 }''';
     return ApiManager.instance.makeApiCall(
       callName: 'postTecnico',
-      apiUrl: 'https://vl-helpdesk-api.herokuapp.com/tecnicos',
+      apiUrl: '${apiUrl}/tecnicos?body',
       callType: ApiCallType.POST,
       headers: {
         'Content-type': 'application/json; charset=utf-8',
@@ -87,6 +90,7 @@ class PostTecnicoCall {
         'cpf': cpf,
         'email': email,
         'senha': senha,
+        'perfisFf': perfisFf,
       },
       body: body,
       bodyType: BodyType.JSON,
@@ -173,6 +177,7 @@ class PutTecnicoCall {
     String? id = '',
     String? perfis = '[\"ADMIN\",\"CLIENTE\",\"TECNICO\"]',
     String? perfisFf = 'ADMIN,CLIENTE,TECNICO',
+    String? apiUrl = 'https://vl-helpdesk-api.herokuapp.com',
   }) {
     final body = '''
 {
@@ -184,7 +189,7 @@ class PutTecnicoCall {
 }''';
     return ApiManager.instance.makeApiCall(
       callName: 'putTecnico',
-      apiUrl: 'https://vl-helpdesk-api.herokuapp.com/tecnicos/${id}',
+      apiUrl: '${apiUrl}/tecnicos/${id}',
       callType: ApiCallType.PUT,
       headers: {
         'Content-type': 'application/json; charset=utf-8',
@@ -263,18 +268,19 @@ class PostClienteCall {
     String? cpf = '',
     String? email = '',
     String? senha = '',
+    String? apiUrl = 'https://vl-helpdesk-api.herokuapp.com',
   }) {
     final body = '''
 {
   "nome": "${nome}",
   "cpf": "${cpf}",
   "email": "${email}",
-  "senha": "${senha}"
+  "senha": "${senha}",
+  "perfis": ["CLIENTE"]
 }''';
     return ApiManager.instance.makeApiCall(
       callName: 'postCliente',
-      apiUrl:
-          'https://vl-helpdesk-api.herokuapp.com/clientes?with_response_body',
+      apiUrl: '${apiUrl}/clientes?with_response_body',
       callType: ApiCallType.POST,
       headers: {
         'Content-type': 'application/json; charset=utf-8',

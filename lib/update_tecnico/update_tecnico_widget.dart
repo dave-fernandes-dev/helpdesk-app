@@ -480,6 +480,7 @@ class _UpdateTecnicoWidgetState extends State<UpdateTecnicoWidget> {
                                 senha: textFieldSenhaController?.text ?? '',
                                 perfisFf: functions.listToString(
                                     choiceChipsPerfisValues!.toList()),
+                                apiUrl: FFAppState().apiUrl,
                               );
                               if ((responsePutTecnico?.succeeded ?? true)) {
                                 ScaffoldMessenger.of(context).showSnackBar(
