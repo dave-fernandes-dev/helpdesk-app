@@ -48,3 +48,11 @@ String handlerPrioridade(String? prioridade) {
       }
   }
 }
+
+String listToString(List<String> input) {
+  return input.join(",");
+}
+
+List<String>? jsonToList(List<dynamic> json) {
+  return List<String>.from(json as List);
+}

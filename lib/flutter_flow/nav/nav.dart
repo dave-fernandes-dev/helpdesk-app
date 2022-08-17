@@ -80,6 +80,8 @@ GoRouter createRouter(AppStateNotifier appStateNotifier) => GoRouter(
               path: 'updateTecnico',
               builder: (context, params) => UpdateTecnicoWidget(
                 tecnicoId: params.getParam('tecnicoId', ParamType.String),
+                perfisSelecionados:
+                    params.getParam('perfisSelecionados', ParamType.String),
               ),
             ),
             FFRoute(

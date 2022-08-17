@@ -194,6 +194,13 @@ class _ListTecnicosWidgetState extends State<ListTecnicosWidget> {
                                                         r'''$.id''',
                                                       ).toString(),
                                                       ParamType.String),
+                                                  'perfisSelecionados':
+                                                      serializeParam(
+                                                          getJsonField(
+                                                            tecItem,
+                                                            r'''$.perfis''',
+                                                          ).toString(),
+                                                          ParamType.String),
                                                 }.withoutNulls,
                                               );
                                             },

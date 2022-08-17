@@ -1,10 +1,11 @@
 import '../backend/api_requests/api_calls.dart';
 import '../flutter_flow/flutter_flow_checkbox_group.dart';
+import '../flutter_flow/flutter_flow_choice_chips.dart';
 import '../flutter_flow/flutter_flow_icon_button.dart';
 import '../flutter_flow/flutter_flow_theme.dart';
 import '../flutter_flow/flutter_flow_util.dart';
 import '../flutter_flow/flutter_flow_widgets.dart';
-import '../custom_code/widgets/index.dart' as custom_widgets;
+import '../flutter_flow/custom_functions.dart' as functions;
 import 'package:easy_debounce/easy_debounce.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
@@ -14,9 +15,11 @@ class UpdateTecnicoWidget extends StatefulWidget {
   const UpdateTecnicoWidget({
     Key? key,
     this.tecnicoId,
+    this.perfisSelecionados,
   }) : super(key: key);
 
   final String? tecnicoId;
+  final String? perfisSelecionados;
 
   @override
   _UpdateTecnicoWidgetState createState() => _UpdateTecnicoWidgetState();
@@ -30,6 +33,7 @@ class _UpdateTecnicoWidgetState extends State<UpdateTecnicoWidget> {
   TextEditingController? textFieldEmailController;
   TextEditingController? textFieldSenhaController;
   late bool textFieldSenhaVisibility;
+  List<String>? choiceChipsValues;
   final formKey = GlobalKey<FormState>();
   final scaffoldKey = GlobalKey<ScaffoldState>();
 
@@ -118,11 +122,10 @@ class _UpdateTecnicoWidgetState extends State<UpdateTecnicoWidget> {
                         fit: BoxFit.fill,
                       ),
                       FlutterFlowCheckboxGroup(
-                        initiallySelected: checkboxGroupPerfisValues ??= [
-                          'ADMIN',
-                          'CLIENTE',
-                          'TECNICO'
-                        ],
+                        initiallySelected: checkboxGroupPerfisValues ??=
+                            functions.jsonToList(GetTecnicoByIdCall.perfis(
+                          updateTecnicoGetTecnicoByIdResponse.jsonBody,
+                        )),
                         options: FFAppState().perfisList.toList(),
                         onChanged: (val) =>
                             setState(() => checkboxGroupPerfisValues = val),
@@ -443,16 +446,8 @@ class _UpdateTecnicoWidgetState extends State<UpdateTecnicoWidget> {
                               cpf: textFieldCpfController?.text ?? '',
                               email: textFieldEmailController?.text ?? '',
                               senha: textFieldSenhaController?.text ?? '',
-                              perfisFf: valueOrDefault<String>(
-                                checkboxGroupPerfisValues
-                                    ?.contains('${valueOrDefault<String>(
-                                      checkboxGroupPerfisValues?.length
-                                          ?.toString(),
-                                      'ND',
-                                    )}')
-                                    ?.toString(),
-                                'ND',
-                              ),
+                              perfisFf: functions.listToString(
+                                  checkboxGroupPerfisValues!.toList()),
                             );
                             if ((responsePutTecnico?.succeeded ?? true)) {
                               ScaffoldMessenger.of(context).showSnackBar(
@@ -533,13 +528,39 @@ class _UpdateTecnicoWidgetState extends State<UpdateTecnicoWidget> {
                           ),
                         ),
                       ),
-                      Container(
-                        width: double.infinity,
-                        height: 50,
-                        child: custom_widgets.GroupButtonDev(
-                          width: double.infinity,
-                          height: 50,
+                      FlutterFlowChoiceChips(
+                        initiallySelected:
+                            choiceChipsValues != null ? choiceChipsValues : [],
+                        options: [ChipData('ADMIN', Icons.person)],
+                        onChanged: (val) =>
+                            setState(() => choiceChipsValues = val),
+                        selectedChipStyle: ChipStyle(
+                          backgroundColor:
+                              FlutterFlowTheme.of(context).primaryColor,
+                          textStyle:
+                              FlutterFlowTheme.of(context).bodyText1.override(
+                                    fontFamily: 'Poppins',
+                                    color: Colors.white,
+                                  ),
+                          iconColor: Colors.white,
+                          iconSize: 18,
+                          elevation: 4,
                         ),
+                        unselectedChipStyle: ChipStyle(
+                          backgroundColor: Colors.white,
+                          textStyle:
+                              FlutterFlowTheme.of(context).bodyText2.override(
+                                    fontFamily: 'Poppins',
+                                    color: Color(0xFFE3E7ED),
+                                  ),
+                          iconColor: Color(0xFFE3E7ED),
+                          iconSize: 18,
+                          elevation: 4,
+                        ),
+                        chipSpacing: 20,
+                        multiselect: true,
+                        initialized: choiceChipsValues != null,
+                        alignment: WrapAlignment.start,
                       ),
                     ],
                   ),

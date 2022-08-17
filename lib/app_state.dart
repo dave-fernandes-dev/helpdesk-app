@@ -1,5 +1,6 @@
 import 'package:shared_preferences/shared_preferences.dart';
 import 'flutter_flow/lat_lng.dart';
+import 'dart:convert';
 
 class FFAppState {
   static final FFAppState _instance = FFAppState._internal();
@@ -23,6 +24,9 @@ class FFAppState {
   List<String> perfisList = ['ADMIN', 'CLIENTE', 'TECNICO'];
 
   String apiUrl = 'https://vl-helpdesk-api.herokuapp.com';
+
+  dynamic perfisJson =
+      jsonDecode('{\"perfis\":[\"CLIENTE\",\"ADMIN\",\"TECNICO\"]}');
 }
 
 LatLng? _latLngFromString(String? val) {
