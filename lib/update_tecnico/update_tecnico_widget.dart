@@ -33,7 +33,7 @@ class _UpdateTecnicoWidgetState extends State<UpdateTecnicoWidget> {
   TextEditingController? textFieldEmailController;
   TextEditingController? textFieldSenhaController;
   late bool textFieldSenhaVisibility;
-  List<String>? choiceChipsValues;
+  List<String>? choiceChipsPerfisValues;
   final formKey = GlobalKey<FormState>();
   final scaffoldKey = GlobalKey<ScaffoldState>();
 
@@ -447,7 +447,7 @@ class _UpdateTecnicoWidgetState extends State<UpdateTecnicoWidget> {
                               email: textFieldEmailController?.text ?? '',
                               senha: textFieldSenhaController?.text ?? '',
                               perfisFf: functions.listToString(
-                                  checkboxGroupPerfisValues!.toList()),
+                                  choiceChipsPerfisValues!.toList()),
                             );
                             if ((responsePutTecnico?.succeeded ?? true)) {
                               ScaffoldMessenger.of(context).showSnackBar(
@@ -529,11 +529,17 @@ class _UpdateTecnicoWidgetState extends State<UpdateTecnicoWidget> {
                         ),
                       ),
                       FlutterFlowChoiceChips(
-                        initiallySelected:
-                            choiceChipsValues != null ? choiceChipsValues : [],
-                        options: [ChipData('ADMIN', Icons.person)],
+                        initiallySelected: choiceChipsPerfisValues != null
+                            ? choiceChipsPerfisValues
+                            : functions.jsonToList(GetTecnicoByIdCall.perfis(
+                                updateTecnicoGetTecnicoByIdResponse.jsonBody,
+                              )),
+                        options: FFAppState()
+                            .perfisList
+                            .map((label) => ChipData(label))
+                            .toList(),
                         onChanged: (val) =>
-                            setState(() => choiceChipsValues = val),
+                            setState(() => choiceChipsPerfisValues = val),
                         selectedChipStyle: ChipStyle(
                           backgroundColor:
                               FlutterFlowTheme.of(context).primaryColor,
@@ -548,18 +554,20 @@ class _UpdateTecnicoWidgetState extends State<UpdateTecnicoWidget> {
                         ),
                         unselectedChipStyle: ChipStyle(
                           backgroundColor: Colors.white,
-                          textStyle:
-                              FlutterFlowTheme.of(context).bodyText2.override(
-                                    fontFamily: 'Poppins',
-                                    color: Color(0xFFE3E7ED),
-                                  ),
+                          textStyle: FlutterFlowTheme.of(context)
+                              .bodyText2
+                              .override(
+                                fontFamily: 'Poppins',
+                                color:
+                                    FlutterFlowTheme.of(context).primaryColor,
+                              ),
                           iconColor: Color(0xFFE3E7ED),
                           iconSize: 18,
                           elevation: 4,
                         ),
                         chipSpacing: 20,
                         multiselect: true,
-                        initialized: choiceChipsValues != null,
+                        initialized: choiceChipsPerfisValues != null,
                         alignment: WrapAlignment.start,
                       ),
                     ],
