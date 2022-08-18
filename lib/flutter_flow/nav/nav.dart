@@ -69,13 +69,6 @@ GoRouter createRouter(AppStateNotifier appStateNotifier) => GoRouter(
               ),
             ),
             FFRoute(
-              name: 'ListTecnicos',
-              path: 'listTecnicos',
-              builder: (context, params) => params.isEmpty
-                  ? NavBarPage(initialPage: 'ListTecnicos')
-                  : ListTecnicosWidget(),
-            ),
-            FFRoute(
               name: 'UpdateTecnico',
               path: 'updateTecnico',
               builder: (context, params) => UpdateTecnicoWidget(
@@ -106,6 +99,15 @@ GoRouter createRouter(AppStateNotifier appStateNotifier) => GoRouter(
               ),
             ),
             FFRoute(
+              name: 'Home',
+              path: 'home',
+              builder: (context, params) => params.isEmpty
+                  ? NavBarPage(initialPage: 'Home')
+                  : HomeWidget(
+                      token: params.getParam('token', ParamType.String),
+                    ),
+            ),
+            FFRoute(
               name: 'Logout',
               path: 'logout',
               builder: (context, params) => params.isEmpty
@@ -115,13 +117,11 @@ GoRouter createRouter(AppStateNotifier appStateNotifier) => GoRouter(
                     ),
             ),
             FFRoute(
-              name: 'Home',
-              path: 'home',
+              name: 'ListTecnicos',
+              path: 'listTecnicos',
               builder: (context, params) => params.isEmpty
-                  ? NavBarPage(initialPage: 'Home')
-                  : HomeWidget(
-                      token: params.getParam('token', ParamType.String),
-                    ),
+                  ? NavBarPage(initialPage: 'ListTecnicos')
+                  : ListTecnicosWidget(),
             ),
             FFRoute(
               name: 'ListChamados',
@@ -136,6 +136,11 @@ GoRouter createRouter(AppStateNotifier appStateNotifier) => GoRouter(
               builder: (context, params) => UpdateChamadoWidget(
                 chamadoId: params.getParam('chamadoId', ParamType.String),
               ),
+            ),
+            FFRoute(
+              name: 'CreateChamado',
+              path: 'createChamado',
+              builder: (context, params) => CreateChamadoWidget(),
             )
           ].map((r) => r.toRoute(appStateNotifier)).toList(),
         ).toRoute(appStateNotifier),

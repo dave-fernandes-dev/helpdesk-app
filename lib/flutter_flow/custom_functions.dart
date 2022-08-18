@@ -23,12 +23,12 @@ String handlerStatus(String? status) {
       }
     default:
       {
-        return "ND";
+        return "";
       }
   }
 }
 
-String handlerPrioridade(String? prioridade) {
+String handlerPrioridade(dynamic prioridade) {
   switch (prioridade) {
     case "0":
       {
@@ -44,7 +44,7 @@ String handlerPrioridade(String? prioridade) {
       }
     default:
       {
-        return "ND";
+        return "";
       }
   }
 }

@@ -265,39 +265,41 @@ class _HomeWidgetState extends State<HomeWidget> {
                         ),
                       ),
                       Divider(),
-                      Padding(
-                        padding: EdgeInsetsDirectional.fromSTEB(20, 15, 0, 0),
-                        child: InkWell(
-                          onTap: () async {
-                            context.pushNamed('Login');
-                          },
-                          child: Row(
-                            mainAxisSize: MainAxisSize.max,
-                            mainAxisAlignment: MainAxisAlignment.start,
-                            crossAxisAlignment: CrossAxisAlignment.center,
-                            children: [
-                              Align(
-                                alignment: AlignmentDirectional(0, 0),
-                                child: Icon(
-                                  Icons.login,
-                                  color: FlutterFlowTheme.of(context)
-                                      .secondaryText,
-                                  size: 24,
+                      if (tokenValid ?? true)
+                        Padding(
+                          padding: EdgeInsetsDirectional.fromSTEB(20, 15, 0, 0),
+                          child: InkWell(
+                            onTap: () async {
+                              context.pushNamed('Login');
+                            },
+                            child: Row(
+                              mainAxisSize: MainAxisSize.max,
+                              mainAxisAlignment: MainAxisAlignment.start,
+                              crossAxisAlignment: CrossAxisAlignment.center,
+                              children: [
+                                Align(
+                                  alignment: AlignmentDirectional(0, 0),
+                                  child: Icon(
+                                    Icons.login,
+                                    color: FlutterFlowTheme.of(context)
+                                        .secondaryText,
+                                    size: 24,
+                                  ),
                                 ),
-                              ),
-                              Padding(
-                                padding:
-                                    EdgeInsetsDirectional.fromSTEB(5, 0, 0, 0),
-                                child: Text(
-                                  'Entrar',
-                                  textAlign: TextAlign.center,
-                                  style: FlutterFlowTheme.of(context).subtitle2,
+                                Padding(
+                                  padding: EdgeInsetsDirectional.fromSTEB(
+                                      5, 0, 0, 0),
+                                  child: Text(
+                                    'Entrar',
+                                    textAlign: TextAlign.center,
+                                    style:
+                                        FlutterFlowTheme.of(context).subtitle2,
+                                  ),
                                 ),
-                              ),
-                            ],
+                              ],
+                            ),
                           ),
                         ),
-                      ),
                       Divider(),
                       Padding(
                         padding: EdgeInsetsDirectional.fromSTEB(20, 15, 0, 0),

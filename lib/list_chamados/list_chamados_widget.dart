@@ -87,7 +87,7 @@ class _ListChamadosWidgetState extends State<ListChamadosWidget> {
                   size: 30,
                 ),
                 onPressed: () async {
-                  context.pushNamed('CreateTecnico');
+                  context.pushNamed('CreateChamado');
                 },
               ),
             ],
@@ -294,6 +294,7 @@ class _ListChamadosWidgetState extends State<ListChamadosWidget> {
                         token: FFAppState().token,
                         titulo: textController!.text,
                         status: radioButtonValue,
+                        apiUrl: FFAppState().apiUrl,
                       ),
                       builder: (context, snapshot) {
                         // Customize what your widget looks like when it's loading.
@@ -317,14 +318,6 @@ class _ListChamadosWidgetState extends State<ListChamadosWidget> {
                               listViewGetChamadosByFilterResponse.jsonBody,
                               r'''$''',
                             ).toList();
-                            if (chamado.isEmpty) {
-                              return Center(
-                                child: Image.asset(
-                                  'assets/images/nada.png',
-                                  fit: BoxFit.cover,
-                                ),
-                              );
-                            }
                             return ListView.builder(
                               padding: EdgeInsets.zero,
                               shrinkWrap: true,
@@ -367,13 +360,10 @@ class _ListChamadosWidgetState extends State<ListChamadosWidget> {
                                                   'UpdateChamado',
                                                   queryParams: {
                                                     'chamadoId': serializeParam(
-                                                        valueOrDefault<String>(
-                                                          getJsonField(
-                                                            chamadoItem,
-                                                            r'''$.id''',
-                                                          ).toString(),
-                                                          'ND',
-                                                        ),
+                                                        getJsonField(
+                                                          chamadoItem,
+                                                          r'''$.id''',
+                                                        ).toString(),
                                                         ParamType.String),
                                                   }.withoutNulls,
                                                 );
@@ -614,19 +604,16 @@ class _ListChamadosWidgetState extends State<ListChamadosWidget> {
                                                         ),
                                                       ),
                                                       Text(
-                                                        valueOrDefault<String>(
-                                                          functions
-                                                              .handlerPrioridade(
-                                                                  valueOrDefault<
-                                                                      String>(
-                                                            getJsonField(
-                                                              chamadoItem,
-                                                              r'''$.prioridade''',
-                                                            ).toString(),
-                                                            'ND',
-                                                          )),
-                                                          'ND',
-                                                        ),
+                                                        functions
+                                                            .handlerPrioridade(
+                                                                valueOrDefault<
+                                                                    dynamic>(
+                                                          getJsonField(
+                                                            chamadoItem,
+                                                            r'''$.prioridade''',
+                                                          ),
+                                                          nd,
+                                                        )),
                                                         style:
                                                             FlutterFlowTheme.of(
                                                                     context)
@@ -662,14 +649,10 @@ class _ListChamadosWidgetState extends State<ListChamadosWidget> {
                                                     queryParams: {
                                                       'chamadoId':
                                                           serializeParam(
-                                                              valueOrDefault<
-                                                                  String>(
-                                                                getJsonField(
-                                                                  chamadoItem,
-                                                                  r'''$.id''',
-                                                                ).toString(),
-                                                                'ND',
-                                                              ),
+                                                              getJsonField(
+                                                                chamadoItem,
+                                                                r'''$.id''',
+                                                              ).toString(),
                                                               ParamType.String),
                                                     }.withoutNulls,
                                                   );

@@ -397,10 +397,11 @@ class PutClienteCall {
 class GetChamadosCall {
   static Future<ApiCallResponse> call({
     String? token = '',
+    String? apiUrl = 'https://vl-helpdesk-api.herokuapp.com',
   }) {
     return ApiManager.instance.makeApiCall(
       callName: 'getChamados',
-      apiUrl: 'https://vl-helpdesk-api.herokuapp.com/chamados',
+      apiUrl: '${apiUrl}/chamados',
       callType: ApiCallType.GET,
       headers: {
         'Content-type': 'application/json; charset=utf-8',
@@ -448,17 +449,18 @@ class GetChamadosCall {
 class PostChamadoCall {
   static Future<ApiCallResponse> call({
     String? token = '',
-    int? prioridade = 0,
-    int? status = 0,
+    String? prioridadeDescricao = '',
+    String? status = '',
     String? titulo = '',
     String? observacoes = '',
     int? tecnicoId,
     int? clienteId,
+    String? apiUrl = 'https://vl-helpdesk-api.herokuapp.com',
   }) {
     final body = '''
 {
-  "prioridade": ${prioridade},
-  "status": ${status},
+  "prioridadeDescricao": "${prioridadeDescricao}",
+  "status": "0",
   "titulo": "${titulo}",
   "tecnico": ${tecnicoId},
   "cliente": ${clienteId},
@@ -466,15 +468,14 @@ class PostChamadoCall {
 }''';
     return ApiManager.instance.makeApiCall(
       callName: 'postChamado',
-      apiUrl:
-          'https://vl-helpdesk-api.herokuapp.com/chamados?with_response_body',
+      apiUrl: '${apiUrl}/chamados?with_response_body',
       callType: ApiCallType.POST,
       headers: {
         'Content-type': 'application/json; charset=utf-8',
         'Authorization': '${token}',
       },
       params: {
-        'prioridade': prioridade,
+        'prioridadeDescricao': prioridadeDescricao,
         'status': status,
         'titulo': titulo,
         'observacoes': observacoes,
@@ -575,11 +576,11 @@ class GetChamadosByFilterCall {
     String? token = '',
     String? titulo = '',
     String? status = '',
+    String? apiUrl = 'https://vl-helpdesk-api.herokuapp.com',
   }) {
     return ApiManager.instance.makeApiCall(
       callName: 'getChamadosByFilter',
-      apiUrl:
-          'https://vl-helpdesk-api.herokuapp.com/chamados?filter&titulo=${titulo}&status=${status}',
+      apiUrl: '${apiUrl}/chamados?filter&titulo=${titulo}&status=${status}',
       callType: ApiCallType.GET,
       headers: {
         'Content-type': 'application/json; charset=utf-8',
