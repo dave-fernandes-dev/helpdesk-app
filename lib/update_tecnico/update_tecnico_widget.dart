@@ -1,4 +1,5 @@
 import '../backend/api_requests/api_calls.dart';
+import '../flutter_flow/flutter_flow_animations.dart';
 import '../flutter_flow/flutter_flow_choice_chips.dart';
 import '../flutter_flow/flutter_flow_icon_button.dart';
 import '../flutter_flow/flutter_flow_theme.dart';
@@ -24,7 +25,8 @@ class UpdateTecnicoWidget extends StatefulWidget {
   _UpdateTecnicoWidgetState createState() => _UpdateTecnicoWidgetState();
 }
 
-class _UpdateTecnicoWidgetState extends State<UpdateTecnicoWidget> {
+class _UpdateTecnicoWidgetState extends State<UpdateTecnicoWidget>
+    with TickerProviderStateMixin {
   ApiCallResponse? responsePutTecnico;
   List<String>? choiceChipsPerfisValues;
   TextEditingController? textFieldNomeController;
@@ -34,10 +36,35 @@ class _UpdateTecnicoWidgetState extends State<UpdateTecnicoWidget> {
   late bool textFieldSenhaVisibility;
   final formKey = GlobalKey<FormState>();
   final scaffoldKey = GlobalKey<ScaffoldState>();
+  final animationsMap = {
+    'containerOnPageLoadAnimation': AnimationInfo(
+      curve: Curves.easeIn,
+      trigger: AnimationTrigger.onPageLoad,
+      duration: 600,
+      hideBeforeAnimating: true,
+      fadeIn: true,
+      initialState: AnimationState(
+        offset: Offset(0, 0),
+        scale: 1,
+        opacity: 0,
+      ),
+      finalState: AnimationState(
+        offset: Offset(0, 0),
+        scale: 1,
+        opacity: 1,
+      ),
+    ),
+  };
 
   @override
   void initState() {
     super.initState();
+    startPageLoadAnimations(
+      animationsMap.values
+          .where((anim) => anim.trigger == AnimationTrigger.onPageLoad),
+      this,
+    );
+
     textFieldSenhaVisibility = false;
     WidgetsBinding.instance.addPostFrameCallback((_) => setState(() {}));
   }
@@ -596,7 +623,7 @@ class _UpdateTecnicoWidgetState extends State<UpdateTecnicoWidget> {
                         ),
                       ),
                     ),
-                  ),
+                  ).animated([animationsMap['containerOnPageLoadAnimation']!]),
                 ),
               ),
             ));

@@ -1,4 +1,5 @@
 import '../backend/api_requests/api_calls.dart';
+import '../flutter_flow/flutter_flow_animations.dart';
 import '../flutter_flow/flutter_flow_icon_button.dart';
 import '../flutter_flow/flutter_flow_theme.dart';
 import '../flutter_flow/flutter_flow_util.dart';
@@ -20,7 +21,8 @@ class CreateClienteWidget extends StatefulWidget {
   _CreateClienteWidgetState createState() => _CreateClienteWidgetState();
 }
 
-class _CreateClienteWidgetState extends State<CreateClienteWidget> {
+class _CreateClienteWidgetState extends State<CreateClienteWidget>
+    with TickerProviderStateMixin {
   ApiCallResponse? responseCreateCliente;
   TextEditingController? textFieldCpfController;
   TextEditingController? textFieldNomeController;
@@ -29,10 +31,35 @@ class _CreateClienteWidgetState extends State<CreateClienteWidget> {
   late bool textFieldSenhaVisibility;
   final formKey = GlobalKey<FormState>();
   final scaffoldKey = GlobalKey<ScaffoldState>();
+  final animationsMap = {
+    'containerOnPageLoadAnimation': AnimationInfo(
+      curve: Curves.easeIn,
+      trigger: AnimationTrigger.onPageLoad,
+      duration: 600,
+      hideBeforeAnimating: true,
+      fadeIn: true,
+      initialState: AnimationState(
+        offset: Offset(0, 0),
+        scale: 1,
+        opacity: 0,
+      ),
+      finalState: AnimationState(
+        offset: Offset(0, 0),
+        scale: 1,
+        opacity: 1,
+      ),
+    ),
+  };
 
   @override
   void initState() {
     super.initState();
+    startPageLoadAnimations(
+      animationsMap.values
+          .where((anim) => anim.trigger == AnimationTrigger.onPageLoad),
+      this,
+    );
+
     textFieldCpfController = TextEditingController();
     textFieldNomeController = TextEditingController();
     textFieldEmailController = TextEditingController();
@@ -516,7 +543,7 @@ class _CreateClienteWidgetState extends State<CreateClienteWidget> {
                         ],
                       ),
                     ),
-                  ),
+                  ).animated([animationsMap['containerOnPageLoadAnimation']!]),
                 ),
               ),
             ));

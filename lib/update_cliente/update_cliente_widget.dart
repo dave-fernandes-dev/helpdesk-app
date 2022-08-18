@@ -1,4 +1,5 @@
 import '../backend/api_requests/api_calls.dart';
+import '../flutter_flow/flutter_flow_animations.dart';
 import '../flutter_flow/flutter_flow_icon_button.dart';
 import '../flutter_flow/flutter_flow_theme.dart';
 import '../flutter_flow/flutter_flow_util.dart';
@@ -20,7 +21,8 @@ class UpdateClienteWidget extends StatefulWidget {
   _UpdateClienteWidgetState createState() => _UpdateClienteWidgetState();
 }
 
-class _UpdateClienteWidgetState extends State<UpdateClienteWidget> {
+class _UpdateClienteWidgetState extends State<UpdateClienteWidget>
+    with TickerProviderStateMixin {
   ApiCallResponse? responsePutCliente;
   TextEditingController? textFieldCpfController;
   TextEditingController? textFieldNomeController;
@@ -28,10 +30,35 @@ class _UpdateClienteWidgetState extends State<UpdateClienteWidget> {
   TextEditingController? textFieldSenhaController;
   late bool textFieldSenhaVisibility;
   final scaffoldKey = GlobalKey<ScaffoldState>();
+  final animationsMap = {
+    'containerOnPageLoadAnimation': AnimationInfo(
+      curve: Curves.easeIn,
+      trigger: AnimationTrigger.onPageLoad,
+      duration: 600,
+      hideBeforeAnimating: true,
+      fadeIn: true,
+      initialState: AnimationState(
+        offset: Offset(0, 0),
+        scale: 1,
+        opacity: 0,
+      ),
+      finalState: AnimationState(
+        offset: Offset(0, 0),
+        scale: 1,
+        opacity: 1,
+      ),
+    ),
+  };
 
   @override
   void initState() {
     super.initState();
+    startPageLoadAnimations(
+      animationsMap.values
+          .where((anim) => anim.trigger == AnimationTrigger.onPageLoad),
+      this,
+    );
+
     textFieldSenhaVisibility = false;
     WidgetsBinding.instance.addPostFrameCallback((_) => setState(() {}));
   }
@@ -456,7 +483,7 @@ class _UpdateClienteWidgetState extends State<UpdateClienteWidget> {
                         ),
                       ],
                     ),
-                  ),
+                  ).animated([animationsMap['containerOnPageLoadAnimation']!]),
                 ),
               ),
             ));

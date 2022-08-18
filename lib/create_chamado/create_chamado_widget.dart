@@ -1,4 +1,5 @@
 import '../backend/api_requests/api_calls.dart';
+import '../flutter_flow/flutter_flow_animations.dart';
 import '../flutter_flow/flutter_flow_drop_down.dart';
 import '../flutter_flow/flutter_flow_icon_button.dart';
 import '../flutter_flow/flutter_flow_theme.dart';
@@ -16,8 +17,9 @@ class CreateChamadoWidget extends StatefulWidget {
   _CreateChamadoWidgetState createState() => _CreateChamadoWidgetState();
 }
 
-class _CreateChamadoWidgetState extends State<CreateChamadoWidget> {
-  ApiCallResponse? responseUpdate;
+class _CreateChamadoWidgetState extends State<CreateChamadoWidget>
+    with TickerProviderStateMixin {
+  ApiCallResponse? responseCreate;
   String? dropDownClienteValue;
   String? dropDownPrioridadeValue;
   String? dropDownStatusValue;
@@ -26,10 +28,35 @@ class _CreateChamadoWidgetState extends State<CreateChamadoWidget> {
   TextEditingController? textFieldObsController;
   final formKey = GlobalKey<FormState>();
   final scaffoldKey = GlobalKey<ScaffoldState>();
+  final animationsMap = {
+    'containerOnPageLoadAnimation': AnimationInfo(
+      curve: Curves.easeIn,
+      trigger: AnimationTrigger.onPageLoad,
+      duration: 600,
+      hideBeforeAnimating: true,
+      fadeIn: true,
+      initialState: AnimationState(
+        offset: Offset(0, 0),
+        scale: 1,
+        opacity: 0,
+      ),
+      finalState: AnimationState(
+        offset: Offset(0, 0),
+        scale: 1,
+        opacity: 1,
+      ),
+    ),
+  };
 
   @override
   void initState() {
     super.initState();
+    startPageLoadAnimations(
+      animationsMap.values
+          .where((anim) => anim.trigger == AnimationTrigger.onPageLoad),
+      this,
+    );
+
     textFieldObsController = TextEditingController();
     textFieldTituloController = TextEditingController();
     WidgetsBinding.instance.addPostFrameCallback((_) => setState(() {}));
@@ -173,6 +200,13 @@ class _CreateChamadoWidgetState extends State<CreateChamadoWidget> {
                                     fontWeight: FontWeight.normal,
                                   ),
                           textAlign: TextAlign.start,
+                          validator: (val) {
+                            if (val == null || val.isEmpty) {
+                              return 'Field is required';
+                            }
+
+                            return null;
+                          },
                         ),
                       ),
                       Padding(
@@ -556,6 +590,13 @@ class _CreateChamadoWidgetState extends State<CreateChamadoWidget> {
                                   ),
                           textAlign: TextAlign.start,
                           maxLines: 2,
+                          validator: (val) {
+                            if (val == null || val.isEmpty) {
+                              return 'Field is required';
+                            }
+
+                            return null;
+                          },
                         ),
                       ),
                       Padding(
@@ -567,16 +608,74 @@ class _CreateChamadoWidgetState extends State<CreateChamadoWidget> {
                               return;
                             }
 
-                            responseUpdate = await PostChamadoCall.call(
+                            if (dropDownPrioridadeValue == null) {
+                              await showDialog(
+                                context: context,
+                                builder: (alertDialogContext) {
+                                  return AlertDialog(
+                                    title: Text('Atenção'),
+                                    content: Text('Defina a Prioridade'),
+                                    actions: [
+                                      TextButton(
+                                        onPressed: () =>
+                                            Navigator.pop(alertDialogContext),
+                                        child: Text('Ok'),
+                                      ),
+                                    ],
+                                  );
+                                },
+                              );
+                              return;
+                            }
+                            if (dropDownTecnicoValue == null) {
+                              await showDialog(
+                                context: context,
+                                builder: (alertDialogContext) {
+                                  return AlertDialog(
+                                    title: Text('Atenção'),
+                                    content: Text('Escolha um Tecnico'),
+                                    actions: [
+                                      TextButton(
+                                        onPressed: () =>
+                                            Navigator.pop(alertDialogContext),
+                                        child: Text('Ok'),
+                                      ),
+                                    ],
+                                  );
+                                },
+                              );
+                              return;
+                            }
+                            if (dropDownClienteValue == null) {
+                              await showDialog(
+                                context: context,
+                                builder: (alertDialogContext) {
+                                  return AlertDialog(
+                                    title: Text('Atenção'),
+                                    content: Text('Escolha um Cliente'),
+                                    actions: [
+                                      TextButton(
+                                        onPressed: () =>
+                                            Navigator.pop(alertDialogContext),
+                                        child: Text('Ok'),
+                                      ),
+                                    ],
+                                  );
+                                },
+                              );
+                              return;
+                            }
+
+                            responseCreate = await PostChamadoCall.call(
                               token: FFAppState().token,
                               apiUrl: FFAppState().apiUrl,
                               prioridadeDescricao: dropDownPrioridadeValue,
                               titulo: textFieldTituloController!.text,
                               observacoes: textFieldObsController!.text,
                               tecnicoId: 1,
-                              clienteId: 1,
+                              clienteId: 7,
                             );
-                            if ((responseUpdate?.succeeded ?? true)) {
+                            if ((responseCreate?.succeeded ?? true)) {
                               context.pushNamed('ListChamados');
                               ScaffoldMessenger.of(context).showSnackBar(
                                 SnackBar(
@@ -600,7 +699,7 @@ class _CreateChamadoWidgetState extends State<CreateChamadoWidget> {
                                 SnackBar(
                                   content: Text(
                                     PostChamadoCall.message(
-                                      (responseUpdate?.jsonBody ?? ''),
+                                      (responseCreate?.jsonBody ?? ''),
                                     ).toString(),
                                     style: FlutterFlowTheme.of(context)
                                         .bodyText1
@@ -618,7 +717,7 @@ class _CreateChamadoWidgetState extends State<CreateChamadoWidget> {
                                 SnackBar(
                                   content: Text(
                                     PostChamadoCall.fieldNameError(
-                                      (responseUpdate?.jsonBody ?? ''),
+                                      (responseCreate?.jsonBody ?? ''),
                                     ).toString(),
                                     style: FlutterFlowTheme.of(context)
                                         .bodyText1
@@ -661,7 +760,7 @@ class _CreateChamadoWidgetState extends State<CreateChamadoWidget> {
                     ],
                   ),
                 ),
-              ),
+              ).animated([animationsMap['containerOnPageLoadAnimation']!]),
             ),
           ),
         ));

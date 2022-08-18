@@ -1,3 +1,4 @@
+import '../flutter_flow/flutter_flow_animations.dart';
 import '../flutter_flow/flutter_flow_theme.dart';
 import '../flutter_flow/flutter_flow_util.dart';
 import 'package:flutter/material.dart';
@@ -16,7 +17,27 @@ class LogoutWidget extends StatefulWidget {
   _LogoutWidgetState createState() => _LogoutWidgetState();
 }
 
-class _LogoutWidgetState extends State<LogoutWidget> {
+class _LogoutWidgetState extends State<LogoutWidget>
+    with TickerProviderStateMixin {
+  final animationsMap = {
+    'containerOnPageLoadAnimation': AnimationInfo(
+      curve: Curves.easeIn,
+      trigger: AnimationTrigger.onPageLoad,
+      duration: 600,
+      hideBeforeAnimating: true,
+      fadeIn: true,
+      initialState: AnimationState(
+        offset: Offset(0, 0),
+        scale: 1,
+        opacity: 0,
+      ),
+      finalState: AnimationState(
+        offset: Offset(0, 0),
+        scale: 1,
+        opacity: 1,
+      ),
+    ),
+  };
   final scaffoldKey = GlobalKey<ScaffoldState>();
 
   @override
@@ -27,6 +48,12 @@ class _LogoutWidgetState extends State<LogoutWidget> {
       // Action Logout
       setState(() => FFAppState().token = '');
     });
+
+    startPageLoadAnimations(
+      animationsMap.values
+          .where((anim) => anim.trigger == AnimationTrigger.onPageLoad),
+      this,
+    );
 
     WidgetsBinding.instance.addPostFrameCallback((_) => setState(() {}));
   }
@@ -119,7 +146,7 @@ class _LogoutWidgetState extends State<LogoutWidget> {
                     ),
                   ),
                 ),
-              ),
+              ).animated([animationsMap['containerOnPageLoadAnimation']!]),
             ),
           ),
         ));
