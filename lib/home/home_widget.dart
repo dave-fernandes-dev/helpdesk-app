@@ -265,7 +265,7 @@ class _HomeWidgetState extends State<HomeWidget> {
                         ),
                       ),
                       Divider(),
-                      if (tokenValid ?? true)
+                      if (FFAppState().token == 'ND')
                         Padding(
                           padding: EdgeInsetsDirectional.fromSTEB(20, 15, 0, 0),
                           child: InkWell(

@@ -606,13 +606,9 @@ class _ListChamadosWidgetState extends State<ListChamadosWidget> {
                                                       Text(
                                                         functions
                                                             .handlerPrioridade(
-                                                                valueOrDefault<
-                                                                    dynamic>(
-                                                          getJsonField(
-                                                            chamadoItem,
-                                                            r'''$.prioridade''',
-                                                          ),
-                                                          nd,
+                                                                getJsonField(
+                                                          chamadoItem,
+                                                          r'''$.prioridade''',
                                                         )),
                                                         style:
                                                             FlutterFlowTheme.of(
