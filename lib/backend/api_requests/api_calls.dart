@@ -456,14 +456,16 @@ class PostChamadoCall {
     int? tecnicoId,
     int? clienteId,
     String? apiUrl = 'https://vl-helpdesk-api.herokuapp.com',
+    String? nomeTecnico = '',
+    String? nomeCliente = '',
   }) {
     final body = '''
 {
   "prioridadeDescricao": "${prioridadeDescricao}",
   "status": "0",
   "titulo": "${titulo}",
-  "tecnico": ${tecnicoId},
-  "cliente": ${clienteId},
+  "nomeTecnico": "${nomeTecnico}",
+  "nomeCliente": "${nomeCliente}",
   "observacoes": "${observacoes}"
 }''';
     return ApiManager.instance.makeApiCall(
@@ -481,6 +483,8 @@ class PostChamadoCall {
         'observacoes': observacoes,
         'tecnicoId': tecnicoId,
         'clienteId': clienteId,
+        'nomeTecnico': nomeTecnico,
+        'nomeCliente': nomeCliente,
       },
       body: body,
       bodyType: BodyType.JSON,

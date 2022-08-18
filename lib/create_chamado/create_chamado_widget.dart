@@ -672,8 +672,8 @@ class _CreateChamadoWidgetState extends State<CreateChamadoWidget>
                               prioridadeDescricao: dropDownPrioridadeValue,
                               titulo: textFieldTituloController!.text,
                               observacoes: textFieldObsController!.text,
-                              tecnicoId: 1,
-                              clienteId: 7,
+                              nomeTecnico: dropDownTecnicoValue,
+                              nomeCliente: dropDownClienteValue,
                             );
                             if ((responseCreate?.succeeded ?? true)) {
                               context.pushNamed('ListChamados');
