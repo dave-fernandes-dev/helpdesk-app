@@ -1,5 +1,6 @@
 import '../backend/api_requests/api_calls.dart';
 import '../flutter_flow/flutter_flow_animations.dart';
+import '../flutter_flow/flutter_flow_choice_chips.dart';
 import '../flutter_flow/flutter_flow_icon_button.dart';
 import '../flutter_flow/flutter_flow_theme.dart';
 import '../flutter_flow/flutter_flow_util.dart';
@@ -24,8 +25,9 @@ class CreateClienteWidget extends StatefulWidget {
 class _CreateClienteWidgetState extends State<CreateClienteWidget>
     with TickerProviderStateMixin {
   ApiCallResponse? responseCreateCliente;
-  TextEditingController? textFieldCpfController;
+  String? choiceChipsPerfisValue;
   TextEditingController? textFieldNomeController;
+  TextEditingController? textFieldCpfController;
   TextEditingController? textFieldEmailController;
   TextEditingController? textFieldSenhaController;
   late bool textFieldSenhaVisibility;
@@ -148,6 +150,52 @@ class _CreateClienteWidgetState extends State<CreateClienteWidget>
                             width: double.infinity,
                             height: 170,
                             fit: BoxFit.fill,
+                          ),
+                          Align(
+                            alignment: AlignmentDirectional(-0.85, 0),
+                            child: Padding(
+                              padding:
+                                  EdgeInsetsDirectional.fromSTEB(0, 15, 0, 0),
+                              child: FlutterFlowChoiceChips(
+                                initiallySelected:
+                                    choiceChipsPerfisValue != null
+                                        ? [choiceChipsPerfisValue!]
+                                        : ['CLIENTE'],
+                                options: [ChipData('CLIENTE', Icons.face)],
+                                onChanged: (val) => setState(
+                                    () => choiceChipsPerfisValue = val?.first),
+                                selectedChipStyle: ChipStyle(
+                                  backgroundColor:
+                                      FlutterFlowTheme.of(context).primaryColor,
+                                  textStyle: FlutterFlowTheme.of(context)
+                                      .bodyText1
+                                      .override(
+                                        fontFamily: 'Poppins',
+                                        color: Colors.white,
+                                      ),
+                                  iconColor: Colors.white,
+                                  iconSize: 18,
+                                  elevation: 4,
+                                ),
+                                unselectedChipStyle: ChipStyle(
+                                  backgroundColor: Colors.white,
+                                  textStyle: FlutterFlowTheme.of(context)
+                                      .bodyText2
+                                      .override(
+                                        fontFamily: 'Poppins',
+                                        color: FlutterFlowTheme.of(context)
+                                            .secondaryText,
+                                      ),
+                                  iconColor: Color(0xFFE3E7ED),
+                                  iconSize: 18,
+                                  elevation: 4,
+                                ),
+                                chipSpacing: 20,
+                                multiselect: false,
+                                initialized: choiceChipsPerfisValue != null,
+                                alignment: WrapAlignment.start,
+                              ),
+                            ),
                           ),
                           Padding(
                             padding:

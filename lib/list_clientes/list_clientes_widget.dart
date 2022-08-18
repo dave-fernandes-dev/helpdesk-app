@@ -135,8 +135,8 @@ class _ListClientesWidgetState extends State<ListClientesWidget>
                 color: FlutterFlowTheme.of(context).secondaryBackground,
                 size: 30,
               ),
-              onPressed: () {
-                print('IconButton pressed ...');
+              onPressed: () async {
+                context.pushNamed('CreateCliente');
               },
             ),
           ),
